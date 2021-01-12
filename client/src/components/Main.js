@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import Home from '../pages/Home'
+import NavbarComponent from './NavbarComponent'
+import Footer from './Footer'
+
 
 class Main extends Component {
     constructor(props) {
@@ -10,7 +14,9 @@ class Main extends Component {
     render() {
         return (
             <div>
-
+                <NavbarComponent />
+                <Home />
+                <Footer />
             </div>
         )
     }
