@@ -54,11 +54,6 @@ const Home = () => {
     )
 }
 
-var imgStyle = {
-    height: '50vh',
-    width: '90%',
-}
-
 var jumbotronStyle = {
     margin: '0',
     padding: '0'
