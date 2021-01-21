@@ -7,7 +7,7 @@ const Footer = () => {
                 <p>@Jonathan J || Full Stack Developer</p>
             </div>
             <div>
-                <a>
+                <a href="https://www.linkedin.com/in/jonathan-jimenez101/">
                     <i className="fab fa-linkedin"></i>
                 </a>
             </div>
