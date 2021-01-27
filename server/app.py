@@ -7,11 +7,10 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
-def main():
-    return "<h1>Hello World</h1>"
+@app.route('/<string:name>', methods=['GET'])
+def main(name):
+    return "<h1>hello {}</h1>".format(name)
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,
-            port=int(os.environ.get("PORT", 5000)))
+    app.run(host='127.0.0.1', port=int(os.environ.get("PORT", 5000)))
