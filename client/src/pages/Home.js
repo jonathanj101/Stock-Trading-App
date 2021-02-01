@@ -1,8 +1,8 @@
 import React from 'react'
 import { Jumbotron, Container, Carousel, Image, Card } from 'react-bootstrap'
-import tabletStocksData from '../assets/images/tablet-stocks-data.jpg'
+import tabletStocksData from '../assets/images/tablet-display-stocks.jpg'
 import bitcoinBenjamin from '../assets/images/bitcoin-benjamin.jpg'
-import laptopDisplayStock from '../assets/images/laptop-display-stock.jpg'
+import laptopDisplayStock from '../assets/images/laptop-display-stocks.jpg'
 
 const Home = () => {
     return (
