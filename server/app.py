@@ -6,10 +6,26 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+api_key = os.environ.get('API_KEY')
 
-@app.route('/<string:name>', methods=['GET'])
-def main(name):
-    return "<h1>hello {}</h1>".format(name)
+base_url = "https://cloud.iexapis.com"
+
+
+@app.route('/', methods=['GET'])
+def main():
+    # version = "/stable"
+    # symbol = "/IBM/financials"
+    # endpoint = "/stock"
+    # token = "?token={}".format(api_key)
+
+    # search_url = "{}{}{}/batch/{}{}".format(
+    #     base_url, version, endpoint, symbol, token)
+    # print(search_url)
+
+    search_url = "https://cloud.iexapis.com/stable/stock/aapl/quote?token={}".format(
+        api_key)
+
+    return jsonify({"response": search_url})
 
 
 if __name__ == '__main__':
