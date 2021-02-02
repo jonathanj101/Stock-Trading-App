@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const NavbarComponent = () => {
     return (
-        <div>
+        <div style={{fontSize: '1.5rem'}}>
             <Navbar
                 className="d-flex justify-content-between"
                 bg="dark"
@@ -29,7 +29,7 @@ const NavbarComponent = () => {
                         Home
                     </NavLink>
                     <NavLink
-                        to="/market"
+                        to="/summary"
                         exact
                         className="nav-link mr-3"
                     >
