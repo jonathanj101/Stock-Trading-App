@@ -1,30 +1,26 @@
-import React from 'react'
+import React from "react";
 
 const Footer = () => {
-    return (
+  return (
+      <div
+          className="bg-dark w-100 h-100"
+          style={textSize}  >
+      <div className="w-50 mx-auto text-center text-white">
         <div>
-            <div>
-                <p>@Jonathan J || Full Stack Developer</p>
-            </div>
-            <div>
-                <a href="https://www.linkedin.com/in/jonathan-jimenez101/">
-                    <i className="fab fa-linkedin"></i>
-                </a>
-            </div>
+          <p className="fs-1">@Jonathan J || Full Stack Developer</p>
         </div>
-        // <div className="footer bg-dark h-50">
-        //     <div className="center-info pt-5 mx-auto">
-        //         <p className=" text-white">@Jonathan J || Full Stack Developer</p>
-        //     </div>
-        //     <div className="website-info">
-        //         <a
-        //             className="s"
-        //             href="https://www.linkedin.com/feed/">
-        //             <i className="fab fa-linkedin"></i>
-        //         </a>
-        //     </div>
-        // </div>
-    )
+        <div className="">
+          <a href="https://www.linkedin.com/in/jonathan-jimenez101/">
+            <i className="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+var textSize = {
+    fontSize: "1.5rem"
 }
 
-export default Footer
+export default Footer;
