@@ -15,7 +15,7 @@ class Main extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={{height: `30vh`}}>
                 <NavbarComponent />
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
