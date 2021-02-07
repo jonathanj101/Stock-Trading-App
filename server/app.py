@@ -13,23 +13,13 @@ base_url = "https://cloud.iexapis.com"
 
 @app.route('/testing_data', methods=['GET'])
 def main():
-    # version = "/stable"
-    # symbol = "/IBM/financials"
-    # endpoint = "/stock"
-    # token = "?token={}".format(api_key)
-
-    # search_url = "{}{}{}/batch/{}{}".format(
-    #     base_url, version, endpoint, symbol, token)
-    # print(search_url)
 
     tesla = "Tsla"
     apple = "aapl"
-    search_url = "https://cloud.iexapis.com/stable/stock/{}/quote?token={}".format(
-        tesla, api_key)
+    search_url = "{}/stable/stock/{}/quote?token={}".format(
+        base_url, tesla, api_key)
 
     req = requests.get(search_url)
-
-    print(req)
 
     resp = req.json()
 
@@ -41,8 +31,6 @@ def main():
         "high": resp["high"],
         "low": resp["low"]
     }
-
-    print(resp["companyName"])
 
     return jsonify(test_list)
 
