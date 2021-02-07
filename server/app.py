@@ -11,7 +11,7 @@ api_key = os.environ.get('API_KEY')
 base_url = "https://cloud.iexapis.com"
 
 
-@app.route('/', methods=['GET'])
+@app.route('/testing_data', methods=['GET'])
 def main():
     # version = "/stable"
     # symbol = "/IBM/financials"
@@ -22,25 +22,29 @@ def main():
     #     base_url, version, endpoint, symbol, token)
     # print(search_url)
 
-    tesla = "Tesla"
-    # search_url = "https://cloud.iexapis.com/stable/stock/search/securityName={}?token={}".format(
-    #     tesla, api_key)
-    # search_url = "https://cloud.iexapis.com/stable/stock/{}/quote?token={}".format(
-    #     tesla, api_key)
-    search_url = "https://cloud.iexapis.com/stable/stock/search/tsl?token={}".format(
-        api_key)
-    # search_url = "https://cloud.iexapis.com/stable/tops?token={}&search={}".format(
-    #     api_key, tesla)
+    tesla = "Tsla"
+    apple = "aapl"
+    search_url = "https://cloud.iexapis.com/stable/stock/{}/quote?token={}".format(
+        tesla, api_key)
+
     req = requests.get(search_url)
 
     print(req)
 
-    # resp = req.json()
-    # print(resp)
+    resp = req.json()
 
-    # print(resp["companyName"])
+    test_list = {
+        "company_name": resp["companyName"],
+        "symbol": resp["symbol"],
+        "open": resp["open"],
+        "close": resp["close"],
+        "high": resp["high"],
+        "low": resp["low"]
+    }
 
-    return jsonify({"response": "resp"})
+    print(resp["companyName"])
+
+    return jsonify(test_list)
 
 
 if __name__ == '__main__':
