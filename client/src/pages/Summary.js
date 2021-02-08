@@ -15,8 +15,11 @@ const SummaryComponent = () => {
               <Card.Subtitle className="mb-5 text-muted" stlye={{ height: "2rem" }}>
                 (open) Today
               </Card.Subtitle>
-              <Button className="" href="#" block>
+              <Button href="#" block>
                 sell
+              </Button>
+              <Button href="#" block>
+                buy
               </Button>
             </Card.Body>
           </Card>
@@ -28,6 +31,9 @@ const SummaryComponent = () => {
               </Card.Subtitle>
               <Button className="" href="#" block>
                 sell
+              </Button>
+              <Button href="#" block>
+                buy
               </Button>
             </Card.Body>
           </Card>
