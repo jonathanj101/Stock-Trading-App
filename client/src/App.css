@@ -1,3 +1,7 @@
 .lindkedIn_div:hover {
   color: white;
 }
+
+.modal-dialog {
+  max-width: 50%;
+}
