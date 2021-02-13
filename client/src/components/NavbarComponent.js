@@ -117,9 +117,6 @@ const NavbarComponent = ({ modalClicked, isLogged }) => {
                         <NavLink to="/" exact className="nav-link mr-3 ">
                             Home
                         </NavLink>
-                        <NavLink to="/summary" exact className="nav-link mr-3">
-                            Market
-                        </NavLink>
                         <NavLink to="/my-stocks" exact className="nav-link ">
                             My Stocks
                         </NavLink>
