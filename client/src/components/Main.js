@@ -4,13 +4,14 @@ import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
 import SummaryComponent from '../pages/Summary';
+import FormComponent from './Form';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             empty: '',
-            testing: false,
+            testing: true,
         };
     }
 
@@ -32,6 +33,11 @@ class Main extends Component {
                         path="/my-stocks"
                         exact
                         component={() => <SummaryComponent />}
+                    />
+                    <Route
+                        path="/form"
+                        exact
+                        component={() => <FormComponent />}
                     />
                 </Switch>
                 <Footer />
