@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const NavbarComponent = ({ modalClicked }) => {
+const NavbarComponent = ({ modalClicked, isLogged }) => {
+    console.log(isLogged);
     const [inputValue, displayValue] = useState('');
     const [show, setShow] = useState(false);
 
@@ -98,45 +99,65 @@ const NavbarComponent = ({ modalClicked }) => {
                     </div>
                 </div>
             </Modal>
-
-            <Navbar
-                className="d-flex justify-content-between"
-                bg="dark"
-                variant="dark"
-            >
-                <Navbar.Brand>
-                    {/* <img
+            {isLogged ? (
+                <Navbar
+                    className="d-flex justify-content-between"
+                    bg="dark"
+                    variant="dark"
+                >
+                    <Navbar.Brand>
+                        {/* <img
                         alt="twitter bird"
                         width="125"
                         height="100"
                         className="d-inline-block align-top"
                     /> */}
-                </Navbar.Brand>
-                <Nav variant="pills" className="">
-                    <NavLink
-                        onClick={handleShow}
-                        className="nav-link mr-3 "
-                        activeStyle={{
-                            fontWeight: 'bold',
-                            color: 'blue',
-                            backgroundColor: '#007bff',
-                        }}
-                        to={{ pathname: '' }}
-                        exact
-                    >
-                        Log In / Register
-                    </NavLink>
-                    <NavLink to="/" exact className="nav-link mr-3 ">
-                        Home
-                    </NavLink>
-                    <NavLink to="/summary" exact className="nav-link mr-3">
-                        Market
-                    </NavLink>
-                    <NavLink to="/my-stocks" exact className="nav-link ">
-                        My Stocks
-                    </NavLink>
-                </Nav>
-            </Navbar>
+                    </Navbar.Brand>
+                    <Nav variant="pills" className="">
+                        <NavLink to="/" exact className="nav-link mr-3 ">
+                            Home
+                        </NavLink>
+                        <NavLink to="/summary" exact className="nav-link mr-3">
+                            Market
+                        </NavLink>
+                        <NavLink to="/my-stocks" exact className="nav-link ">
+                            My Stocks
+                        </NavLink>
+                    </Nav>
+                </Navbar>
+            ) : (
+                <Navbar
+                    className="d-flex justify-content-between"
+                    bg="dark"
+                    variant="dark"
+                >
+                    <Navbar.Brand>
+                        {/* <img
+                        alt="twitter bird"
+                        width="125"
+                        height="100"
+                        className="d-inline-block align-top"
+                    /> */}
+                    </Navbar.Brand>
+                    <Nav variant="pills" className="">
+                        <NavLink
+                            onClick={handleShow}
+                            className="nav-link mr-3 "
+                            to={{ pathname: '' }}
+                            activeStyle={{
+                                color: 'white',
+                                backgroundColor: '#007bff',
+                            }}
+                            // active
+                        >
+                            Log In / Register
+                        </NavLink>
+                        <NavLink to="/" exact className="nav-link mr-3 ">
+                            Home
+                        </NavLink>
+                    </Nav>
+                </Navbar>
+            )}
         </div>
     );
 };
