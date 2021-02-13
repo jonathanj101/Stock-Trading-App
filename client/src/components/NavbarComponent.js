@@ -147,6 +147,10 @@ const NavbarComponent = ({ modalClicked, isLogged }) => {
                             }}
                             // active
                         >
+                            <i
+                                className="fas fa-user-tie mr-3"
+                                style={{ fontSize: '2rem' }}
+                            ></i>
                             Log In / Register
                         </NavLink>
                         <NavLink to="/" exact className="nav-link mr-3 ">
