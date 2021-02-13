@@ -29,7 +29,7 @@ class Main extends Component {
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
                     <Route
-                        path="/summary"
+                        path="/my-stocks"
                         exact
                         component={() => <SummaryComponent />}
                     />
