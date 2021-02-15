@@ -4,7 +4,7 @@ import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
 import SummaryComponent from '../pages/Summary';
-import FormComponent from './Form';
+import FormComponent from './RegisterForm';
 import ProtectRoute from './ProtectRoutes';
 import PageNotFound from '../pages/PageNotFound';
 
@@ -13,11 +13,14 @@ class Main extends Component {
         super(props);
         this.state = {
             empty: '',
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
             testing: false,
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -28,9 +31,20 @@ class Main extends Component {
     //             console.log(data);
     //         });
     // }
+
     handleChange = (e) => {
         const { name, value } = e.target;
-        // console.log({ [name]: value });
+        console.log({ [name]: value });
+        this.setState({
+            [name]: value,
+        });
+        console.log(this.state);
+    };
+
+    handleRegister = (e) => {
+        const { name, value } = e.target;
+        console.log(e.target);
+        console.log({ [name]: value });
         this.setState({
             [name]: value,
         });
@@ -72,7 +86,13 @@ class Main extends Component {
                     <Route
                         path="/form"
                         exact
-                        component={() => <FormComponent />}
+                        component={() => (
+                            <FormComponent
+                                handleRegister={this.handleRegister}
+                                onSubmit={this.onSubmit}
+                                mainState={this.state}
+                            />
+                        )}
                     />
                     <Route path="*" component={() => <PageNotFound />} />
                 </Switch>
