@@ -5,23 +5,24 @@ import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
 import SummaryComponent from '../pages/Summary';
 import FormComponent from './Form';
+import ProtectRoute from './ProtectRoutes';
 
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
             empty: '',
-            testing: true,
+            testing: false,
         };
     }
 
-    componentDidMount() {
-        fetch('/testing_data')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            });
-    }
+    // componentDidMount() {
+    //     fetch('/testing_data')
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             console.log(data);
+    //         });
+    // }
 
     render() {
         return (
@@ -29,10 +30,10 @@ class Main extends Component {
                 <NavbarComponent isLogged={this.state.testing} />
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
-                    <Route
+                    <ProtectRoute
                         path="/my-stocks"
                         exact
-                        component={() => <SummaryComponent />}
+                        component={SummaryComponent}
                     />
                     <Route
                         path="/form"
