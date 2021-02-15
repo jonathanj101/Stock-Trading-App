@@ -13,8 +13,11 @@ class Main extends Component {
         super(props);
         this.state = {
             empty: '',
+            email: '',
+            password: '',
             testing: false,
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     // componentDidMount() {
@@ -24,11 +27,37 @@ class Main extends Component {
     //             console.log(data);
     //         });
     // }
+    handleChange = (e) => {
+        const { name, value } = e.target;
+        // console.log({ [name]: value });
+        this.setState = {
+            [name]: value,
+        };
+    };
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        const logInInfo = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+        this.setState(
+            {
+                email: logInInfo.email,
+                password: logInInfo.password,
+            },
+            () => console.log(this.state),
+        );
+        console.log(this.state);
+    };
 
     render() {
         return (
             <div style={{ height: `30vh` }}>
-                <NavbarComponent isLogged={this.state.testing} />
+                <NavbarComponent
+                    isLogged={this.state.testing}
+                    handleChange={this.handleChange}
+                />
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
                     <ProtectRoute
