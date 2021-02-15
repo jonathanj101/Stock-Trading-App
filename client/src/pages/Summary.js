@@ -47,7 +47,7 @@ const SummaryComponent = () => {
                         </Card.Body>
                     </Card>
                 </div>
-                <div className=" w-100">
+                <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
                         className="text-center mx-auto"
                         striped
