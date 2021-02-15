@@ -6,6 +6,9 @@ const FormComponent = () => {
         <div style={styles.mainDiv}>
             <div style={styles.div}>
                 <Form style={styles.formContainer}>
+                    <div className="w-50 text-center mx-auto">
+                        <h1>Register</h1>
+                    </div>
                     <div className="d-flex ">
                         <Form.Group
                             style={styles.formGroupStyles}
@@ -28,7 +31,10 @@ const FormComponent = () => {
                             />
                         </Form.Group>
                     </div>
-                    <Form.Group controlId="email">
+                    <Form.Group
+                        style={{ border: '1px solid black' }}
+                        controlId="email"
+                    >
                         <Form.Control
                             style={styles.formControlStyles}
                             type="email"
@@ -67,10 +73,13 @@ var styles = {
     formContainer: {
         width: '100%',
         margin: 'auto',
-        backgroundColor: 'grey',
+        border: '1px solid black',
+        borderRadius: '50px',
+        boxShadow: '5px 10px 18px 10px #888888',
     },
     formGroupStyles: {
         margin: '100px auto',
+        border: '1px solid black',
     },
     formControlStyles: {
         fontSize: '2rem',
@@ -84,7 +93,6 @@ var styles = {
         margin: '100px auto 0 auto',
     },
     div: {
-        backgroundColor: 'red',
         width: '100%',
         height: '100%',
     },
