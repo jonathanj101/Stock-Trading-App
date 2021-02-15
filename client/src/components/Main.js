@@ -6,6 +6,7 @@ import Footer from './Footer';
 import SummaryComponent from '../pages/Summary';
 import FormComponent from './Form';
 import ProtectRoute from './ProtectRoutes';
+import PageNotFound from '../pages/PageNotFound';
 
 class Main extends Component {
     constructor(props) {
@@ -40,6 +41,7 @@ class Main extends Component {
                         exact
                         component={() => <FormComponent />}
                     />
+                    <Route path="*" component={() => <PageNotFound />} />
                 </Switch>
                 <Footer />
             </div>
