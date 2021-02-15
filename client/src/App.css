@@ -2,6 +2,7 @@
   color: white;
 }
 
-.modal-dialog {
-  max-width: 50%;
+div.modal-header button span {
+  color:red;
+  text-shadow: 0
 }
