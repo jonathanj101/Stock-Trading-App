@@ -2,20 +2,12 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const NavbarComponent = ({ modalClicked, isLogged }) => {
-    console.log(isLogged);
-    const [inputValue, displayValue] = useState('');
+const NavbarComponent = ({ modalClicked, isLogged, handleChange }) => {
+    // console.log(isLogged);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    function handleValue(e) {
-        const { value } = e.target;
-        displayValue(value);
-        console.log(`inputValue > ${[inputValue]}`);
-        console.log(value);
-    }
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
@@ -34,7 +26,8 @@ const NavbarComponent = ({ modalClicked, isLogged }) => {
                                     controlId="logInEmail"
                                 >
                                     <Form.Control
-                                        onChange={handleValue}
+                                        onChange={handleChange}
+                                        name="email"
                                         type="email"
                                         placeholder="Enter email"
                                     />
@@ -42,6 +35,8 @@ const NavbarComponent = ({ modalClicked, isLogged }) => {
                                 <Form.Group controlId="logInPassWord">
                                     <Form.Control
                                         style={styles.formGroupStyles}
+                                        name="password"
+                                        onChange={handleChange}
                                         type="password"
                                         placeholder="Password"
                                     />
