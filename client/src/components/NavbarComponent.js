@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const NavbarComponent = ({ modalClicked, isLogged, handleChange }) => {
+const NavbarComponent = ({
+    modalClicked,
+    isLogged,
+    handleChange,
+    onSubmit,
+}) => {
     // console.log(isLogged);
     const [show, setShow] = useState(false);
 
@@ -45,7 +50,11 @@ const NavbarComponent = ({ modalClicked, isLogged, handleChange }) => {
                                     <Button
                                         className="mb-auto"
                                         variant="primary"
-                                        onClick={handleClose}
+                                        onClick={() => {
+                                            handleClose();
+                                            onSubmit();
+                                        }}
+                                        // onClick={onSubmit}
                                         size="lg"
                                     >
                                         Log In
