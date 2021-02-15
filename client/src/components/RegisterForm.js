@@ -48,6 +48,7 @@ const FormComponent = ({ handleRegister, onSubmit, mainState }) => {
                                 className="form-control"
                                 style={styles.formControlStyles}
                                 id="lastName"
+                                onChange={handleRegister}
                                 name="lastName"
                                 value={mainState.lastName}
                                 placeholder="Last Name"
@@ -64,6 +65,7 @@ const FormComponent = ({ handleRegister, onSubmit, mainState }) => {
                         <input
                             type="email"
                             className="form-control"
+                            onChange={handleRegister}
                             style={styles.formControlStyles}
                             name="email"
                             value={mainState.email}
@@ -79,6 +81,7 @@ const FormComponent = ({ handleRegister, onSubmit, mainState }) => {
                             type="password"
                             name="password"
                             value={mainState.password}
+                            onChange={handleRegister}
                             className="form-control"
                             style={styles.formControlStyles}
                             id="password"
