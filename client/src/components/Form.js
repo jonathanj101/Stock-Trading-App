@@ -32,7 +32,10 @@ const FormComponent = () => {
                         </Form.Group>
                     </div>
                     <Form.Group
-                        style={{ border: '1px solid black' }}
+                        style={{
+                            border: '1px solid black',
+                            borderRadius: '5px',
+                        }}
                         controlId="email"
                     >
                         <Form.Control
@@ -80,6 +83,7 @@ var styles = {
     formGroupStyles: {
         margin: '100px auto',
         border: '1px solid black',
+        borderRadius: '5px',
     },
     formControlStyles: {
         fontSize: '2rem',
