@@ -18,6 +18,7 @@ class Main extends Component {
             testing: false,
         };
         this.handleChange = this.handleChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     // componentDidMount() {
@@ -30,23 +31,25 @@ class Main extends Component {
     handleChange = (e) => {
         const { name, value } = e.target;
         // console.log({ [name]: value });
-        this.setState = {
+        this.setState({
             [name]: value,
-        };
+        });
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
+    onSubmit = () => {
         const logInInfo = {
             email: this.state.email,
             password: this.state.password,
         };
+        console.log(logInInfo.email);
         this.setState(
             {
                 email: logInInfo.email,
                 password: logInInfo.password,
             },
-            () => console.log(this.state),
+            () => {
+                console.log(this.state);
+            },
         );
         console.log(this.state);
     };
@@ -57,6 +60,7 @@ class Main extends Component {
                 <NavbarComponent
                     isLogged={this.state.testing}
                     handleChange={this.handleChange}
+                    onSubmit={this.onSubmit}
                 />
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
