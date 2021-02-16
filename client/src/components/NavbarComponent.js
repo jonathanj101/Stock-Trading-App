@@ -8,7 +8,6 @@ const NavbarComponent = ({
     handleChange,
     onSubmit,
 }) => {
-    // console.log(isLogged);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -62,6 +61,8 @@ const NavbarComponent = ({
                         </div>
                     </div>
                 </div>
+                <span className="mx-auto">or</span>
+                <Button href="/form">Register</Button>
             </Modal>
             {isLogged ? (
                 <Navbar
@@ -109,13 +110,12 @@ const NavbarComponent = ({
                                 color: 'white',
                                 backgroundColor: '#007bff',
                             }}
-                            // active
                         >
                             <i
                                 className="fas fa-user-tie mr-3"
                                 style={{ fontSize: '2rem' }}
                             ></i>
-                            Log In / Register
+                            Log In
                         </NavLink>
                         <NavLink to="/" exact className="nav-link mr-3 ">
                             Home
