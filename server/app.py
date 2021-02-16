@@ -26,13 +26,27 @@ def main():
     test_list = {
         "company_name": resp["companyName"],
         "symbol": resp["symbol"],
-        "open": resp["open"],
-        "close": resp["close"],
-        "high": resp["high"],
-        "low": resp["low"]
+        "cost": resp["latestPrice"],
+        "change": resp["change"],
     }
 
     return jsonify(test_list)
+
+@app.route("/multiple", methods=["GET"])
+def multiple():
+    tesla = "tsla"
+    apple = "aaple"
+    
+    search_url = "{}/stable/stock/market/batch?symbols={},{},FB&types=quote&token={}".format(base_url,tesla,apple, api_key)
+    
+    req = requests.get(search_url)
+    
+    resp = req.json()
+    
+    # tesla = resp['Tsla']
+    
+    
+    return jsonify(resp['TSLA'])
 
 
 if __name__ == '__main__':
