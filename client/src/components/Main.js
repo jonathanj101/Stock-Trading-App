@@ -41,13 +41,17 @@ class Main extends Component {
         console.log(this.state);
     };
 
-    handleRegister = (e) => {
-        const { name, value } = e.target;
-        console.log(e.target);
-        console.log({ [name]: value });
-        this.setState({
-            [name]: value,
-        });
+    handleRegister = (firstName, lastName, email, password) => {
+        this.setState(
+            {
+                firstName: firstName,
+                lasttName: lastName,
+                email: email,
+                password: password,
+            },
+            () => console.log(this.state),
+        );
+        console.log(this.state);
     };
 
     onSubmit = () => {
