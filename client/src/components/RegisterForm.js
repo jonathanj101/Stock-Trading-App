@@ -1,97 +1,91 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-const FormComponent = ({ handleRegister, onSubmit, mainState }) => {
-    const [firstName, getFirstName] = useState('');
-    const [lastName, getLastName] = useState('');
-    const [email, getEmail] = useState('');
-    const [password, getPassword] = useState('');
+const FormComponent = ({ handleRegister }) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    console.log(mainState);
-    function getValue(e) {
-        // getFirstName(e.target.value);
-        // getLastName(e.target.value);
-        // getEmail(e.target.value);
-        // getPassword(e.target.value);
-        // handleRegister(e);
-        console.log(
-            `firstname > ${firstName} lastname > ${lastName} email > ${email} password > ${password}`,
-        );
-    }
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(firstName, lastName, email, password);
+        handleRegister(firstName, lastName, email, password);
+    };
 
     return (
         <div style={styles.mainDiv}>
             <div style={styles.div}>
-                <form style={styles.formContainer}>
+                <Form style={styles.formContainer} onSubmit={onSubmit}>
                     <div className="w-50 text-center mx-auto">
                         <h1>Register</h1>
                     </div>
-                    <div className="d-flex">
-                        <div class="form-group" style={styles.formGroupStyles}>
-                            <input
-                                type="text"
-                                class="form-control"
-                                onChange={handleRegister}
-                                style={styles.formControlStyles}
-                                name={'firstName'}
-                                value={mainState.firstName}
-                                id="firstName"
-                                placeholder="First Name"
-                            />
-                        </div>
-                        <div
-                            className="form-group"
+                    <div className="d-flex ">
+                        <Form.Group
                             style={styles.formGroupStyles}
+                            className="w-50 mr-3"
+                            controlId="firstName"
                         >
-                            <input
-                                type="text"
-                                className="form-control"
+                            <Form.Control
                                 style={styles.formControlStyles}
-                                id="lastName"
-                                onChange={handleRegister}
-                                name="lastName"
-                                value={mainState.lastName}
-                                placeholder="Last Name"
+                                onChange={(e) => setFirstName(e.target.value)}
+                                name="firstName"
+                                value={firstName}
+                                placeholder="First name"
                             />
-                        </div>
+                        </Form.Group>
+                        <Form.Group
+                            style={styles.formGroupStyles}
+                            className="w-50"
+                            controlId="lastName"
+                        >
+                            <Form.Control
+                                style={styles.formControlStyles}
+                                onChange={(e) => setLastName(e.target.value)}
+                                name="lastName"
+                                value={lastName}
+                                placeholder="Last name"
+                            />
+                        </Form.Group>
                     </div>
-                    <div
-                        className="form-group"
+                    <Form.Group
                         style={{
                             border: '1px solid black',
                             borderRadius: '5px',
                         }}
+                        controlId="email"
                     >
-                        <input
-                            type="email"
-                            className="form-control"
-                            onChange={handleRegister}
+                        <Form.Control
                             style={styles.formControlStyles}
+                            onChange={(e) => setEmail(e.target.value)}
                             name="email"
-                            value={mainState.email}
-                            id="email"
+                            value={email}
+                            type="email"
                             placeholder="Enter email"
                         />
-                    </div>
-                    <small id="emailHelp" className="form-text text-muted">
-                        We'll never share your email with anyone else.
-                    </small>
-                    <div className="form-group" style={styles.formGroupStyles}>
-                        <input
-                            type="password"
-                            name="password"
-                            value={mainState.password}
-                            onChange={handleRegister}
-                            className="form-control"
+                    </Form.Group>
+                    <Form.Group
+                        style={styles.formGroupStyles}
+                        controlId="password"
+                    >
+                        <Form.Control
                             style={styles.formControlStyles}
-                            id="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={password}
+                            type="password"
                             placeholder="Password"
                         />
-                    </div>
-                    <button type="submit" className="btn btn-primary">
+                    </Form.Group>
+                    <Button
+                        style={styles.btnStyles}
+                        variant="primary"
+                        type="submit"
+                        block
+                    >
                         Submit
-                    </button>
-                </form>
+                    </Button>
+                </Form>
             </div>
         </div>
     );
@@ -133,84 +127,76 @@ var styles = {
 
 export default FormComponent;
 
-{
-    /* <Form style={styles.formContainer}>
-<div className="w-50 text-center mx-auto">
-    <h1>Register</h1>
-</div>
-<div className="d-flex ">
-    <Form.Group
-        style={styles.formGroupStyles}
-        className="w-50 mr-3"
-        controlId="firstName"
-    >
-        <Form.Control
-            style={styles.formControlStyles}
-            onChange={(e) => {
-                getValue(e);
-                getFirstName(e.target.value);
-                handleRegister(e);
-            }}
-            name="firstName"
-            value={firstName}
-            placeholder="First name"
-        />
-    </Form.Group>
-    <Form.Group
-        style={styles.formGroupStyles}
-        className="w-50"
-        controlId="lastName"
-    >
-        <Form.Control
-            style={styles.formControlStyles}
-            onChange={(e) => {
-                getValue(e);
-            }}
-            name="lastName"
-            value={lastName}
-            placeholder="Last name"
-        />
-    </Form.Group>
-</div>
-<Form.Group
-    style={{
-        border: '1px solid black',
-        borderRadius: '5px',
-    }}
-    controlId="email"
->
-    <Form.Control
-        style={styles.formControlStyles}
-        onChange={(e) => {
-            getValue(e);
-        }}
-        name="email"
-        value={email}
-        type="email"
-        placeholder="Enter email"
-    />
-</Form.Group>
-<Form.Group
-    style={styles.formGroupStyles}
-    controlId="password"
->
-    <Form.Control
-        style={styles.formControlStyles}
-        onChange={(e) => getValue(e)}
-        name="password"
-        value={password}
-        type="password"
-        placeholder="Password"
-    />
-</Form.Group>
-<Button
-    style={styles.btnStyles}
-    variant="primary"
-    type="submit"
-    // onClick={() => onSubmit()}
-    block
->
-    Submit
-</Button>
-</Form> */
-}
+// <form style={styles.formContainer} onSubmit={onSubmit}>
+// <div className="w-50 text-center mx-auto">
+//     <h1>Register</h1>
+// </div>
+// <div className="d-flex">
+//     <div
+//         className="form-group"
+//         style={styles.formGroupStyles}
+//     >
+//         <input
+//             type="text"
+//             className="form-control"
+//             onChange={(e) => setFirstName(e.target.value)}
+//             style={styles.formControlStyles}
+//             name={'firstName'}
+//             value={firstName}
+//             id="firstName"
+//             placeholder="First Name"
+//         />
+//     </div>
+//     <div
+//         className="form-group"
+//         style={styles.formGroupStyles}
+//     >
+//         <input
+//             type="text"
+//             className="form-control"
+//             style={styles.formControlStyles}
+//             id="lastName"
+//             onChange={(e) => setLastName(e.target.value)}
+//             name="lastName"
+//             value={lastName}
+//             placeholder="Last Name"
+//         />
+//     </div>
+// </div>
+// <div
+//     className="form-group"
+//     style={{
+//         border: '1px solid black',
+//         borderRadius: '5px',
+//     }}
+// >
+//     <input
+//         type="email"
+//         className="form-control"
+//         onChange={(e) => setEmail(e.target.value)}
+//         style={styles.formControlStyles}
+//         name="email"
+//         value={email}
+//         id="email"
+//         placeholder="Enter email"
+//     />
+// </div>
+// <small id="emailHelp" className="form-text text-muted">
+//     We'll never share your email with anyone else.
+// </small>
+// <div className="form-group" style={styles.formGroupStyles}>
+//     <input
+//         type="password"
+//         name="password"
+//         value={password}
+//         onChange={(e) => setPassword(e.target.value)}
+//         className="form-control"
+//         style={styles.formControlStyles}
+//         id="password"
+//         placeholder="Password"
+//     />
+// </div>
+// <button type="submit" className="btn btn-primary">
+//     Submit
+// </button>
+// </form>
