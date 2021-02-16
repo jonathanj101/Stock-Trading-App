@@ -24,13 +24,18 @@ class Main extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    // componentDidMount() {
-    //     fetch('/testing_data')
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //         });
-    // }
+    componentDidMount() {
+        fetch('/testing_data')
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            });
+        fetch('multiple')
+            .then((resp) => resp.json())
+            .then((data) => {
+                console.log(data);
+            });
+    }
 
     handleChange = (e) => {
         const { name, value } = e.target;
