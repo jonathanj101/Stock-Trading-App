@@ -17,9 +17,9 @@ const NavbarComponent = ({
     return (
         <div style={{ fontSize: '1.5rem' }}>
             <Modal show={show} onHide={handleClose} centered>
-                <div style={styles.modalDiv}>
-                    <div className="w-50 bg-secondary">
-                        <Modal.Header>
+                <div>
+                    <div className="">
+                        <Modal.Header closeButton>
                             <Modal.Title style={styles.modalHeaderTitle}>
                                 Log In
                             </Modal.Title>
@@ -40,66 +40,26 @@ const NavbarComponent = ({
                                 <Form.Group controlId="logInPassWord">
                                     <Form.Control
                                         style={styles.formGroupStyles}
-                                        name="password"
                                         onChange={handleChange}
+                                        name="password"
                                         type="password"
                                         placeholder="Password"
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-0 d-flex justify-content-end">
-                                    <Button
-                                        className="mb-auto"
-                                        variant="primary"
-                                        onClick={() => {
-                                            handleClose();
-                                            onSubmit();
-                                        }}
-                                        // onClick={onSubmit}
-                                        size="lg"
-                                    >
-                                        Log In
-                                    </Button>
-                                </Form.Group>
+                                <Button
+                                    className="mb-auto"
+                                    variant="primary"
+                                    onClick={() => {
+                                        handleClose();
+                                        onSubmit();
+                                    }}
+                                    size="lg"
+                                    block
+                                >
+                                    Log In
+                                </Button>
                             </Form>
                         </div>
-                    </div>
-                    <div className="w-50 bg-info">
-                        <Modal.Header closeButton>
-                            <Modal.Title style={styles.modalHeaderTitle}>
-                                Register
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Form style={styles.formStyles}>
-                            <Form.Group className="d-flex mb-5">
-                                <Form.Control placeholder="First Name" />
-                                <Form.Control placeholder="Last Name" />
-                            </Form.Group>
-                            <Form.Group className="d-flex mb-0">
-                                <Form.Control
-                                    id="registrantEmail"
-                                    style={styles.formGroupStyles}
-                                    type="email"
-                                    placeholder="Enter email"
-                                />
-                                <Form.Control
-                                    id="registrantPassword"
-                                    className=""
-                                    style={styles.formGroupStyles}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-0 d-flex justify-content-end ">
-                                <Button
-                                    className=""
-                                    variant="primary"
-                                    onClick={handleClose}
-                                    size="lg"
-                                >
-                                    Register
-                                </Button>
-                            </Form.Group>
-                        </Form>
                     </div>
                 </div>
             </Modal>
@@ -174,15 +134,15 @@ var styles = {
     formGroupStyles: {
         margin: '50px auto 100px auto',
     },
-    modalDiv: {
-        display: 'flex',
-        width: '100%',
-        height: '75%',
-        justifyContent: 'space-between',
-    },
+    // modalDiv: {
+    //     display: 'flex',
+    //     width: '100%',
+    //     height: '75%',
+    //     justifyContent: 'space-between',
+    // },
     modalHeaderTitle: {
         fontSize: '2rem',
-        color: 'white',
+        color: 'black',
     },
 };
 
