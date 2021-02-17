@@ -1,3 +1,15 @@
-import sqlalchemy
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-print(sqlalchemy.__version__)
+db = SQLAlchemy()
+
+def create_app():
+    app = Flask(__name__)
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
+    
+    db.init_app(app)
+    
+    print('ok')
+    
+    return app
