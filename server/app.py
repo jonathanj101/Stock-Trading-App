@@ -2,9 +2,13 @@ import os
 import json
 import base64
 import requests
+import sqlalchemy
 from flask import Flask, jsonify
 
 app = Flask(__name__)
+
+print(sqlalchemy.__version__)
+
 
 api_key = os.environ.get('API_KEY')
 
