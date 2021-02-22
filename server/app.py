@@ -3,9 +3,25 @@ import json
 import base64
 import requests
 import sqlalchemy
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, render_template, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+# from database import User, db
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1209lmc@localhost/testing_tutorial'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    
+    def __init__(self, username,email):
+        self.username = username
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 print(sqlalchemy.__version__)
 
@@ -51,6 +67,18 @@ def multiple():
     
     
     return jsonify(resp['TSLA'])
+
+@app.route('/testing_tutorial', methods=['GET'])
+def testing():
+    return render_template('form.html')
+
+@app.route('/submit_form', methods=["POST"])
+def testing_form():
+    print(request.form['username'])
+    user = User(request.form['username'], request.form['email'])
+    db.session.add(user)
+    db.session.commit()
+    return redirect(url_for('testing_tutorial'))
 
 
 if __name__ == '__main__':
