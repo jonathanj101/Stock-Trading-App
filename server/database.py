@@ -1,19 +1,17 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-import sqlalchemy
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+# # from sqlalchemy import Table, Column, Integer, String, ForeignKey
 
-db = SQLAlchemy()
 
-def connect(user, password, db, host='localhost', port=5432):
-    '''Returns a connection and a metadata object'''
-    # We connect with the help of the PostgreSQL URL
-    # postgresql://federer:grandestslam@localhost:5432/tennis
-    url = 'postgresql://{}:{}@{}:{}/{}'
-    url = url.format(user, password, host, port, db)
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True, nullable=False)
+#     email = db.Column(db.String(120), unique=True, nullable=False)
+    
+#     def __init__(self, username,email):
+#         self.username = username
+#         self.email = email
 
-    con = sqlalchemy.create_engine(url, client_encoding='utf8')
+#     def __repr__(self):
+#         return '<User %r>' % self.username
 
-    # We then bind the connection to MetaData()
-    meta = sqlalchemy.MetaData(bind=con, reflect=True)
-
-    return con, meta
