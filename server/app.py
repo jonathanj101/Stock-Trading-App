@@ -22,6 +22,14 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+    
+class Transactions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    amount = db.Column(db.Integer)
+    date = db.Column(db.DateTime(timezone=True), nullable=False)
+    
+    def __init__(self, amount):
+        self.amount = amount
 
 print(sqlalchemy.__version__)
 
@@ -76,9 +84,11 @@ def testing():
 def testing_form():
     print(request.form['username'])
     user = User(request.form['username'], request.form['email'])
+    transactions = Transactions(500)
     db.session.add(user)
+    db.session.add(transactions)
     db.session.commit()
-    return redirect(url_for('testing_tutorial'))
+    return redirect(url_for('/testing_tutorial'))
 
 
 if __name__ == '__main__':
