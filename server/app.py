@@ -78,11 +78,11 @@ def multiple():
     return jsonify(resp['TSLA'])
 
 @app.route('/testing_tutorial', methods=['GET'])
-def testing():
+def testing_tutorial():
     return render_template('form.html')
 
 @app.route('/submit_form', methods=["POST"])
-def testing_form():
+def submit_form():
     print(request.form['username'])
     user = User(request.form['username'], request.form['email'])
     transactions = Transactions(250)
