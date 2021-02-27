@@ -12,28 +12,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1209lmc@localhost/testing_tutorial'
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    
-    def __init__(self, username,email):
-        self.username = username
-        self.email = email
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-    
-class Transactions(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    amount = db.Column(db.Integer)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    
-    def __init__(self, amount):
-        self.amount = amount
-
-print(sqlalchemy.__version__)
-
+from models import main, User, Transactions
+app.register_blueprint(main)
 
 api_key = os.environ.get('API_KEY')
 
@@ -93,4 +73,4 @@ def submit_form():
 
 
 if __name__ == '__main__':
-    main.run(host='127.0.0.1', port=int(os.environ.get("PORT", 5000)))
+    app.run(host='127.0.0.1', port=int(os.environ.get("PORT", 5000)))
