@@ -3,6 +3,7 @@ import json
 import base64
 import requests
 import sqlalchemy
+from datetime import datetime
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 # from database import User, db
@@ -26,7 +27,7 @@ class User(db.Model):
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer)
-    date = db.Column(db.DateTime(timezone=True), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     def __init__(self, amount):
         self.amount = amount
@@ -84,11 +85,11 @@ def testing():
 def testing_form():
     print(request.form['username'])
     user = User(request.form['username'], request.form['email'])
-    transactions = Transactions(500)
+    transactions = Transactions(250)
     db.session.add(user)
     db.session.add(transactions)
     db.session.commit()
-    return redirect(url_for('/testing_tutorial'))
+    return redirect(url_for('testing_tutorial'))
 
 
 if __name__ == '__main__':
