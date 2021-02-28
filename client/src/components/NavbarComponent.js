@@ -62,7 +62,7 @@ const NavbarComponent = ({
                     </div>
                 </div>
                 <span className="mx-auto">or</span>
-                <Button href="/form">Register</Button>
+                <Button href="/register">Register</Button>
             </Modal>
             {isLogged ? (
                 <Navbar
