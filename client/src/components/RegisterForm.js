@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 
 const FormComponent = ({ handleRegister }) => {
@@ -8,9 +9,33 @@ const FormComponent = ({ handleRegister }) => {
     const [password, setPassword] = useState('');
 
     const onSubmit = (e) => {
+        const reresp = {
+            title: firstName,
+            msg: 'new to this',
+        };
         e.preventDefault();
         console.log(firstName, lastName, email, password);
         handleRegister(firstName, lastName, email, password);
+        // fetch('/submit_form', {
+        //     method: 'post',
+        //     body: JSON.stringify({
+        //         firstname: firstName,
+        //     }),
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => console.log(data));
+        axios({
+            method: 'post',
+            url: '/submit_form',
+            headers: { 'content-type': 'application/json' },
+            firstname: firstName,
+        })
+            .then((result) => {
+                console.log(result.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
