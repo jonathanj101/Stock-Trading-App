@@ -4,8 +4,8 @@ import base64
 import requests
 from datetime import datetime
 from flask import jsonify, request, render_template, redirect, url_for
-from models import User, Transactions
 from server_files import app
+from server_files.models import User, Transactions
 
 api_key = os.environ.get('API_KEY')
 
