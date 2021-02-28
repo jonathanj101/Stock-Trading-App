@@ -11,7 +11,7 @@ const PageNotFound = () => {
                     Please click on the button below to take you back to main
                     page
                 </p>
-                <Button hred="/">Home</Button>
+                <Button href="/">Home</Button>
             </div>
         </div>
     );
