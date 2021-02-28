@@ -63,13 +63,14 @@ def testing_tutorial():
 
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
-    print(request.form['username'])
-    user = User(request.form['username'], request.form['email'])
-    transactions = Transactions(250)
-    db.session.add(user)
-    db.session.add(transactions)
-    db.session.commit()
-    return redirect(url_for('testing_tutorial'))
+    # user = User(request.form['email'], request.form['email'])
+    print(request.form)
+    # transactions = Transactions(250)
+    # db.session.add(user)
+    # db.session.add(transactions)
+    # db.session.commit()
+    # return redirect(url_for('testing_tutorial'))
+    return jsonify({'msg':'ok'})
 
 
 if __name__ == '__main__':
