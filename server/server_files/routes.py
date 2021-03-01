@@ -44,14 +44,7 @@ def multiple():
     
     resp = req.json()
     
-    # tesla = resp['Tsla']
-    
-    
     return jsonify(resp['TSLA'])
-
-@app.route('/testing_tutorial', methods=['GET'])
-def testing_tutorial():
-    return render_template('form.html')
 
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
