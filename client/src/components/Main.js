@@ -17,7 +17,10 @@ class Main extends Component {
             lastName: '',
             email: '',
             password: '',
-            testing: false,
+            city: '',
+            state: '',
+            zipCode: '',
+            testing: true,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -46,13 +49,24 @@ class Main extends Component {
         console.log(this.state);
     };
 
-    handleRegister = (firstName, lastName, email, password) => {
+    handleRegister = (
+        firstName,
+        lastName,
+        email,
+        password,
+        city,
+        state,
+        zipCode,
+    ) => {
         this.setState(
             {
                 firstName: firstName,
                 lasttName: lastName,
                 email: email,
                 password: password,
+                city: city,
+                state: state,
+                zipCode: zipCode,
             },
             () => console.log(this.state),
         );
@@ -93,7 +107,7 @@ class Main extends Component {
                         component={SummaryComponent}
                     />
                     <Route
-                        path="/form"
+                        path="/register"
                         exact
                         component={() => (
                             <FormComponent
