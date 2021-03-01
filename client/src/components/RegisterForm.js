@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Form, Button, Col } from 'react-bootstrap';
 
 const FormComponent = ({ handleRegister }) => {
@@ -19,7 +18,6 @@ const FormComponent = ({ handleRegister }) => {
             event.stopPropagation();
             console.log(validated);
         }
-
         setValidated(true);
     };
 
@@ -29,7 +27,15 @@ const FormComponent = ({ handleRegister }) => {
             console.log('true');
         } else {
             e.preventDefault();
-            handleRegister(firstName, lastName, email, password);
+            handleRegister(
+                firstName,
+                lastName,
+                email,
+                password,
+                city,
+                state,
+                zipCode,
+            );
             fetch('/submit_form', {
                 method: 'post',
                 body: JSON.stringify({
@@ -265,7 +271,6 @@ var styles = {
     div: {
         width: '100%',
         height: '100%',
-        // backgroundColor: 'green',
     },
 };
 
