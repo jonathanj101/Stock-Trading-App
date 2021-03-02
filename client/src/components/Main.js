@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
@@ -21,24 +22,51 @@ class Main extends Component {
             state: '',
             zipCode: '',
             testing: true,
+            facebook: [],
+            tesla: [],
+            apple: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
+        this.handleRequest = this.handleRequest.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    // componentDidMount() {
-    //     fetch('/testing_data')
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //         });
-    //     fetch('multiple')
-    //         .then((resp) => resp.json())
-    //         .then((data) => {
-    //             console.log(data);
-    //         });
-    // }
+    async componentDidMount() {
+        // fetch('/testing_data')
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //     });
+        let multipleStocksData = await axios.get('/multiple');
+        this.handleRequest(multipleStocksData);
+        // fetch('/multiple')
+        //     .then((resp) => resp.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //     });
+    }
+
+    handleRequest = async (request) => {
+        console.log(request.data.data);
+        try {
+            const req = Promise.all(
+                request.data.data.map((stock) => {
+                    console.log(stock.facebook);
+                    return {
+                        facebook: stock.facebook,
+                    };
+                }),
+            );
+            req.then((stockData) => {
+                this.setState({
+                    facebook: stockData,
+                });
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     handleChange = (e) => {
         const { name, value } = e.target;
