@@ -48,28 +48,24 @@ class Main extends Component {
     }
 
     handleRequest = async (request) => {
-        console.log(request.data.data);
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
-                    console.log(stock.facebook);
                     return {
+                        apple: stock.apple,
                         facebook: stock.facebook,
+                        tesla: stock.tesla,
                     };
                 }),
             );
             console.log(req);
             req.then((stockData) => {
-                const test = stockData.map((stocking) => {
-                    return stocking.facebook;
+                this.setState({
+                    apple: stockData[0].apple,
+                    facebook: stockData[0].facebook,
+                    tesla: stockData[0].tesla,
                 });
-                console.log(test);
-                this.setState(
-                    {
-                        facebook: stockData,
-                    },
-                    console.log(this.state.facebook, req),
-                );
+                console.log(this.state);
             });
         } catch (err) {
             console.log(err);
@@ -140,7 +136,13 @@ class Main extends Component {
                     <ProtectRoute
                         path="/my-stocks"
                         exact
-                        component={SummaryComponent}
+                        component={() => (
+                            <SummaryComponent
+                                apple={this.state.apple}
+                                facebook={this.state.facebook}
+                                tesla={this.state.tesla}
+                            />
+                        )}
                     />
                     <Route
                         path="/register"
