@@ -59,9 +59,12 @@ class Main extends Component {
                 }),
             );
             req.then((stockData) => {
-                this.setState({
-                    facebook: stockData,
-                });
+                this.setState(
+                    {
+                        facebook: [stockData],
+                    },
+                    console.log(this.state.facebook),
+                );
             });
         } catch (err) {
             console.log(err);
