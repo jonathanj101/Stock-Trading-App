@@ -36,7 +36,7 @@ def main():
 @app.route("/multiple", methods=["GET"])
 def multiple():
     tesla = "tsla"
-    apple = "aaple"
+    apple = "aapl"
     
     search_url = "{}/stable/stock/market/batch?symbols={},{},FB&types=quote&token={}".format(base_url,tesla,apple, api_key)
     
@@ -44,7 +44,28 @@ def multiple():
     
     resp = req.json()
     
-    return jsonify(resp['TSLA'])
+    stocks_data = {
+        "apple": {
+            "company_name": resp['AAPL']["quote"]["companyName"],
+            "symbol": resp['AAPL']["quote"]["symbol"],
+            "latestPrice": resp['AAPL']["quote"]["latestPrice"],
+            "change": resp['AAPL']["quote"]["change"],
+        },
+        "tesla": {
+            "company_name": resp['TSLA']["quote"]["companyName"],
+            "symbol": resp['TSLA']["quote"]["symbol"],
+            "latestPrice": resp['TSLA']["quote"]["latestPrice"],
+            "change": resp['TSLA']["quote"]["change"],
+        },
+        "facebook": {
+            "company_name": resp['FB']["quote"]["companyName"],
+            "symbol": resp['FB']["quote"]["symbol"],
+            "latestPrice": resp['TSLA']["quote"]["latestPrice"],
+            "change": resp['FB']["quote"]["change"],
+        }
+    }
+    
+    return jsonify({"data":stocks_data})
 
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
