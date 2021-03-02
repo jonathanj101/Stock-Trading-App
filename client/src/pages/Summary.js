@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Table, Button } from 'react-bootstrap';
 
-const SummaryComponent = () => {
+const SummaryComponent = ({ apple, facebook, tesla }) => {
+    console.log(apple, facebook, tesla);
     return (
         <div>
             <div className="w-75 mx-auto">
@@ -14,35 +15,33 @@ const SummaryComponent = () => {
                 >
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>Company name (symbol)</Card.Title>
+                            <Card.Title>
+                                {apple.company_name} ({apple.symbol})
+                            </Card.Title>
                             <Card.Subtitle
                                 className="mb-5 text-muted"
                                 stlye={{ height: '2rem' }}
                             >
-                                (open) Today
+                                (${apple.latestPrice}) Today
                             </Card.Subtitle>
                             <Button href="#" block>
                                 sell
-                            </Button>
-                            <Button href="#" block>
-                                buy
                             </Button>
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>Company name (symbol)</Card.Title>
+                            <Card.Title>
+                                {facebook.company_name} ({facebook.symbol})
+                            </Card.Title>
                             <Card.Subtitle
                                 className="mb-5 text-muted"
                                 stlye={{ height: '2rem' }}
                             >
-                                (open) Today
+                                (${facebook.latestPrice}) Today
                             </Card.Subtitle>
                             <Button className="" href="#" block>
                                 sell
-                            </Button>
-                            <Button href="#" block>
-                                buy
                             </Button>
                         </Card.Body>
                     </Card>
@@ -57,8 +56,12 @@ const SummaryComponent = () => {
                         <caption style={styles.caption}>List</caption>
                         <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>
+                                    <h3>Company Name</h3>
+                                </th>
+                                <th>
+                                    <h3>Cost/Difference</h3>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
