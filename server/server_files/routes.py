@@ -44,7 +44,7 @@ def multiple():
     
     resp = req.json()
     
-    stocks_data = {
+    stocks_data = [{
         "apple": {
             "company_name": resp['AAPL']["quote"]["companyName"],
             "symbol": resp['AAPL']["quote"]["symbol"],
@@ -63,7 +63,7 @@ def multiple():
             "latestPrice": resp['TSLA']["quote"]["latestPrice"],
             "change": resp['FB']["quote"]["change"],
         }
-    }
+    }]
     
     return jsonify({"data":stocks_data})
 
