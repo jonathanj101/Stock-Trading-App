@@ -58,12 +58,17 @@ class Main extends Component {
                     };
                 }),
             );
+            console.log(req);
             req.then((stockData) => {
+                const test = stockData.map((stocking) => {
+                    return stocking.facebook;
+                });
+                console.log(test);
                 this.setState(
                     {
-                        facebook: [stockData],
+                        facebook: stockData,
                     },
-                    console.log(this.state.facebook),
+                    console.log(this.state.facebook, req),
                 );
             });
         } catch (err) {
