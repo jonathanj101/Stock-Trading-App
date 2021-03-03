@@ -37,8 +37,13 @@ def main():
 def multiple():
     tesla = "tsla"
     apple = "aapl"
+    fb = "fb"
+    qcom = "qcom"
+    microsft = "msft"
+    sony = 'sne'
+    american_airline = "aal"
     
-    search_url = "{}/stable/stock/market/batch?symbols={},{},FB&types=quote&token={}".format(base_url,tesla,apple, api_key)
+    search_url = "{}/stable/stock/market/batch?symbols={},{},{},{},{},{},{}&types=quote&token={}".format(base_url,tesla,apple,fb,qcom, microsft, sony,american_airline, api_key)
     
     req = requests.get(search_url)
     
@@ -60,9 +65,33 @@ def multiple():
         "facebook": {
             "company_name": resp['FB']["quote"]["companyName"],
             "symbol": resp['FB']["quote"]["symbol"],
-            "latestPrice": resp['TSLA']["quote"]["latestPrice"],
+            "latestPrice": resp['FB']["quote"]["latestPrice"],
             "change": resp['FB']["quote"]["change"],
-        }
+        },
+        "american_airline": {
+            "company_name": resp['AAL']["quote"]["companyName"],
+            "symbol": resp['AAL']["quote"]["symbol"],
+            "latestPrice": resp['AAL']["quote"]["latestPrice"],
+            "change": resp['AAL']["quote"]["change"],
+        },
+        "microsoft": {
+            "company_name": resp['MSFT']["quote"]["companyName"],
+            "symbol": resp['MSFT']["quote"]["symbol"],
+            "latestPrice": resp['MSFT']["quote"]["latestPrice"],
+            "change": resp['MSFT']["quote"]["change"],
+        },
+        "qcom": {
+            "company_name": resp['QCOM']["quote"]["companyName"],
+            "symbol": resp['QCOM']["quote"]["symbol"],
+            "latestPrice": resp['QCOM']["quote"]["latestPrice"],
+            "change": resp['QCOM']["quote"]["change"],
+        },
+        "sony": {
+            "company_name": resp['SNE']["quote"]["companyName"],
+            "symbol": resp['SNE']["quote"]["symbol"],
+            "latestPrice": resp['SNE']["quote"]["latestPrice"],
+            "change": resp['SNE']["quote"]["change"],
+        },
     }]
     
     return jsonify({"data":stocks_data})
