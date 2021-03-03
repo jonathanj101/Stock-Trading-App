@@ -25,6 +25,10 @@ class Main extends Component {
             facebook: [],
             tesla: [],
             apple: [],
+            microsoft: [],
+            american_airline: [],
+            qcom: [],
+            sony: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -51,10 +55,15 @@ class Main extends Component {
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
+                    console.log(stock);
                     return {
                         apple: stock.apple,
                         facebook: stock.facebook,
                         tesla: stock.tesla,
+                        microsoft: stock.microsoft,
+                        american_airline: stock.american_airline,
+                        qcom: stock.qcom,
+                        sony: stock.sony,
                     };
                 }),
             );
@@ -64,6 +73,10 @@ class Main extends Component {
                     apple: stockData[0].apple,
                     facebook: stockData[0].facebook,
                     tesla: stockData[0].tesla,
+                    american_airline: stockData[0].american_airline,
+                    microsoft: stockData[0].microsoft,
+                    sony: stockData[0].sony,
+                    qcom: stockData[0].qcom,
                 });
                 console.log(this.state);
             });
@@ -141,6 +154,10 @@ class Main extends Component {
                                 apple={this.state.apple}
                                 facebook={this.state.facebook}
                                 tesla={this.state.tesla}
+                                american_airline={this.state.american_airline}
+                                microsoft={this.state.microsoft}
+                                sony={this.state.sony}
+                                qcom={this.state.qcom}
                             />
                         )}
                     />
