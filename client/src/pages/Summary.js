@@ -40,6 +40,22 @@ const SummaryComponent = ({
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
                             <Card.Title>
+                                {sony.company_name} ({sony.symbol})
+                            </Card.Title>
+                            <Card.Subtitle
+                                className="mb-5 text-muted"
+                                stlye={{ height: '2rem' }}
+                            >
+                                (${sony.latestPrice}) Today
+                            </Card.Subtitle>
+                            <Button href="#" block>
+                                sell
+                            </Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Body>
+                            <Card.Title>
                                 {facebook.company_name} ({facebook.symbol})
                             </Card.Title>
                             <Card.Subtitle
