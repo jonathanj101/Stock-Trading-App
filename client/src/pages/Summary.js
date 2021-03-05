@@ -23,8 +23,13 @@ const SummaryComponent = ({
                 >
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>
-                                {apple.company_name} ({apple.symbol})
+                            <Card.Title
+                                style={{ display: 'flex', flexWrap: 'wrap' }}
+                            >
+                                <span style={{ width: '100%' }}>
+                                    {apple.company_name}
+                                </span>
+                                <span>({apple.symbol})</span>
                             </Card.Title>
                             <Card.Subtitle
                                 className="mb-5 text-muted"
@@ -39,8 +44,13 @@ const SummaryComponent = ({
                     </Card>
                     <Card style={{ width: '18rem' }}>
                         <Card.Body>
-                            <Card.Title>
-                                {sony.company_name} ({sony.symbol})
+                            <Card.Title
+                                style={{ display: 'flex', flexWrap: 'wrap' }}
+                            >
+                                <span style={{ width: '100%' }}>
+                                    {sony.company_name}
+                                </span>
+                                <span>({sony.symbol})</span>
                             </Card.Title>
                             <Card.Subtitle
                                 className="mb-5 text-muted"
