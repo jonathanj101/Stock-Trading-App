@@ -29,6 +29,7 @@ class Main extends Component {
             american_airline: [],
             qcom: [],
             sony: [],
+            stocksData: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -77,6 +78,7 @@ class Main extends Component {
                     microsoft: stockData[0].microsoft,
                     sony: stockData[0].sony,
                     qcom: stockData[0].qcom,
+                    stocksData: stockData,
                 });
                 console.log(this.state);
             });
@@ -158,6 +160,7 @@ class Main extends Component {
                                 microsoft={this.state.microsoft}
                                 sony={this.state.sony}
                                 qcom={this.state.qcom}
+                                stocks={this.state.stocksData}
                             />
                         )}
                     />
