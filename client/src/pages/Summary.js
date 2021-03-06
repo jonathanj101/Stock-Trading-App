@@ -9,8 +9,39 @@ const SummaryComponent = ({
     american_airline,
     microsoft,
     sony,
+    stocks,
 }) => {
-    console.log(apple, facebook, tesla);
+    console.log(stocks);
+
+    // const stocksData = stocks.map((stock, num) => {
+    //     for (const key in stock) {
+    //         const test = stock[key];
+    //         return (
+    //             <Card style={{ width: '18rem' }} key={num}>
+    //                 <Card.Body>
+    //                     <Card.Title
+    //                         style={{ display: 'flex', flexWrap: 'wrap' }}
+    //                     >
+    //                         <span style={{ width: '100%' }}>
+    //                             {test.company_name}
+    //                         </span>
+    //                         <span>({test.symbol})</span>
+    //                     </Card.Title>
+    //                     <Card.Subtitle
+    //                         className="mb-5 text-muted"
+    //                         stlye={{ height: '2rem' }}
+    //                     >
+    //                         (${test.latestPrice}) Today
+    //                     </Card.Subtitle>
+    //                     <Button href="#" block>
+    //                         sell
+    //                     </Button>
+    //                 </Card.Body>
+    //             </Card>
+    //         );
+    //     }
+    // });
+    // console.log(stocksData);
     return (
         <div>
             <div className="w-75 mx-auto">
@@ -20,66 +51,7 @@ const SummaryComponent = ({
                 <div
                     className="d-flex justify-content-around flex-wrap mb-5"
                     style={styles.bordersDivs}
-                >
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title
-                                style={{ display: 'flex', flexWrap: 'wrap' }}
-                            >
-                                <span style={{ width: '100%' }}>
-                                    {apple.company_name}
-                                </span>
-                                <span>({apple.symbol})</span>
-                            </Card.Title>
-                            <Card.Subtitle
-                                className="mb-5 text-muted"
-                                stlye={{ height: '2rem' }}
-                            >
-                                (${apple.latestPrice}) Today
-                            </Card.Subtitle>
-                            <Button href="#" block>
-                                sell
-                            </Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title
-                                style={{ display: 'flex', flexWrap: 'wrap' }}
-                            >
-                                <span style={{ width: '100%' }}>
-                                    {sony.company_name}
-                                </span>
-                                <span>({sony.symbol})</span>
-                            </Card.Title>
-                            <Card.Subtitle
-                                className="mb-5 text-muted"
-                                stlye={{ height: '2rem' }}
-                            >
-                                (${sony.latestPrice}) Today
-                            </Card.Subtitle>
-                            <Button href="#" block>
-                                sell
-                            </Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Body>
-                            <Card.Title>
-                                {facebook.company_name} ({facebook.symbol})
-                            </Card.Title>
-                            <Card.Subtitle
-                                className="mb-5 text-muted"
-                                stlye={{ height: '2rem' }}
-                            >
-                                (${facebook.latestPrice}) Today
-                            </Card.Subtitle>
-                            <Button className="" href="#" block>
-                                sell
-                            </Button>
-                        </Card.Body>
-                    </Card>
-                </div>
+                ></div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
                         className="text-center mx-auto"
