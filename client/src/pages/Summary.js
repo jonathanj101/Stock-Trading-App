@@ -12,6 +12,9 @@ const SummaryComponent = ({
     stocks,
 }) => {
     console.log(stocks);
+    const testing = stocks.map((stock) => {
+        console.log(stock.stockData);
+    });
 
     // const stocksData = stocks.map((stock, num) => {
     //     for (const key in stock) {
