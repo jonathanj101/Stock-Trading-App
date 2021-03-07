@@ -53,31 +53,34 @@ class Main extends Component {
     }
 
     handleRequest = async (request) => {
+        // console.log(request.data);
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
                     console.log(stock);
                     return {
-                        apple: stock.apple,
-                        facebook: stock.facebook,
-                        tesla: stock.tesla,
-                        microsoft: stock.microsoft,
-                        american_airline: stock.american_airline,
-                        qcom: stock.qcom,
-                        sony: stock.sony,
+                        // apple: stock.apple,
+                        // facebook: stock.facebook,
+                        // tesla: stock.tesla,
+                        // microsoft: stock.microsoft,
+                        // american_airline: stock.american_airline,
+                        // qcom: stock.qcom,
+                        // sony: stock.sony,
+                        stockData: stock,
                     };
                 }),
             );
             console.log(req);
             req.then((stockData) => {
+                console.log(stockData);
                 this.setState({
-                    apple: stockData[0].apple,
-                    facebook: stockData[0].facebook,
-                    tesla: stockData[0].tesla,
-                    american_airline: stockData[0].american_airline,
-                    microsoft: stockData[0].microsoft,
-                    sony: stockData[0].sony,
-                    qcom: stockData[0].qcom,
+                    // apple: stockData[0].apple,
+                    // facebook: stockData[0].facebook,
+                    // tesla: stockData[0].tesla,
+                    // american_airline: stockData[0].american_airline,
+                    // microsoft: stockData[0].microsoft,
+                    // sony: stockData[0].sony,
+                    // qcom: stockData[0].qcom,
                     stocksData: stockData,
                 });
                 console.log(this.state);
