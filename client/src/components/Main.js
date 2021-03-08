@@ -22,19 +22,14 @@ class Main extends Component {
             state: '',
             zipCode: '',
             testing: true,
-            facebook: [],
-            tesla: [],
-            apple: [],
-            microsoft: [],
-            american_airline: [],
-            qcom: [],
-            sony: [],
-            stocksData: [],
+            investingList: [],
+            stocksList: [],
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleRequest = this.handleRequest.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleTransactions = this.handleTransactions.bind(this);
     }
 
     async componentDidMount() {
@@ -59,13 +54,7 @@ class Main extends Component {
                 request.data.data.map((stock) => {
                     console.log(stock);
                     return {
-                        // apple: stock.apple,
-                        // facebook: stock.facebook,
-                        // tesla: stock.tesla,
-                        // microsoft: stock.microsoft,
-                        // american_airline: stock.american_airline,
-                        // qcom: stock.qcom,
-                        // sony: stock.sony,
+                        investingList: stock,
                         stockData: stock,
                     };
                 }),
@@ -74,20 +63,18 @@ class Main extends Component {
             req.then((stockData) => {
                 console.log(stockData);
                 this.setState({
-                    // apple: stockData[0].apple,
-                    // facebook: stockData[0].facebook,
-                    // tesla: stockData[0].tesla,
-                    // american_airline: stockData[0].american_airline,
-                    // microsoft: stockData[0].microsoft,
-                    // sony: stockData[0].sony,
-                    // qcom: stockData[0].qcom,
-                    stocksData: stockData,
+                    investingList: stockData,
+                    stocksList: stockData,
                 });
                 console.log(this.state);
             });
         } catch (err) {
             console.log(err);
         }
+    };
+
+    handleTransactions = () => {
+        return;
     };
 
     handleChange = (e) => {
@@ -156,14 +143,8 @@ class Main extends Component {
                         exact
                         component={() => (
                             <SummaryComponent
-                                apple={this.state.apple}
-                                facebook={this.state.facebook}
-                                tesla={this.state.tesla}
-                                american_airline={this.state.american_airline}
-                                microsoft={this.state.microsoft}
-                                sony={this.state.sony}
-                                qcom={this.state.qcom}
-                                stocks={this.state.stocksData}
+                                investingList={this.state.investingList}
+                                stocksList={this.state.stocksList}
                             />
                         )}
                     />
