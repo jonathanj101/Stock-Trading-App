@@ -16,11 +16,8 @@ class Main extends Component {
             empty: '',
             firstName: '',
             lastName: '',
-            email: '',
             password: '',
-            city: '',
-            state: '',
-            zipCode: '',
+            username: '',
             testing: true,
             investingList: [],
             stocksList: [],
@@ -52,21 +49,21 @@ class Main extends Component {
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
-                    console.log(stock);
+                    // console.log(stock);
                     return {
                         investingList: stock,
                         stockData: stock,
                     };
                 }),
             );
-            console.log(req);
+            // console.log(req);
             req.then((stockData) => {
-                console.log(stockData);
+                // console.log(stockData);
                 this.setState({
                     investingList: stockData,
                     stocksList: stockData,
                 });
-                console.log(this.state);
+                // console.log(this.state);
             });
         } catch (err) {
             console.log(err);
@@ -86,28 +83,28 @@ class Main extends Component {
         console.log(this.state);
     };
 
-    handleRegister = (
-        firstName,
-        lastName,
-        email,
-        password,
-        city,
-        state,
-        zipCode,
-    ) => {
+    handleRegister = (firstName, lastName, password, username) => {
         this.setState(
             {
                 firstName: firstName,
                 lasttName: lastName,
-                email: email,
                 password: password,
-                city: city,
-                state: state,
-                zipCode: zipCode,
+                username: username,
             },
             () => console.log(this.state),
         );
         console.log(this.state);
+        fetch('/submit_form', {
+            method: 'post',
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                password: password,
+                username: username,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
     };
 
     onSubmit = () => {
