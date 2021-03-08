@@ -1,9 +1,18 @@
-import React from 'react';
-import { Card, Table, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Table, Button, Modal } from 'react-bootstrap';
 
 const SummaryComponent = ({ investingList, stocksList }) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const buyingButton = (e) => {
-        console.log(e);
+        const stockName =
+            e.currentTarget.childNodes[0].childNodes[0].textContent;
+        const stockPrice =
+            e.currentTarget.childNodes[1].childNodes[0].textContent;
+        console.log(stockName, stockPrice);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -38,7 +47,10 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                 data-placement="top"
                 title="Want to buy? Just click!"
                 className="tableRow"
-                onClick={(e) => buyingButton(e)}
+                onClick={(e) => {
+                    handleShow();
+                    buyingButton(e);
+                }}
             >
                 <td className="d-flex flex-column">
                     <span
@@ -65,23 +77,38 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                         ${stock.stockData.change}
                     </span>
                 </td>
-                <td>
-                    <Button
-                        style={{
-                            fontSize: '1.50rem',
-                            fontWeight: ' bold',
-                        }}
-                        onClick={(e) => buyingButton(e)}
-                    >
-                        Buy
-                    </Button>
-                </td>
             </tr>
         );
     });
 
     return (
         <div>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Modal heading
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Centered Modal</h4>
+                    <p>
+                        Cras mattis consectetur purus sit amet fermentum. Cras
+                        justo odio, dapibus ac facilisis in, egestas eget quam.
+                        Morbi leo risus, porta ac consectetur ac, vestibulum at
+                        eros.
+                    </p>
+                </Modal.Body>
+                {/* <Modal.Footer>
+                    <Button onClick={handleClose}>Close</Button>
+                </Modal.Footer> */}
+            </Modal>
+
             <div className="w-75 mx-auto">
                 <h1 className="w-100 mx-auto" style={styles.investingTitle}>
                     INVESTING
@@ -107,9 +134,6 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                                 </th>
                                 <th>
                                     <h3>Cost/Difference</h3>
-                                </th>
-                                <th>
-                                    <h3>Buy</h3>
                                 </th>
                             </tr>
                         </thead>
