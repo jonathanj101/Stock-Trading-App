@@ -6,3 +6,7 @@ div.modal-header button span {
   color:red;
   text-shadow: 0
 }
+
+.tableRow:hover {
+  cursor: pointer;
+}
