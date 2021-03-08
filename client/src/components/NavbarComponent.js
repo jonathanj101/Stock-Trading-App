@@ -82,8 +82,15 @@ const NavbarComponent = ({
                         <NavLink to="/" exact className="nav-link mr-3 ">
                             Home
                         </NavLink>
-                        <NavLink to="/my-stocks" exact className="nav-link ">
+                        <NavLink
+                            to="/my-stocks"
+                            exact
+                            className="nav-link mr-3 "
+                        >
                             My Stocks
+                        </NavLink>
+                        <NavLink to="/" exact className="nav-link ">
+                            Log Out
                         </NavLink>
                     </Nav>
                 </Navbar>
