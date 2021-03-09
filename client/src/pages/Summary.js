@@ -3,11 +3,13 @@ import { Card, Table, Button, Modal } from 'react-bootstrap';
 
 const SummaryComponent = ({ investingList, stocksList }) => {
     const [show, setShow] = useState(false);
+    const [stockName, setStockName] = useState('');
+    const [stockPrice, setStocPrice] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const buyingButton = (e) => {
+    const handleStockInfo = (e) => {
         const stockName =
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockPrice =
@@ -49,7 +51,7 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                 className="tableRow"
                 onClick={(e) => {
                     handleShow();
-                    buyingButton(e);
+                    handleStockInfo(e);
                 }}
             >
                 <td className="d-flex flex-column">
@@ -92,7 +94,7 @@ const SummaryComponent = ({ investingList, stocksList }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Modal heading
+                        Buy
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
