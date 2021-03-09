@@ -17,7 +17,7 @@ const SummaryComponent = ({ investingList, stocksList }) => {
 
     const investingTable = investingList.map((stock, num) => {
         return (
-            <Card style={{ width: '18rem' }} key={num}>
+            <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
                     <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
                         <span style={{ width: '100%' }}>
@@ -104,9 +104,9 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                         eros.
                     </p>
                 </Modal.Body>
-                {/* <Modal.Footer>
+                <Modal.Footer>
                     <Button onClick={handleClose}>Close</Button>
-                </Modal.Footer> */}
+                </Modal.Footer>
             </Modal>
 
             <div className="w-75 mx-auto">
