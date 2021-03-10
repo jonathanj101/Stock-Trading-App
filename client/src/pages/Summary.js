@@ -10,11 +10,13 @@ const SummaryComponent = ({ investingList, stocksList }) => {
     const handleShow = () => setShow(true);
 
     const handleStockInfo = (e) => {
-        const stockName =
+        const stockCompanyName =
             e.currentTarget.childNodes[0].childNodes[0].textContent;
-        const stockPrice =
+        const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
-        console.log(stockName, stockPrice);
+        console.log(stockCompanyName, stockCost);
+        setStockName(stockCompanyName);
+        setStocPrice(stockCost);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -94,17 +96,11 @@ const SummaryComponent = ({ investingList, stocksList }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Buy
+                        {stockName}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras
-                        justo odio, dapibus ac facilisis in, egestas eget quam.
-                        Morbi leo risus, porta ac consectetur ac, vestibulum at
-                        eros.
-                    </p>
+                    <div></div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose}>Close</Button>
