@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { Card, Table, Button, Modal } from 'react-bootstrap';
+import {
+    Card,
+    Table,
+    Button,
+    Modal,
+    DropdownButton,
+    Dropdown,
+} from 'react-bootstrap';
 
 const SummaryComponent = ({ investingList, stocksList }) => {
     const [show, setShow] = useState(false);
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
+    const [dropdownTitle, setDropdownTitle] = useState('Dollars');
+    const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        setDropdownTitle('Dollars');
+        setDropdownItemTitle('Shares');
+    };
 
     const handleStockInfo = (e) => {
         const stockCompanyName =
@@ -17,6 +30,16 @@ const SummaryComponent = ({ investingList, stocksList }) => {
         console.log(stockCompanyName, stockCost);
         setStockName(stockCompanyName);
         setStocPrice(stockCost);
+    };
+
+    const checkingItem = (e) => {
+        console.log(e);
+        const ele = e.currentTarget.textContent;
+        console.log(ele);
+        setDropdownTitle(ele);
+        console.log(dropdownTitle);
+        setDropdownItemTitle(dropdownTitle);
+        console.log(dropdownItemTitle);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -96,11 +119,29 @@ const SummaryComponent = ({ investingList, stocksList }) => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {stockName}
+                        Buy {stockName}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div></div>
+                    <div>
+                        <DropdownButton
+                            id="dropdown-basic-button"
+                            title={
+                                dropdownTitle
+                                    ? dropdownTitle
+                                    : dropdownItemTitle
+                            }
+                        >
+                            <Dropdown.Item
+                                onClick={(e) => checkingItem(e)}
+                                eventKey="Shares"
+                            >
+                                {dropdownItemTitle
+                                    ? dropdownItemTitle
+                                    : dropdownTitle}
+                            </Dropdown.Item>
+                        </DropdownButton>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose}>Close</Button>
