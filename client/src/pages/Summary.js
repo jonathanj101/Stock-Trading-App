@@ -6,12 +6,14 @@ import {
     Modal,
     DropdownButton,
     Dropdown,
+    Form,
 } from 'react-bootstrap';
 
 const SummaryComponent = ({ investingList, stocksList }) => {
     const [show, setShow] = useState(false);
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
+    const [stockSymbol, setStockSymbol] = useState('');
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
 
@@ -27,19 +29,22 @@ const SummaryComponent = ({ investingList, stocksList }) => {
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
+        const stockSymbol =
+            e.currentTarget.childNodes[0].childNodes[1].textContent;
         console.log(stockCompanyName, stockCost);
         setStockName(stockCompanyName);
         setStocPrice(stockCost);
+        setStockSymbol(stockSymbol);
     };
 
-    const checkingItem = (e) => {
+    const handleDropdownTitle = (e) => {
         console.log(e);
         const ele = e.currentTarget.textContent;
         console.log(ele);
         setDropdownTitle(ele);
-        console.log(dropdownTitle);
+        console.log(`dropdown title ${dropdownTitle}`);
         setDropdownItemTitle(dropdownTitle);
-        console.log(dropdownItemTitle);
+        console.log(`dropdownItemTitle ${dropdownItemTitle}`);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -124,23 +129,39 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <DropdownButton
-                            id="dropdown-basic-button"
-                            title={
-                                dropdownTitle
-                                    ? dropdownTitle
-                                    : dropdownItemTitle
-                            }
-                        >
-                            <Dropdown.Item
-                                onClick={(e) => checkingItem(e)}
-                                eventKey="Shares"
+                        <div>
+                            {stockSymbol} = {stockPrice}
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <DropdownButton
+                                id="dropdown-basic-button"
+                                title={
+                                    dropdownTitle
+                                        ? dropdownTitle
+                                        : dropdownItemTitle
+                                }
                             >
-                                {dropdownItemTitle
-                                    ? dropdownItemTitle
-                                    : dropdownTitle}
-                            </Dropdown.Item>
-                        </DropdownButton>
+                                <Dropdown.Item
+                                    onClick={(e) => handleDropdownTitle(e)}
+                                    eventKey="Shares"
+                                >
+                                    {dropdownItemTitle
+                                        ? dropdownItemTitle
+                                        : dropdownTitle}
+                                </Dropdown.Item>
+                            </DropdownButton>
+                            <Form.Row>
+                                <Form.Control
+                                    required
+                                    type="number"
+                                    placeholder={
+                                        dropdownTitle === 'Dollars'
+                                            ? '$0.00'
+                                            : '0'
+                                    }
+                                />
+                            </Form.Row>
+                        </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
