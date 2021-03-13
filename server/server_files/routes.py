@@ -33,6 +33,40 @@ def main():
 
     return jsonify(test_list)
 
+
+@app.route('/testing/<string:name>', methods=['GET'])
+def testing(name):
+    f = 'f'
+    f2 = 'fb'
+    # search_url = "{}/stable/stock/{}/quote?token={}".format(
+    #     base_url, f, api_key)
+    # print(search_url)
+    search_url = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
+        base_url, f, api_key)
+    search_url2 = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
+        base_url, f2, api_key)
+
+    req = requests.get(search_url)
+    req2 = requests.get(search_url2)
+
+    resp = req.json()
+    resp2 = req2.json()
+
+    print(name)
+
+    print(resp)
+    print(resp2)
+
+    response = {
+        "url": search_url,
+        "req": req,
+        "resp": resp
+    }
+
+    # return jsonify({"data": response})
+    return "ok"
+
+
 @app.route("/multiple", methods=["GET"])
 def multiple():
     tesla = "tsla"
@@ -42,59 +76,66 @@ def multiple():
     microsft = "msft"
     sony = 'sne'
     american_airline = "aal"
-    
-    search_url = "{}/stable/stock/market/batch?symbols={},{},{},{},{},{},{}&types=quote&token={}".format(base_url,tesla,apple,fb,qcom, microsft, sony,american_airline, api_key)
-    
+
+    search_url = "{}/stable/stock/market/batch?symbols={},{},{},{},{},{},{}&types=quote&token={}".format(
+        base_url, tesla, apple, fb, qcom, microsft, sony, american_airline, api_key)
+
     req = requests.get(search_url)
-    
+
     resp = req.json()
-    
-    stocks_data = [{
-        "apple": {
+
+    stocks_data = [
+        {
             "company_name": resp['AAPL']["quote"]["companyName"],
             "symbol": resp['AAPL']["quote"]["symbol"],
             "latestPrice": resp['AAPL']["quote"]["latestPrice"],
             "change": resp['AAPL']["quote"]["change"],
         },
-        "tesla": {
+        {
             "company_name": resp['TSLA']["quote"]["companyName"],
             "symbol": resp['TSLA']["quote"]["symbol"],
             "latestPrice": resp['TSLA']["quote"]["latestPrice"],
-            "change": resp['TSLA']["quote"]["change"],
+            "change": resp['TSLA']["quote"]["change"]
         },
-        "facebook": {
+
+        {
             "company_name": resp['FB']["quote"]["companyName"],
             "symbol": resp['FB']["quote"]["symbol"],
             "latestPrice": resp['FB']["quote"]["latestPrice"],
-            "change": resp['FB']["quote"]["change"],
+            "change": resp['FB']["quote"]["change"]
         },
-        "american_airline": {
+
+        {
             "company_name": resp['AAL']["quote"]["companyName"],
             "symbol": resp['AAL']["quote"]["symbol"],
             "latestPrice": resp['AAL']["quote"]["latestPrice"],
-            "change": resp['AAL']["quote"]["change"],
+            "change": resp['AAL']["quote"]["change"]
         },
-        "microsoft": {
+
+        {
             "company_name": resp['MSFT']["quote"]["companyName"],
             "symbol": resp['MSFT']["quote"]["symbol"],
             "latestPrice": resp['MSFT']["quote"]["latestPrice"],
-            "change": resp['MSFT']["quote"]["change"],
+            "change": resp['MSFT']["quote"]["change"]
         },
-        "qcom": {
+
+        {
             "company_name": resp['QCOM']["quote"]["companyName"],
             "symbol": resp['QCOM']["quote"]["symbol"],
             "latestPrice": resp['QCOM']["quote"]["latestPrice"],
-            "change": resp['QCOM']["quote"]["change"],
+            "change": resp['QCOM']["quote"]["change"]
         },
-        "sony": {
+
+        {
             "company_name": resp['SNE']["quote"]["companyName"],
             "symbol": resp['SNE']["quote"]["symbol"],
             "latestPrice": resp['SNE']["quote"]["latestPrice"],
-            "change": resp['SNE']["quote"]["change"],
+            "change": resp['SNE']["quote"]["change"]
         },
-    }]
-    
-    return jsonify({"data":stocks_data})
+    ]
+
+    return jsonify({"data": stocks_data})
+
 
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
@@ -105,4 +146,4 @@ def submit_form():
     # db.session.add(transactions)
     # db.session.commit()
     # return redirect(url_for('testing_tutorial'))
-    return jsonify({'msg':'ok'})
+    return jsonify({'msg': 'ok'})
