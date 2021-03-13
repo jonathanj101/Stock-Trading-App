@@ -64,72 +64,35 @@ const NavbarComponent = ({
                 <span className="mx-auto">or</span>
                 <Button href="/register">Register</Button>
             </Modal>
-            {isLogged ? (
-                <Navbar
-                    className="d-flex justify-content-between"
-                    bg="dark"
-                    variant="dark"
-                >
-                    <Navbar.Brand>
-                        {/* <img
+            <Navbar
+                className="d-flex justify-content-between"
+                bg="dark"
+                variant="dark"
+            >
+                <Navbar.Brand>
+                    {/* <img
                         alt="twitter bird"
                         width="125"
                         height="100"
                         className="d-inline-block align-top"
                     /> */}
-                    </Navbar.Brand>
-                    <Nav variant="pills" className="">
-                        <NavLink to="/" exact className="nav-link mr-3 ">
-                            Home
-                        </NavLink>
-                        <NavLink
-                            to="/my-stocks"
-                            exact
-                            className="nav-link mr-3 "
-                        >
-                            My Stocks
-                        </NavLink>
-                        <NavLink to="/" exact className="nav-link ">
-                            Log Out
-                        </NavLink>
-                    </Nav>
-                </Navbar>
-            ) : (
-                <Navbar
-                    className="d-flex justify-content-between"
-                    bg="dark"
-                    variant="dark"
-                >
-                    <Navbar.Brand>
-                        {/* <img
-                        alt="twitter bird"
-                        width="125"
-                        height="100"
-                        className="d-inline-block align-top"
-                    /> */}
-                    </Navbar.Brand>
-                    <Nav variant="pills" className="">
-                        <NavLink
-                            onClick={handleShow}
-                            className="nav-link mr-3 "
-                            to={{ pathname: '' }}
-                            activeStyle={{
-                                color: 'white',
-                                backgroundColor: '#007bff',
-                            }}
-                        >
-                            <i
-                                className="fas fa-user-tie mr-3"
-                                style={{ fontSize: '2rem' }}
-                            ></i>
-                            Log In
-                        </NavLink>
-                        <NavLink to="/" exact className="nav-link mr-3 ">
-                            Home
-                        </NavLink>
-                    </Nav>
-                </Navbar>
-            )}
+                </Navbar.Brand>
+                <Nav variant="pills" className="">
+                    <NavLink to="/" exact className="nav-link mr-3 ">
+                        Home
+                    </NavLink>
+                    <NavLink
+                        to={isLogged ? '/my-stocks' : '/'}
+                        exact
+                        className={isLogged ? 'nav-link mr-3' : ''}
+                    >
+                        {isLogged ? 'My Stocks' : ''}
+                    </NavLink>
+                    <NavLink to="/" exact className="nav-link ">
+                        {isLogged ? 'Log Out' : 'Log In'}
+                    </NavLink>
+                </Nav>
+            </Navbar>
         </div>
     );
 };
