@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchComponent from '../pages/SearchComponent';
 import {
     Card,
     Table,
@@ -9,7 +10,11 @@ import {
     Form,
 } from 'react-bootstrap';
 
-const SummaryComponent = ({ investingList, stocksList }) => {
+const SummaryComponent = ({
+    investingList,
+    stocksList,
+    handleTransactions,
+}) => {
     const [show, setShow] = useState(false);
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
@@ -22,6 +27,10 @@ const SummaryComponent = ({ investingList, stocksList }) => {
         setShow(true);
         setDropdownTitle('Dollars');
         setDropdownItemTitle('Shares');
+    };
+
+    const handleSubmit = () => {
+        handleTransactions(stockSymbol);
     };
 
     const handleStockInfo = (e) => {
@@ -115,6 +124,7 @@ const SummaryComponent = ({ investingList, stocksList }) => {
 
     return (
         <div>
+            <SearchComponent />
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -129,43 +139,73 @@ const SummaryComponent = ({ investingList, stocksList }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <div>
+                        <div style={styles.stockInfoDiv}>
                             {stockSymbol} = {stockPrice}
                         </div>
-                        <div className="d-flex justify-content-center">
-                            <DropdownButton
-                                id="dropdown-basic-button"
-                                title={
-                                    dropdownTitle
-                                        ? dropdownTitle
-                                        : dropdownItemTitle
-                                }
-                            >
-                                <Dropdown.Item
-                                    onClick={(e) => handleDropdownTitle(e)}
-                                    eventKey="Shares"
-                                >
-                                    {dropdownItemTitle
-                                        ? dropdownItemTitle
-                                        : dropdownTitle}
-                                </Dropdown.Item>
-                            </DropdownButton>
-                            <Form.Row>
-                                <Form.Control
-                                    required
-                                    type="number"
-                                    placeholder={
-                                        dropdownTitle === 'Dollars'
-                                            ? '$0.00'
-                                            : '0'
+                        <div className="mx-auto w-50 mt-5 mb-5">
+                            <div className="d-flex justify-content-center">
+                                <DropdownButton
+                                    id="dropdown-basic-button"
+                                    title={
+                                        dropdownTitle
+                                            ? dropdownTitle
+                                            : dropdownItemTitle
                                     }
-                                />
-                            </Form.Row>
+                                >
+                                    <Dropdown.Item
+                                        onClick={(e) => handleDropdownTitle(e)}
+                                        eventKey="Shares"
+                                    >
+                                        {dropdownItemTitle
+                                            ? dropdownItemTitle
+                                            : dropdownTitle}
+                                    </Dropdown.Item>
+                                </DropdownButton>
+                                <div className="w-100">
+                                    <Form.Row>
+                                        <Form.Control
+                                            required
+                                            type="number"
+                                            step="0.01"
+                                            placeholder={
+                                                dropdownTitle === 'Dollars'
+                                                    ? '$0.00'
+                                                    : '0'
+                                            }
+                                        />
+                                    </Form.Row>
+                                </div>
+                            </div>
+                            <div className="w-100">
+                                <Form.Row>
+                                    <Form.Control
+                                        required
+                                        type="number"
+                                        step="0.01"
+                                        placeholder={
+                                            dropdownTitle === 'Dollars'
+                                                ? 'Amount'
+                                                : 'Shares'
+                                        }
+                                    />
+                                </Form.Row>
+                            </div>
                         </div>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleClose}>Close</Button>
+                    <div className="text-center mx-auto">
+                        <h4>$0.00 available to buy stock </h4>
+                        <Button
+                            onClick={() => {
+                                handleClose();
+                                handleSubmit();
+                            }}
+                            block
+                        >
+                            Buy
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
 
@@ -225,6 +265,14 @@ var styles = {
     bordersDivs: {
         border: '1px solid black',
         padding: '50px',
+    },
+    stockInfoDiv: {
+        text: 'center',
+        marginTop: '20px',
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
+        color: 'black',
+        textAlign: 'center',
     },
 };
 
