@@ -8,6 +8,7 @@ import SummaryComponent from '../pages/Summary';
 import FormComponent from './RegisterForm';
 import ProtectRoute from './ProtectRoutes';
 import PageNotFound from '../pages/PageNotFound';
+import SearchComponent from '../pages/SearchComponent';
 
 class Main extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class Main extends Component {
             lastName: '',
             password: '',
             username: '',
-            testing: true,
+            isLogged: true,
             investingList: [],
             stocksList: [],
         };
@@ -30,6 +31,11 @@ class Main extends Component {
     }
 
     async componentDidMount() {
+        fetch(`/testing/idk`)
+            .then((response) => {
+                response.json();
+            })
+            .then((data) => console.log(data));
         // fetch('/testing_data')
         //     .then((response) => response.json())
         //     .then((data) => {
@@ -70,7 +76,7 @@ class Main extends Component {
         }
     };
 
-    handleTransactions = () => {
+    handleTransactions = (stock_name, stock_symbol, stock_price, shares) => {
         return;
     };
 
@@ -129,7 +135,7 @@ class Main extends Component {
         return (
             <div style={{ height: `30vh` }}>
                 <NavbarComponent
-                    isLogged={this.state.testing}
+                    isLogged={this.state.isLogged}
                     handleChange={this.handleChange}
                     onSubmit={this.onSubmit}
                 />
@@ -142,8 +148,14 @@ class Main extends Component {
                             <SummaryComponent
                                 investingList={this.state.investingList}
                                 stocksList={this.state.stocksList}
+                                handleTransactions={this.handleTransactions}
                             />
                         )}
+                    />
+                    <ProtectRoute
+                        path="/my-stocks"
+                        exact
+                        component={() => <SearchComponent />}
                     />
                     <Route
                         path="/register"
