@@ -8,7 +8,7 @@ class ProtectRoute extends Component {
         return isAuthenticated ? (
             <Component />
         ) : (
-            <Redirect to={{ pathname: '/form' }} />
+            <Redirect to={{ pathname: '/page-not-found' }} />
         );
     }
 }
