@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 
-const FormComponent = ({ handleRegister }) => {
+const FormComponent = ({ handleRegister, mainState }) => {
+    console.log(mainState);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
