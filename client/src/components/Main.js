@@ -31,11 +31,11 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        fetch(`/testing`)
-            .then((response) => {
-                response.json();
-            })
-            .then((data) => console.log(data));
+        // fetch(`/testing`)
+        //     .then((response) => {
+        //         response.json();
+        //     })
+        //     .then((data) => console.log(data));
         // fetch('/testing_data')
         //     .then((response) => response.json())
         //     .then((data) => {
@@ -92,14 +92,13 @@ class Main extends Component {
     };
 
     handleChange = (e) => {
-        e.preventDefault();
         const { value } = e.target;
-        // console.log(value);
-        // console.log(value);
+        console.log(value);
+        console.log(value);
         this.setState({
             searchStock: value,
         });
-        // console.log(this.state);
+        console.log(this.state);
     };
 
     handleRegister = (firstName, lastName, password, username) => {
@@ -162,7 +161,7 @@ class Main extends Component {
                                 investingList={this.state.investingList}
                                 stocksList={this.state.stocksList}
                                 handleTransactions={this.handleTransactions}
-                                handleChange={this.handleChange}
+                                handleRequest={this.handleRequest}
                                 mainState={this.state}
                             />
                         )}
