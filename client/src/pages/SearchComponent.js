@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Form, InputGroup, ListGroup } from 'react-bootstrap';
 
-const SearchComponent = ({ mainState }) => {
+const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
     const [textInput, setTextInput] = useState('');
+    const [stockPrice, setStockPrice] = useState('');
+    const [stockChange, setStockChange] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
     const [companyName, setCompanyName] = useState('');
+    const [stockInfo, setStockInfo] = useState([]);
     const [isStockSearched, setIsStockSearched] = useState(false);
 
     const getTextInput = (e) => {
@@ -22,7 +25,28 @@ const SearchComponent = ({ mainState }) => {
                 console.log(data);
                 setCompanyName(data.data.company_name);
                 setStockSymbol(data.data.symbol);
+                setStockPrice(data.data.cost);
+                setStockChange(data.data.change);
             });
+    };
+
+    const onSelect = (e) => {
+        // console.log(e.currentTarget.childNodes[0].childNodes);
+        const symbol = e.currentTarget.childNodes[0].childNodes[0].textContent;
+        const stockName =
+            e.currentTarget.childNodes[0].childNodes[1].textContent;
+        const stockCost =
+            e.currentTarget.childNodes[0].childNodes[2].textContent;
+        setStockInfo({
+            symbol: symbol,
+            stockName: stockName,
+            stockCost: stockCost,
+        });
+        addStockToInvestingTable({
+            symbol: stockSymbol,
+            companyName: companyName,
+            stockCost: stockPrice,
+        });
     };
 
     return (
@@ -48,22 +72,23 @@ const SearchComponent = ({ mainState }) => {
                     </InputGroup.Prepend>
                 </InputGroup>
                 {isStockSearched ? (
-                    <ListGroup flush className="d-flex flex-row">
+                    <ListGroup>
                         <ListGroup.Item
+                            onClick={(e) => onSelect(e)}
                             style={styles.ListGroupItem}
                             className=""
                             action
                             variant=""
                         >
-                            {companyName}
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            style={styles.ListGroupItem2}
-                            className=""
-                            action
-                            variant=""
-                        >
-                            {stockSymbol}
+                            <div style={styles.spanContainer}>
+                                <span style={styles.stockSymbolSpan}>
+                                    {stockSymbol}
+                                </span>
+                                <span style={styles.companyNameSpan}>
+                                    {companyName}
+                                </span>
+                                <span>{stockPrice}</span>
+                            </div>
                         </ListGroup.Item>
                     </ListGroup>
                 ) : (
@@ -87,18 +112,15 @@ const styles = {
     ListGroup: {
         display: 'none',
     },
-    ListGroupItem: {
-        borderLeft: 'none',
-        borderRight: '1px solid rgba(0,0,0,.125)',
-        borderTop: 'nonr',
-        borderBottom: 'none',
+    spanContainer: {
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
     },
-
-    ListGroupItem2: {
-        borderLeft: '1px solid rgba(0,0,0,.125)',
-        borderRight: 'none',
-        borderTop: 'nonr',
-        borderBottom: 'none',
+    companyNameSpan: {
+        margin: 'auto 5% auto auto',
+    },
+    stockSymbolSpan: {
+        margin: 'auto 5% auto auto',
     },
 };
 
