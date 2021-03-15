@@ -41,30 +41,38 @@ def testing(name):
     # f2 = 'fb'
     search_url = "{}/stable/stock/{}/quote?token={}".format(
         base_url, name, api_key)
-    # print(search_url)
-    # search_url = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
-    #     base_url, f, api_key)
-    # search_url2 = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
-    #     base_url, f2, api_key)
+    # search_url2 = "{}/stable/stock/{}/quote?token={}".format(
+    #     base_url, name, api_key)
+    # search_url3 = "{}/stable/stock/{}/quote?token={}".format(
+    #     base_url, name, api_key)
 
     req = requests.get(search_url)
+    # req2 = requests.get(search_url2)
+    # req3 = requests.get(search_url3)
     # req2 = requests.get(search_url2)
 
     resp = req.json()
     # resp2 = req2.json()
+    # resp3 = req3.json()
+    # print(resp['companyName'])
 
     # print(name)
 
     # print(resp)
     # print(resp2)
 
-    # response = {
-    #     "resp1": resp,
-    #     "resp2": resp2,
-    # }
+    # response = [
+    #     {"resp1": resp},
+    #     {"resp2": resp2},
+    #     {"resp3": resp3},
+    # ]
+    stock_data = {
+        "company_name": resp["companyName"],
+        "symbol": resp["symbol"]
+    }
 
     # return jsonify({"data": response})
-    return jsonify({"data": resp})
+    return jsonify({"data": stock_data})
 
 
 @app.route("/multiple", methods=["GET"])
