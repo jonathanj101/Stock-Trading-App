@@ -28,6 +28,9 @@ class Main extends Component {
         this.handleRequest = this.handleRequest.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
+        this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
+            this,
+        );
     }
 
     async componentDidMount() {
@@ -61,6 +64,18 @@ class Main extends Component {
         // }
     }
 
+    addStockToInvestingTable = (stock) => {
+        console.log(stock);
+        const newStockInfo = {
+            symbol: stock.symbol,
+            stockCost: stock.stockCost,
+            companyName: stock.companyName,
+        };
+        this.setState({
+            investingList: [...this.state.investingList, newStockInfo],
+        });
+    };
+
     handleRequest = async (request) => {
         // console.log(request.data);
         try {
@@ -68,16 +83,13 @@ class Main extends Component {
                 request.data.data.map((stock) => {
                     // console.log(stock);
                     return {
-                        investingList: stock,
                         stockData: stock,
                     };
                 }),
             );
             // console.log(req);
             req.then((stockData) => {
-                // console.log(stockData);
                 this.setState({
-                    investingList: stockData,
                     stocksList: stockData,
                 });
                 // console.log(this.state);
@@ -163,6 +175,9 @@ class Main extends Component {
                                 handleTransactions={this.handleTransactions}
                                 handleRequest={this.handleRequest}
                                 mainState={this.state}
+                                addStockToInvestingTable={
+                                    this.addStockToInvestingTable
+                                }
                             />
                         )}
                     />
