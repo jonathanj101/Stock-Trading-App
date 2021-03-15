@@ -15,6 +15,7 @@ const SummaryComponent = ({
     stocksList,
     handleTransactions,
     mainState,
+    addStockToInvestingTable,
 }) => {
     const [show, setShow] = useState(false);
     const [stockName, setStockName] = useState('');
@@ -63,15 +64,15 @@ const SummaryComponent = ({
                 <Card.Body>
                     <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
                         <span style={{ width: '100%' }}>
-                            {stock.stockData.company_name}
+                            {stock.companyName}
                         </span>
-                        <span>({stock.stockData.symbol})</span>
+                        <span>({stock.symbol})</span>
                     </Card.Title>
                     <Card.Subtitle
                         className="mb-5 text-muted"
                         stlye={{ height: '2rem' }}
                     >
-                        (${stock.stockData.latestPrice}) Today
+                        (${stock.stockCost}) Today
                     </Card.Subtitle>
                     <Button href="#" block>
                         sell
@@ -125,7 +126,10 @@ const SummaryComponent = ({
 
     return (
         <div>
-            <SearchComponent mainState={mainState} />
+            <SearchComponent
+                mainState={mainState}
+                addStockToInvestingTable={addStockToInvestingTable}
+            />
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -218,7 +222,14 @@ const SummaryComponent = ({
                     className="d-flex justify-content-around flex-wrap mb-5"
                     style={styles.bordersDivs}
                 >
-                    {investingTable}
+                    {investingTable.length === 0 ? (
+                        <div>
+                            <h1>Search for a stock and start investing</h1>
+                            <h1>Remember: either go BIG or go HOME!!</h1>
+                        </div>
+                    ) : (
+                        investingTable
+                    )}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
