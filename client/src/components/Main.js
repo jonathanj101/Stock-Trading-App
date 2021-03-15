@@ -14,7 +14,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            empty: '',
+            searchStock: '',
             firstName: '',
             lastName: '',
             password: '',
@@ -31,7 +31,7 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        fetch(`/testing/idk`)
+        fetch(`/testing`)
             .then((response) => {
                 response.json();
             })
@@ -48,6 +48,17 @@ class Main extends Component {
         //     .then((data) => {
         //         console.log(data);
         //     });
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        let userSearchStock = this.state.searchStock;
+        if (this.state.searchStock !== prevState.userSearchStock) {
+            console.log(prevState, this.state.searchStock);
+        }
+        // if (this.state.searchStock !== prevState.userSearchStock) {
+        //     let searchingStock = await axios.get(`/testing/${userSearchStock}`)
+        //     this.handleRequest(searchingStock)
+        // }
     }
 
     handleRequest = async (request) => {
@@ -81,12 +92,14 @@ class Main extends Component {
     };
 
     handleChange = (e) => {
-        const { name, value } = e.target;
-        console.log({ [name]: value });
+        e.preventDefault();
+        const { value } = e.target;
+        // console.log(value);
+        // console.log(value);
         this.setState({
-            [name]: value,
+            searchStock: value,
         });
-        console.log(this.state);
+        // console.log(this.state);
     };
 
     handleRegister = (firstName, lastName, password, username) => {
@@ -149,6 +162,8 @@ class Main extends Component {
                                 investingList={this.state.investingList}
                                 stocksList={this.state.stocksList}
                                 handleTransactions={this.handleTransactions}
+                                handleChange={this.handleChange}
+                                mainState={this.state}
                             />
                         )}
                     />
