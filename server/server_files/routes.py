@@ -68,6 +68,8 @@ def testing(name):
     # ]
     stock_data = {
         "company_name": resp["companyName"],
+        "cost": resp["latestPrice"],
+        "change": resp["change"],
         "symbol": resp["symbol"]
     }
 
