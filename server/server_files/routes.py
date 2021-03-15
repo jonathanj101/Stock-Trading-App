@@ -36,35 +36,35 @@ def main():
 
 @app.route('/testing/<string:name>', methods=['GET'])
 def testing(name):
-    f = 'f'
-    f2 = 'fb'
-    # search_url = "{}/stable/stock/{}/quote?token={}".format(
-    #     base_url, f, api_key)
+    print(name)
+    # f = 'f'
+    # f2 = 'fb'
+    search_url = "{}/stable/stock/{}/quote?token={}".format(
+        base_url, name, api_key)
     # print(search_url)
-    search_url = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
-        base_url, f, api_key)
-    search_url2 = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
-        base_url, f2, api_key)
+    # search_url = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
+    #     base_url, f, api_key)
+    # search_url2 = "{}/stable/stock/market/batch?symbols={}&types=quote&token={}".format(
+    #     base_url, f2, api_key)
 
     req = requests.get(search_url)
-    req2 = requests.get(search_url2)
+    # req2 = requests.get(search_url2)
 
     resp = req.json()
-    resp2 = req2.json()
+    # resp2 = req2.json()
 
-    print(name)
+    # print(name)
 
-    print(resp)
-    print(resp2)
+    # print(resp)
+    # print(resp2)
 
-    response = {
-        "url": search_url,
-        "req": req,
-        "resp": resp
-    }
+    # response = {
+    #     "resp1": resp,
+    #     "resp2": resp2,
+    # }
 
     # return jsonify({"data": response})
-    return "ok"
+    return jsonify({"data": resp})
 
 
 @app.route("/multiple", methods=["GET"])
