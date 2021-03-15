@@ -14,6 +14,8 @@ const SummaryComponent = ({
     investingList,
     stocksList,
     handleTransactions,
+    handleChange,
+    mainState,
 }) => {
     const [show, setShow] = useState(false);
     const [stockName, setStockName] = useState('');
@@ -124,7 +126,10 @@ const SummaryComponent = ({
 
     return (
         <div>
-            <SearchComponent />
+            <SearchComponent
+                handleChange={handleChange}
+                mainState={mainState}
+            />
             <Modal
                 show={show}
                 onHide={handleClose}
