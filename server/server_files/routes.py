@@ -47,6 +47,8 @@ def testing(name):
     #     base_url, name, api_key)
 
     req = requests.get(search_url)
+
+    # print(req)
     # req2 = requests.get(search_url2)
     # req3 = requests.get(search_url3)
     # req2 = requests.get(search_url2)
@@ -75,6 +77,7 @@ def testing(name):
 
     # return jsonify({"data": response})
     return jsonify({"data": stock_data})
+    # return 'ok'
 
 
 @app.route("/multiple", methods=["GET"])
