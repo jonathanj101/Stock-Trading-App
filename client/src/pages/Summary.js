@@ -18,6 +18,8 @@ const SummaryComponent = ({
     addStockToInvestingTable,
 }) => {
     const [show, setShow] = useState(false);
+    const [buyingStockQuantity, setBuyingStockQuantity] = useState('');
+    const [userBuyingStock, setUserBuyingStock] = useState('');
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
@@ -33,6 +35,18 @@ const SummaryComponent = ({
 
     const handleSubmit = () => {
         handleTransactions(stockSymbol);
+    };
+
+    const handleUserStockQuantity = (e) => {
+        const { value } = e.currentTarget;
+        console.log(value);
+        setUserBuyingStock(value);
+        console.log(userBuyingStock);
+    };
+
+    const calculateCost = (stock) => {
+        if (dropdownTitle === 'Dollars') {
+        }
     };
 
     const handleStockInfo = (e) => {
@@ -171,7 +185,9 @@ const SummaryComponent = ({
                                         <Form.Control
                                             required
                                             type="number"
-                                            step="0.01"
+                                            name={userBuyingStock}
+                                            value={userBuyingStock}
+                                            onChange={handleUserStockQuantity}
                                             placeholder={
                                                 dropdownTitle === 'Dollars'
                                                     ? '$0.00'
@@ -182,7 +198,7 @@ const SummaryComponent = ({
                                 </div>
                             </div>
                             <div className="w-100">
-                                <Form.Row>
+                                {/* <Form.Row>
                                     <Form.Control
                                         required
                                         type="number"
@@ -193,7 +209,17 @@ const SummaryComponent = ({
                                                 : 'Shares'
                                         }
                                     />
-                                </Form.Row>
+                                </Form.Row> */}
+                                <Modal.Footer>
+                                    <div className="w-100 d-flex justify-content-between text-center mx-auto">
+                                        <h5>
+                                            {dropdownTitle === 'Dollars'
+                                                ? 'Estimated Shares'
+                                                : 'Estimated Cost'}
+                                        </h5>
+                                        <h5>idk</h5>
+                                    </div>
+                                </Modal.Footer>
                             </div>
                         </div>
                     </div>
@@ -224,7 +250,10 @@ const SummaryComponent = ({
                 >
                     {investingTable.length === 0 ? (
                         <div>
-                            <h1>Search for a stock and start investing</h1>
+                            <h1>
+                                Search for a stock and start investing with
+                                fantasy money
+                            </h1>
                             <h1>Remember: either go BIG or go HOME!!</h1>
                         </div>
                     ) : (
