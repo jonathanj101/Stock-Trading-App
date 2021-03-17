@@ -31,21 +31,36 @@ const SummaryComponent = ({
         setShow(true);
         setDropdownTitle('Dollars');
         setDropdownItemTitle('Shares');
+        setUserBuyingStock('$0.00');
     };
 
     const handleSubmit = () => {
         handleTransactions(stockSymbol);
     };
 
-    const handleUserStockQuantity = (e) => {
+    const handleUserStockInput = (e) => {
         const { value } = e.currentTarget;
         console.log(value);
         setUserBuyingStock(value);
-        console.log(userBuyingStock);
     };
 
-    const calculateCost = (stock) => {
+    const calculateCost = (stockInput) => {
+        console.log(stockInput.currentTarget.value);
+        const { value } = stockInput.currentTarget;
+        console.log(stockPrice);
         if (dropdownTitle === 'Dollars') {
+            let sliced = stockPrice.slice(1, -1);
+            console.log(sliced);
+            let parsed = parseFloat(sliced);
+            console.log(parsed);
+            console.log(typeof stockPrice);
+            // const parsedStockPrice = parseInt(stockPrice);
+            // let total = value / stockPrice;
+            // console.log(total);
+            // console.log(parsedStockPrice);
+            // console.log(stockPrice);
+        } else {
+            console.log(false);
         }
     };
 
@@ -187,7 +202,10 @@ const SummaryComponent = ({
                                             type="number"
                                             name={userBuyingStock}
                                             value={userBuyingStock}
-                                            onChange={handleUserStockQuantity}
+                                            onChange={(e) => {
+                                                handleUserStockInput(e);
+                                                calculateCost(e);
+                                            }}
                                             placeholder={
                                                 dropdownTitle === 'Dollars'
                                                     ? '$0.00'
@@ -210,16 +228,14 @@ const SummaryComponent = ({
                                         }
                                     />
                                 </Form.Row> */}
-                                <Modal.Footer>
-                                    <div className="w-100 d-flex justify-content-between text-center mx-auto">
-                                        <h5>
-                                            {dropdownTitle === 'Dollars'
-                                                ? 'Estimated Shares'
-                                                : 'Estimated Cost'}
-                                        </h5>
-                                        <h5>idk</h5>
-                                    </div>
-                                </Modal.Footer>
+                                <div className="w-100 d-flex justify-content-between text-center mx-auto">
+                                    <h5>
+                                        {dropdownTitle === 'Dollars'
+                                            ? 'Estimated Shares'
+                                            : 'Estimated Cost'}
+                                    </h5>
+                                    <h5>idk</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
