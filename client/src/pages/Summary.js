@@ -45,22 +45,18 @@ const SummaryComponent = ({
     };
 
     const calculateCost = (stockInput) => {
-        console.log(stockInput.currentTarget.value);
         const { value } = stockInput.currentTarget;
-        console.log(stockPrice);
+        let slicedStockPrice = stockPrice.slice(1, -1);
+        let parseSlicedStockPrice = parseFloat(slicedStockPrice);
+        let parseStockInput = parseFloat(value);
         if (dropdownTitle === 'Dollars') {
-            let sliced = stockPrice.slice(1, -1);
-            console.log(sliced);
-            let parsed = parseFloat(sliced);
-            console.log(parsed);
-            console.log(typeof stockPrice);
-            // const parsedStockPrice = parseInt(stockPrice);
-            // let total = value / stockPrice;
-            // console.log(total);
-            // console.log(parsedStockPrice);
-            // console.log(stockPrice);
+            console.log(userBuyingStock);
+            const totalCostInDollars = parseStockInput / parseSlicedStockPrice;
+            console.log(`cost in dollars ${totalCostInDollars}`);
         } else {
-            console.log(false);
+            console.log(userBuyingStock);
+            const totalShares = parseSlicedStockPrice * parseStockInput;
+            console.log(`total shares ${totalShares}`);
         }
     };
 
@@ -78,7 +74,7 @@ const SummaryComponent = ({
     };
 
     const handleDropdownTitle = (e) => {
-        console.log(e);
+        // console.log(e);
         const ele = e.currentTarget.textContent;
         console.log(ele);
         setDropdownTitle(ele);
