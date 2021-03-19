@@ -20,6 +20,7 @@ const SummaryComponent = ({
     const [show, setShow] = useState(false);
     const [buyingStockQuantity, setBuyingStockQuantity] = useState('');
     const [userBuyingStock, setUserBuyingStock] = useState('');
+    const [estimatedTotal, setEstimatedTotal] = useState('0.00');
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
@@ -38,9 +39,26 @@ const SummaryComponent = ({
         handleTransactions(stockSymbol);
     };
 
+    const isNan = (isNan) => {
+        console.log(dropdownTitle);
+        console.log(isNan.toString());
+        if (isNan.toString() !== 'NaN' && dropdownTitle === 'Dollars') {
+            console.log(dropdownTitle);
+            setEstimatedTotal(isNan);
+            console.log('yes');
+        } else if (isNan.toString() !== 'NaN' && dropdownTitle === 'Shares') {
+            console.log(dropdownTitle);
+            setEstimatedTotal(`$ ${isNan}`);
+            console.log('yes 2');
+        } else {
+            console.log('no');
+            setEstimatedTotal('0.00');
+        }
+    };
+
     const handleUserStockInput = (e) => {
         const { value } = e.currentTarget;
-        console.log(value);
+        // console.log(value);
         setUserBuyingStock(value);
     };
 
@@ -50,13 +68,19 @@ const SummaryComponent = ({
         let parseSlicedStockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
         if (dropdownTitle === 'Dollars') {
-            console.log(userBuyingStock);
+            // console.log(userBuyingStock);
             const totalCostInDollars = parseStockInput / parseSlicedStockPrice;
             console.log(`cost in dollars ${totalCostInDollars}`);
+            isNan(totalCostInDollars);
+
+            // setEstimatedTotal(totalCostInDollars);
         } else {
+            console.log(dropdownTitle);
             console.log(userBuyingStock);
             const totalShares = parseSlicedStockPrice * parseStockInput;
             console.log(`total shares ${totalShares}`);
+            isNan(totalShares);
+            // setEstimatedTotal(totalShares);
         }
     };
 
@@ -230,7 +254,7 @@ const SummaryComponent = ({
                                             ? 'Estimated Shares'
                                             : 'Estimated Cost'}
                                     </h5>
-                                    <h5>idk</h5>
+                                    <h5>{estimatedTotal}</h5>
                                 </div>
                             </div>
                         </div>
