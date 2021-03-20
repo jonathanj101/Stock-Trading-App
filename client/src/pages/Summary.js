@@ -58,7 +58,6 @@ const SummaryComponent = ({
 
     const handleUserStockInput = (e) => {
         const { value } = e.currentTarget;
-        // console.log(value);
         setUserBuyingStock(value);
     };
 
@@ -68,19 +67,15 @@ const SummaryComponent = ({
         let parseSlicedStockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
         if (dropdownTitle === 'Dollars') {
-            // console.log(userBuyingStock);
             const totalCostInDollars = parseStockInput / parseSlicedStockPrice;
             console.log(`cost in dollars ${totalCostInDollars}`);
             isNan(totalCostInDollars);
-
-            // setEstimatedTotal(totalCostInDollars);
         } else {
             console.log(dropdownTitle);
             console.log(userBuyingStock);
             const totalShares = parseSlicedStockPrice * parseStockInput;
             console.log(`total shares ${totalShares}`);
             isNan(totalShares);
-            // setEstimatedTotal(totalShares);
         }
     };
 
@@ -98,7 +93,6 @@ const SummaryComponent = ({
     };
 
     const handleDropdownTitle = (e) => {
-        // console.log(e);
         const ele = e.currentTarget.textContent;
         console.log(ele);
         setDropdownTitle(ele);
