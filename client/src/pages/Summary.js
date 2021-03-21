@@ -21,6 +21,7 @@ const SummaryComponent = ({
     const [buyingStockQuantity, setBuyingStockQuantity] = useState('');
     const [userBuyingStock, setUserBuyingStock] = useState('');
     const [estimatedTotal, setEstimatedTotal] = useState('0.00');
+    const [stockInputValue, setStockInputValue] = useState('0.00');
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
@@ -40,18 +41,18 @@ const SummaryComponent = ({
     };
 
     const isNan = (isNan) => {
-        console.log(dropdownTitle);
-        console.log(isNan.toString());
+        // console.log(dropdownTitle);
+        // console.log(isNan.toString());
         if (isNan.toString() !== 'NaN' && dropdownTitle === 'Dollars') {
-            console.log(dropdownTitle);
+            // console.log(dropdownTitle);
             setEstimatedTotal(isNan);
-            console.log('yes');
+            // console.log('yes');
         } else if (isNan.toString() !== 'NaN' && dropdownTitle === 'Shares') {
-            console.log(dropdownTitle);
+            // console.log(dropdownTitle);
             setEstimatedTotal(`$ ${isNan}`);
-            console.log('yes 2');
+            // console.log('yes 2');
         } else {
-            console.log('no');
+            // console.log('no');
             setEstimatedTotal('0.00');
         }
     };
@@ -59,6 +60,42 @@ const SummaryComponent = ({
     const handleUserStockInput = (e) => {
         const { value } = e.currentTarget;
         setUserBuyingStock(value);
+    };
+
+    const calculateOnTitleChange = (dropDownTitle) => {
+        console.log(dropDownTitle);
+        console.log(estimatedTotal);
+        const parseStockInputValue = parseFloat(stockInputValue);
+        console.log(parseStockInputValue);
+        // const parseSlicedStockPrice = parseFloat(estimatedTotal.slice(1, -1));
+        const parseSlicedStockPrice = estimatedTotal;
+
+        if (dropDownTitle === 'Dollars') {
+            console.log('ok');
+            console.log(parseStockInputValue);
+            const totalShares = parseStockInputValue / parseSlicedStockPrice;
+            console.log(totalShares);
+            if (totalShares.toString() !== 'NaN') {
+                console.log('ok');
+                setEstimatedTotal(totalShares);
+            } else {
+                console.log('nan');
+                setEstimatedTotal('0');
+            }
+        } else {
+            console.log('else');
+            console.log(dropDownTitle);
+            console.log(estimatedTotal);
+            const totalStockCost = parseSlicedStockPrice * parseStockInputValue;
+            if (totalStockCost.toString() !== 'NaN') {
+                console.log('ok');
+                setEstimatedTotal(totalStockCost);
+                console.log(totalStockCost);
+            } else {
+                console.log('nan');
+                setEstimatedTotal('$0.00');
+            }
+        }
     };
 
     const calculateCost = (stockInput) => {
@@ -94,11 +131,12 @@ const SummaryComponent = ({
 
     const handleDropdownTitle = (e) => {
         const ele = e.currentTarget.textContent;
-        console.log(ele);
+        calculateOnTitleChange(ele);
+        // console.log(ele);
         setDropdownTitle(ele);
-        console.log(`dropdown title ${dropdownTitle}`);
+        // console.log(`dropdown title ${dropdownTitle}`);
         setDropdownItemTitle(dropdownTitle);
-        console.log(`dropdownItemTitle ${dropdownItemTitle}`);
+        // console.log(`dropdownItemTitle ${dropdownItemTitle}`);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -219,6 +257,9 @@ const SummaryComponent = ({
                                             onChange={(e) => {
                                                 handleUserStockInput(e);
                                                 calculateCost(e);
+                                                setStockInputValue(
+                                                    e.currentTarget.value,
+                                                );
                                             }}
                                             placeholder={
                                                 dropdownTitle === 'Dollars'
