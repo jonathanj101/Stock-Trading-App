@@ -20,6 +20,7 @@ class Main extends Component {
             password: '',
             username: '',
             isLogged: true,
+            stockData: [],
             investingList: [],
             stocksList: [],
         };
@@ -70,6 +71,7 @@ class Main extends Component {
             symbol: stock.symbol,
             stockCost: stock.stockCost,
             companyName: stock.companyName,
+            stockChange: stock.stockChange,
         };
         this.setState({
             investingList: [...this.state.investingList, newStockInfo],
@@ -99,8 +101,8 @@ class Main extends Component {
         }
     };
 
-    handleTransactions = (stock_name, stock_symbol, stock_price, shares) => {
-        return;
+    handleTransactions = (stockInfo) => {
+        console.log(stockInfo);
     };
 
     handleChange = (e) => {
