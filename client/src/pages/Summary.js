@@ -20,11 +20,13 @@ const SummaryComponent = ({
     const [show, setShow] = useState(false);
     const [buyingStockQuantity, setBuyingStockQuantity] = useState('');
     const [userBuyingStock, setUserBuyingStock] = useState('');
-    const [estimatedTotal, setEstimatedTotal] = useState('0.00');
+    const [estimatedShares, setEstimatedShares] = useState('0.00');
+    const [estimatedCost, setEstimatedCost] = useState('0.00');
     const [stockInputValue, setStockInputValue] = useState('0.00');
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStocPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
+    const [stockChange, setStockChange] = useState('');
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
 
@@ -34,26 +36,42 @@ const SummaryComponent = ({
         setDropdownTitle('Dollars');
         setDropdownItemTitle('Shares');
         setUserBuyingStock('$0.00');
+        setEstimatedShares('0.00');
+        setEstimatedShares('$0.00');
     };
 
     const handleSubmit = () => {
         handleTransactions(stockSymbol);
+        addToInvesting({
+            companyName: stockName,
+            symbol: stockSymbol,
+            stockCost: stockPrice,
+            stockChange: stockChange,
+        });
+        handleTransactions({
+            companyName: stockName,
+            symbol: stockSymbol,
+            estimatetShares: estimatedShares,
+            stockPrice: stockPrice,
+        });
+    };
+
+    const addToInvesting = (stockInfo) => {
+        addStockToInvestingTable(stockInfo);
     };
 
     const isNan = (isNan) => {
+        console.log(isNan);
         // console.log(dropdownTitle);
         // console.log(isNan.toString());
         if (isNan.toString() !== 'NaN' && dropdownTitle === 'Dollars') {
             // console.log(dropdownTitle);
-            setEstimatedTotal(isNan);
+            setEstimatedShares(isNan);
             // console.log('yes');
         } else if (isNan.toString() !== 'NaN' && dropdownTitle === 'Shares') {
             // console.log(dropdownTitle);
-            setEstimatedTotal(`$ ${isNan}`);
+            setEstimatedCost(`$ ${isNan}`);
             // console.log('yes 2');
-        } else {
-            // console.log('no');
-            setEstimatedTotal('0.00');
         }
     };
 
@@ -64,36 +82,37 @@ const SummaryComponent = ({
 
     const calculateOnTitleChange = (dropDownTitle) => {
         console.log(dropDownTitle);
-        console.log(estimatedTotal);
         const parseStockInputValue = parseFloat(stockInputValue);
         console.log(parseStockInputValue);
         // const parseSlicedStockPrice = parseFloat(estimatedTotal.slice(1, -1));
-        const parseSlicedStockPrice = estimatedTotal;
 
         if (dropDownTitle === 'Dollars') {
             console.log('ok');
             console.log(parseStockInputValue);
-            const totalShares = parseStockInputValue / parseSlicedStockPrice;
+            console.log(estimatedCost);
+            const totalShares = parseStockInputValue / estimatedCost;
             console.log(totalShares);
+            setEstimatedShares(totalShares);
             if (totalShares.toString() !== 'NaN') {
                 console.log('ok');
-                setEstimatedTotal(totalShares);
+                console.log(estimatedCost);
             } else {
                 console.log('nan');
-                setEstimatedTotal('0');
+                setEstimatedShares('0.00');
             }
         } else {
             console.log('else');
             console.log(dropDownTitle);
-            console.log(estimatedTotal);
-            const totalStockCost = parseSlicedStockPrice * parseStockInputValue;
+            console.log(estimatedCost);
+            const totalStockCost = estimatedShares * parseStockInputValue;
+            console.log(totalStockCost);
             if (totalStockCost.toString() !== 'NaN') {
                 console.log('ok');
-                setEstimatedTotal(totalStockCost);
+                setEstimatedCost(totalStockCost);
                 console.log(totalStockCost);
             } else {
                 console.log('nan');
-                setEstimatedTotal('$0.00');
+                setEstimatedCost('$0.00');
             }
         }
     };
@@ -104,29 +123,32 @@ const SummaryComponent = ({
         let parseSlicedStockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
         if (dropdownTitle === 'Dollars') {
-            const totalCostInDollars = parseStockInput / parseSlicedStockPrice;
-            console.log(`cost in dollars ${totalCostInDollars}`);
-            isNan(totalCostInDollars);
+            const totalShares = parseStockInput / parseSlicedStockPrice;
+            console.log(`cost in dollars ${totalShares}`);
+            isNan(totalShares);
         } else {
             console.log(dropdownTitle);
             console.log(userBuyingStock);
-            const totalShares = parseSlicedStockPrice * parseStockInput;
-            console.log(`total shares ${totalShares}`);
-            isNan(totalShares);
+            const totalCost = parseSlicedStockPrice * parseStockInput;
+            console.log(`total shares ${totalCost}`);
+            isNan(totalCost);
         }
     };
 
-    const handleStockInfo = (e) => {
+    const handleStockInfoOnSelect = (e) => {
         const stockCompanyName =
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
+        const stockChange =
+            e.currentTarget.childNodes[1].childNodes[1].textContent;
         const stockSymbol =
             e.currentTarget.childNodes[0].childNodes[1].textContent;
         console.log(stockCompanyName, stockCost);
         setStockName(stockCompanyName);
         setStocPrice(stockCost);
         setStockSymbol(stockSymbol);
+        setStockChange(stockChange);
     };
 
     const handleDropdownTitle = (e) => {
@@ -153,7 +175,7 @@ const SummaryComponent = ({
                         className="mb-5 text-muted"
                         stlye={{ height: '2rem' }}
                     >
-                        (${stock.stockCost}) Today
+                        ({stock.stockCost}) Today ({stock.stockChange})
                     </Card.Subtitle>
                     <Button href="#" block>
                         sell
@@ -173,7 +195,7 @@ const SummaryComponent = ({
                 className="tableRow"
                 onClick={(e) => {
                     handleShow();
-                    handleStockInfo(e);
+                    handleStockInfoOnSelect(e);
                 }}
             >
                 <td className="d-flex flex-column">
@@ -289,7 +311,11 @@ const SummaryComponent = ({
                                             ? 'Estimated Shares'
                                             : 'Estimated Cost'}
                                     </h5>
-                                    <h5>{estimatedTotal}</h5>
+                                    <h5>
+                                        {dropdownTitle === 'Dollars'
+                                            ? estimatedShares
+                                            : estimatedCost}
+                                    </h5>
                                 </div>
                             </div>
                         </div>
