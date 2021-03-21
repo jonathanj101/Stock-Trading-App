@@ -46,6 +46,7 @@ const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
             symbol: stockSymbol,
             companyName: companyName,
             stockCost: stockPrice,
+            stockChange: stockChange,
         });
     };
 
