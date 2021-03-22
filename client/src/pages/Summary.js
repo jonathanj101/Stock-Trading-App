@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchComponent from '../pages/SearchComponent';
 import BuyStockModal from '../pages/BuyStockModal';
-import { Table } from 'react-bootstrap';
+import { Card, Button, Table } from 'react-bootstrap';
 
 const SummaryComponent = ({
     investingList,
@@ -35,7 +35,7 @@ const SummaryComponent = ({
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
-            estimatedUserCost: estimatedCost,
+            estimatedUserSharesCost: estimatedCost,
             stockPrice: stockPrice,
         });
         handleTransactions({
@@ -57,13 +57,15 @@ const SummaryComponent = ({
 
     const calculateOnTitleChange = (dropDownTitle) => {
         const parseStockInputValue = parseFloat(stockInputValue);
-        const parseSlicedStockPrice = parseFloat(stockPrice.slice(1, -1));
+        // const parseSlicedStockPrice = parseFloat(stockPrice.slice(1, -1));
+        // const stockPrice = parseFloat(stockPrice.slice(1, -1));
 
         if (!isStockQuantity) {
-            const totalShares = parseStockInputValue / parseSlicedStockPrice;
-            console.log(parseStockInputValue);
-            console.log(stockPrice);
-            console.log(totalShares);
+            console.log('totalShares');
+            const totalShares = parseStockInputValue / stockPrice;
+            // console.log(parseStockInputValue);
+            // console.log(stockPrice);
+            // console.log(totalShares);
             if (!isNaN(totalShares)) {
                 setEstimatedShares(totalShares);
                 return setEstimatedShares(totalShares);
@@ -72,7 +74,8 @@ const SummaryComponent = ({
                 return setEstimatedShares('0.00');
             }
         } else {
-            const totalCost = parseSlicedStockPrice * parseStockInputValue;
+            console.log('totalCost');
+            const totalCost = stockPrice * parseStockInputValue;
             console.log(stockPrice);
             console.log(parseStockInputValue);
             console.log(totalCost);
@@ -87,24 +90,28 @@ const SummaryComponent = ({
     };
 
     const calculateCost = (stockInput) => {
-        console.log(stockPrice);
+        // console.log(stockPrice);
         const { value } = stockInput.currentTarget;
-        let slicedStockPrice = stockPrice.slice(1, -1);
-        console.log(slicedStockPrice);
-        let parseSlicedStockPrice = parseFloat(slicedStockPrice);
+        // let slicedStockPrice = stockPrice.slice(1, -1);
+        // console.log(slicedStockPrice);
+        // let parseSlicedStockPrice = parseFloat(slicedStockPrice);
+        // let stockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
         if (isStockQuantity) {
-            const totalShares = parseStockInput / parseSlicedStockPrice;
+            const totalShares = parseStockInput / stockPrice;
             if (!isNaN(totalShares)) {
                 console.log(`cost in shares ${totalShares}`);
                 setEstimatedShares(totalShares);
+                setEstimatedCost(parseStockInput);
             } else {
                 return;
             }
         } else {
-            const totalCost = parseSlicedStockPrice * parseStockInput;
+            console.log('calc on input totalCost');
+            const totalCost = stockPrice * parseStockInput;
             if (!isNaN(totalCost)) {
                 setEstimatedCost(totalCost);
+                setEstimatedShares(parseStockInput);
             } else {
                 return;
             }
@@ -116,34 +123,42 @@ const SummaryComponent = ({
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
+        const parseSliceStockCost = parseFloat(stockCost.slice(1, -1));
         const stockSymbol =
             e.currentTarget.childNodes[0].childNodes[1].textContent;
         setStockName(stockCompanyName);
-        setStockPrice(stockCost);
+        setStockPrice(parseSliceStockCost);
         setStockSymbol(stockSymbol);
     };
 
     const investingTable = investingList.map((stock, num) => {
-        return console.log('ok');
-        // <Card style={{ width: '20rem' }} key={num}>
-        //     <Card.Body>
-        //         <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
-        //             <span style={{ width: '100%' }}>
-        //                 {stock.companyName}
-        //             </span>
-        //             <span>({stock.symbol})</span>
-        //         </Card.Title>
-        //         <Card.Subtitle
-        //             className="mb-5 text-muted"
-        //             stlye={{ height: '2rem' }}
-        //         >
-        //             ({stock.estimatedUserCost}) Today
-        //         </Card.Subtitle>
-        //         <Button href="#" block>
-        //             sell
-        //         </Button>
-        //     </Card.Body>
-        // </Card>
+        return (
+            <Card style={{ width: '20rem' }} key={num}>
+                <Card.Body>
+                    <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <span style={{ width: '100%' }}>
+                            {stock.companyName}
+                        </span>
+                        <span>({stock.symbol})</span>
+                    </Card.Title>
+                    <Card.Subtitle
+                        className="mb-2 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (${stock.userEstimatedHolding}) Today
+                    </Card.Subtitle>
+                    <Card.Subtitle
+                        className="mb-5 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (Total Shares: {stock.userEstimatedShares})
+                    </Card.Subtitle>
+                    <Button href="#" block>
+                        sell
+                    </Button>
+                </Card.Body>
+            </Card>
+        );
     });
 
     const stocksListTable = stocksList.map((stock, num) => {
@@ -234,8 +249,8 @@ const SummaryComponent = ({
                             <h1>Remember: either go BIG or go HOME!!</h1>
                         </div>
                     ) : (
-                        // investingTable
-                        'ok'
+                        investingTable
+                        // 'ok'
                     )}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
