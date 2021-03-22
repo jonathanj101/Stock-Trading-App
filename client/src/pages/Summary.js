@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchComponent from '../pages/SearchComponent';
 import BuyStockModal from '../pages/BuyStockModal';
-import { Card, Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 const SummaryComponent = ({
     investingList,
@@ -17,7 +17,6 @@ const SummaryComponent = ({
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStockPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
-    const [stockChange, setStockChange] = useState('');
     const [isStockQuantity, setIsStockQuantity] = useState(true);
 
     const handleShow = () => {
@@ -26,17 +25,18 @@ const SummaryComponent = ({
 
     const getStockFromSearchAddToModal = (e) => {
         setStockName(e.stockName);
-        setStockChange(e.stockChange);
         setStockSymbol(e.stockSymbol);
         setStockPrice(e.stockPrice);
     };
 
     const handleSubmit = () => {
         handleTransactions(stockSymbol);
+        console.log(estimatedCost);
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
             estimatedUserCost: estimatedCost,
+            stockPrice: stockPrice,
         });
         handleTransactions({
             companyName: stockName,
@@ -57,9 +57,13 @@ const SummaryComponent = ({
 
     const calculateOnTitleChange = (dropDownTitle) => {
         const parseStockInputValue = parseFloat(stockInputValue);
+        const parseSlicedStockPrice = parseFloat(stockPrice.slice(1, -1));
 
         if (!isStockQuantity) {
-            const totalShares = parseStockInputValue / stockPrice;
+            const totalShares = parseStockInputValue / parseSlicedStockPrice;
+            console.log(parseStockInputValue);
+            console.log(stockPrice);
+            console.log(totalShares);
             if (!isNaN(totalShares)) {
                 setEstimatedShares(totalShares);
                 return setEstimatedShares(totalShares);
@@ -68,7 +72,10 @@ const SummaryComponent = ({
                 return setEstimatedShares('0.00');
             }
         } else {
-            const totalCost = stockPrice * parseStockInputValue;
+            const totalCost = parseSlicedStockPrice * parseStockInputValue;
+            console.log(stockPrice);
+            console.log(parseStockInputValue);
+            console.log(totalCost);
             if (!isNaN(totalCost)) {
                 setEstimatedCost(totalCost);
                 return setEstimatedCost(totalCost);
@@ -109,38 +116,34 @@ const SummaryComponent = ({
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
-        const stockChange =
-            e.currentTarget.childNodes[1].childNodes[1].textContent;
         const stockSymbol =
             e.currentTarget.childNodes[0].childNodes[1].textContent;
         setStockName(stockCompanyName);
         setStockPrice(stockCost);
         setStockSymbol(stockSymbol);
-        setStockChange(stockChange);
     };
 
     const investingTable = investingList.map((stock, num) => {
-        return (
-            <Card style={{ width: '20rem' }} key={num}>
-                <Card.Body>
-                    <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <span style={{ width: '100%' }}>
-                            {stock.companyName}
-                        </span>
-                        <span>({stock.symbol})</span>
-                    </Card.Title>
-                    <Card.Subtitle
-                        className="mb-5 text-muted"
-                        stlye={{ height: '2rem' }}
-                    >
-                        ({stock.estimatedUserCost}) Today
-                    </Card.Subtitle>
-                    <Button href="#" block>
-                        sell
-                    </Button>
-                </Card.Body>
-            </Card>
-        );
+        return console.log('ok');
+        // <Card style={{ width: '20rem' }} key={num}>
+        //     <Card.Body>
+        //         <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
+        //             <span style={{ width: '100%' }}>
+        //                 {stock.companyName}
+        //             </span>
+        //             <span>({stock.symbol})</span>
+        //         </Card.Title>
+        //         <Card.Subtitle
+        //             className="mb-5 text-muted"
+        //             stlye={{ height: '2rem' }}
+        //         >
+        //             ({stock.estimatedUserCost}) Today
+        //         </Card.Subtitle>
+        //         <Button href="#" block>
+        //             sell
+        //         </Button>
+        //     </Card.Body>
+        // </Card>
     });
 
     const stocksListTable = stocksList.map((stock, num) => {
@@ -231,7 +234,8 @@ const SummaryComponent = ({
                             <h1>Remember: either go BIG or go HOME!!</h1>
                         </div>
                     ) : (
-                        investingTable
+                        // investingTable
+                        'ok'
                     )}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
