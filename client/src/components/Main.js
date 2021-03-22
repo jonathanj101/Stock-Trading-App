@@ -20,7 +20,8 @@ class Main extends Component {
             password: '',
             username: '',
             isLogged: true,
-            stockData: [],
+            isInvestingEmpty: true,
+            userStocksData: [],
             investingList: [],
             stocksList: [],
         };
@@ -32,6 +33,7 @@ class Main extends Component {
         this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
             this,
         );
+        this.addStockToUserStockList = this.addStockToUserStockList.bind(this);
     }
 
     async componentDidMount() {
@@ -62,18 +64,73 @@ class Main extends Component {
 
     addStockToInvestingTable = (stock) => {
         console.log(stock);
-        const newStockInfo = {
-            symbol: stock.symbol,
-            stockPrice: stock.stockPrice,
-            estimatedUserCost: stock.estimatedUserCost,
-            companyName: stock.companyName,
-        };
-        // if () {
+        this.addStockToUserStockList(stock);
 
+        if (this.state.isInvestingEmpty) {
+            const newStockInfoInvestingList = {
+                symbol: stock.symbol,
+                userEstimatedHolding: stock.estimatedUserSharesCost,
+                userEstimatedShares:
+                    stock.estimatedUserSharesCost / stock.stockPrice,
+                companyName: stock.companyName,
+            };
+            this.setState({
+                investingList: [
+                    ...this.state.investingList,
+                    newStockInfoInvestingList,
+                ],
+                isInvestingEmpty: false,
+            });
+        } else if (this.state.investingList.length > 0) {
+            this.state.investingList.forEach((userStock) => {
+                if (userStock.companyName === stock.companyName) {
+                    console.log(userStock);
+                    console.log(stock);
+                    console.log('same company name');
+                    console.log(`stock price ${stock.stockPrice}`);
+                    console.log(stock.stockPrice);
+                    console.log(
+                        `stock user shares cost${stock.estimatedUserSharesCost}`,
+                    );
+                    console.log(stock.estimatedUserSharesCost);
+                    console.log(
+                        `userstock user holding ${userStock.userEstimatedHolding}`,
+                    );
+                    console.log(userStock.userEstimatedHolding);
+                    console.log(
+                        `userstock user shares ${userStock.userEstimatedShares}`,
+                    );
+                    console.log(userStock.userEstimatedShares);
+                    console.log(
+                        (userStock.userEstimatedHolding =
+                            userStock.userEstimatedHolding +
+                            stock.estimatedUserSharesCost),
+                    );
+                }
+            });
+        } else {
+            this.setState({
+                isInvestingEmpty: true,
+            });
+        }
+    };
+
+    addStockToUserStockList = (stockInfo) => {
+        const newUserStockDataList = {
+            symbol: stockInfo.symbol,
+            stockPrice: stockInfo.stockPrice,
+            estimatedUserShares: stockInfo.estimatedUserShares,
+            companyName: stockInfo.companyName,
+        };
+        // if (this.state.userStocksData.length > 0) {
+        //     this.state.userStocksData.forEach((userStock) => {
+        //         if (userStock.companyName !== stock.companyName) {
+        //             console.log('ok');
+        //         } else {
+        //             return;
+        //         }
+        //     });
         // }
-        this.setState({
-            investingList: [...this.state.investingList, newStockInfo],
-        });
     };
 
     handleRequest = async (request) => {
@@ -102,6 +159,7 @@ class Main extends Component {
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
         console.log(this.state.investingList);
+        console.log(this.state.userStocksData);
     };
 
     handleChange = (e) => {
