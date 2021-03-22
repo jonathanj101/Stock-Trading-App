@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import SearchComponent from '../pages/SearchComponent';
-import {
-    Card,
-    Table,
-    Button,
-    Modal,
-    DropdownButton,
-    Dropdown,
-    Form,
-} from 'react-bootstrap';
+import BuyStockModal from '../pages/BuyStockModal';
+import { Card, Table, Button } from 'react-bootstrap';
 
 const SummaryComponent = ({
     investingList,
@@ -18,26 +11,24 @@ const SummaryComponent = ({
     addStockToInvestingTable,
 }) => {
     const [show, setShow] = useState(false);
-    const [buyingStockQuantity, setBuyingStockQuantity] = useState('');
-    const [userBuyingStock, setUserBuyingStock] = useState('');
     const [estimatedShares, setEstimatedShares] = useState('0.00');
-    const [estimatedCost, setEstimatedCost] = useState('0.00');
+    const [estimatedCost, setEstimatedCost] = useState('$0.00');
     const [stockInputValue, setStockInputValue] = useState('0.00');
     const [stockName, setStockName] = useState('');
-    const [stockPrice, setStocPrice] = useState('');
+    const [stockPrice, setStockPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
     const [stockChange, setStockChange] = useState('');
-    const [dropdownTitle, setDropdownTitle] = useState('Dollars');
-    const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
+    const [isStockQuantity, setIsStockQuantity] = useState(true);
 
-    const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true);
-        setDropdownTitle('Dollars');
-        setDropdownItemTitle('Shares');
-        setUserBuyingStock('$0.00');
-        setEstimatedShares('0.00');
-        setEstimatedShares('$0.00');
+    };
+
+    const getStockFromSearchAddToModal = (e) => {
+        setStockName(e.stockName);
+        setStockChange(e.stockChange);
+        setStockSymbol(e.stockSymbol);
+        setStockPrice(e.stockPrice);
     };
 
     const handleSubmit = () => {
@@ -45,8 +36,7 @@ const SummaryComponent = ({
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
-            stockCost: stockPrice,
-            stockChange: stockChange,
+            estimatedUserCost: estimatedCost,
         });
         handleTransactions({
             companyName: stockName,
@@ -60,78 +50,57 @@ const SummaryComponent = ({
         addStockToInvestingTable(stockInfo);
     };
 
-    const isNan = (isNan) => {
-        console.log(isNan);
-        // console.log(dropdownTitle);
-        // console.log(isNan.toString());
-        if (isNan.toString() !== 'NaN' && dropdownTitle === 'Dollars') {
-            // console.log(dropdownTitle);
-            setEstimatedShares(isNan);
-            // console.log('yes');
-        } else if (isNan.toString() !== 'NaN' && dropdownTitle === 'Shares') {
-            // console.log(dropdownTitle);
-            setEstimatedCost(`$ ${isNan}`);
-            // console.log('yes 2');
-        }
-    };
-
     const handleUserStockInput = (e) => {
         const { value } = e.currentTarget;
-        setUserBuyingStock(value);
+        setStockInputValue(value);
     };
 
     const calculateOnTitleChange = (dropDownTitle) => {
-        console.log(dropDownTitle);
         const parseStockInputValue = parseFloat(stockInputValue);
-        console.log(parseStockInputValue);
-        // const parseSlicedStockPrice = parseFloat(estimatedTotal.slice(1, -1));
 
-        if (dropDownTitle === 'Dollars') {
-            console.log('ok');
-            console.log(parseStockInputValue);
-            console.log(estimatedCost);
-            const totalShares = parseStockInputValue / estimatedCost;
-            console.log(totalShares);
-            setEstimatedShares(totalShares);
-            if (totalShares.toString() !== 'NaN') {
-                console.log('ok');
-                console.log(estimatedCost);
+        if (!isStockQuantity) {
+            const totalShares = parseStockInputValue / stockPrice;
+            if (!isNaN(totalShares)) {
+                setEstimatedShares(totalShares);
+                return setEstimatedShares(totalShares);
             } else {
-                console.log('nan');
                 setEstimatedShares('0.00');
+                return setEstimatedShares('0.00');
             }
         } else {
-            console.log('else');
-            console.log(dropDownTitle);
-            console.log(estimatedCost);
-            const totalStockCost = estimatedShares * parseStockInputValue;
-            console.log(totalStockCost);
-            if (totalStockCost.toString() !== 'NaN') {
-                console.log('ok');
-                setEstimatedCost(totalStockCost);
-                console.log(totalStockCost);
+            const totalCost = stockPrice * parseStockInputValue;
+            if (!isNaN(totalCost)) {
+                setEstimatedCost(totalCost);
+                return setEstimatedCost(totalCost);
             } else {
-                console.log('nan');
                 setEstimatedCost('$0.00');
+                return setEstimatedCost('$0.00');
             }
         }
     };
 
     const calculateCost = (stockInput) => {
+        console.log(stockPrice);
         const { value } = stockInput.currentTarget;
         let slicedStockPrice = stockPrice.slice(1, -1);
+        console.log(slicedStockPrice);
         let parseSlicedStockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
-        if (dropdownTitle === 'Dollars') {
+        if (isStockQuantity) {
             const totalShares = parseStockInput / parseSlicedStockPrice;
-            console.log(`cost in dollars ${totalShares}`);
-            isNan(totalShares);
+            if (!isNaN(totalShares)) {
+                console.log(`cost in shares ${totalShares}`);
+                setEstimatedShares(totalShares);
+            } else {
+                return;
+            }
         } else {
-            console.log(dropdownTitle);
-            console.log(userBuyingStock);
             const totalCost = parseSlicedStockPrice * parseStockInput;
-            console.log(`total shares ${totalCost}`);
-            isNan(totalCost);
+            if (!isNaN(totalCost)) {
+                setEstimatedCost(totalCost);
+            } else {
+                return;
+            }
         }
     };
 
@@ -144,21 +113,10 @@ const SummaryComponent = ({
             e.currentTarget.childNodes[1].childNodes[1].textContent;
         const stockSymbol =
             e.currentTarget.childNodes[0].childNodes[1].textContent;
-        console.log(stockCompanyName, stockCost);
         setStockName(stockCompanyName);
-        setStocPrice(stockCost);
+        setStockPrice(stockCost);
         setStockSymbol(stockSymbol);
         setStockChange(stockChange);
-    };
-
-    const handleDropdownTitle = (e) => {
-        const ele = e.currentTarget.textContent;
-        calculateOnTitleChange(ele);
-        // console.log(ele);
-        setDropdownTitle(ele);
-        // console.log(`dropdown title ${dropdownTitle}`);
-        setDropdownItemTitle(dropdownTitle);
-        // console.log(`dropdownItemTitle ${dropdownItemTitle}`);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -175,7 +133,7 @@ const SummaryComponent = ({
                         className="mb-5 text-muted"
                         stlye={{ height: '2rem' }}
                     >
-                        ({stock.stockCost}) Today ({stock.stockChange})
+                        ({stock.estimatedUserCost}) Today
                     </Card.Subtitle>
                     <Button href="#" block>
                         sell
@@ -232,110 +190,29 @@ const SummaryComponent = ({
             <SearchComponent
                 mainState={mainState}
                 addStockToInvestingTable={addStockToInvestingTable}
-            />
-            <Modal
+                handleShow={handleShow}
+                getStockFromSearchAddToModal={getStockFromSearchAddToModal}
                 show={show}
-                onHide={handleClose}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Buy {stockName}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div>
-                        <div style={styles.stockInfoDiv}>
-                            {stockSymbol} = {stockPrice}
-                        </div>
-                        <div className="mx-auto w-50 mt-5 mb-5">
-                            <div className="d-flex justify-content-center">
-                                <DropdownButton
-                                    id="dropdown-basic-button"
-                                    title={
-                                        dropdownTitle
-                                            ? dropdownTitle
-                                            : dropdownItemTitle
-                                    }
-                                >
-                                    <Dropdown.Item
-                                        onClick={(e) => handleDropdownTitle(e)}
-                                        eventKey="Shares"
-                                    >
-                                        {dropdownItemTitle
-                                            ? dropdownItemTitle
-                                            : dropdownTitle}
-                                    </Dropdown.Item>
-                                </DropdownButton>
-                                <div className="w-100">
-                                    <Form.Row>
-                                        <Form.Control
-                                            required
-                                            type="number"
-                                            name={userBuyingStock}
-                                            value={userBuyingStock}
-                                            onChange={(e) => {
-                                                handleUserStockInput(e);
-                                                calculateCost(e);
-                                                setStockInputValue(
-                                                    e.currentTarget.value,
-                                                );
-                                            }}
-                                            placeholder={
-                                                dropdownTitle === 'Dollars'
-                                                    ? '$0.00'
-                                                    : '0'
-                                            }
-                                        />
-                                    </Form.Row>
-                                </div>
-                            </div>
-                            <div className="w-100">
-                                {/* <Form.Row>
-                                    <Form.Control
-                                        required
-                                        type="number"
-                                        step="0.01"
-                                        placeholder={
-                                            dropdownTitle === 'Dollars'
-                                                ? 'Amount'
-                                                : 'Shares'
-                                        }
-                                    />
-                                </Form.Row> */}
-                                <div className="w-100 d-flex justify-content-between text-center mx-auto">
-                                    <h5>
-                                        {dropdownTitle === 'Dollars'
-                                            ? 'Estimated Shares'
-                                            : 'Estimated Cost'}
-                                    </h5>
-                                    <h5>
-                                        {dropdownTitle === 'Dollars'
-                                            ? estimatedShares
-                                            : estimatedCost}
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <div className="text-center mx-auto">
-                        <h4>$0.00 available to buy stock </h4>
-                        <Button
-                            onClick={() => {
-                                handleClose();
-                                handleSubmit();
-                            }}
-                            block
-                        >
-                            Buy
-                        </Button>
-                    </div>
-                </Modal.Footer>
-            </Modal>
+            />
+
+            <BuyStockModal
+                show={show}
+                stockName={stockName}
+                stockSymbol={stockSymbol}
+                stockPrice={stockPrice}
+                isStockQuantity={isStockQuantity}
+                setIsStockQuantity={setIsStockQuantity}
+                handleSubmit={handleSubmit}
+                calculateOnTitleChange={calculateOnTitleChange}
+                calculateCost={calculateCost}
+                estimatedCost={estimatedCost}
+                estimatedShares={estimatedShares}
+                handleUserStockInput={handleUserStockInput}
+                setStockInputValue={setStockInputValue}
+                setEstimatedCost={setEstimatedCost}
+                setEstimatedShares={setEstimatedShares}
+                setShow={setShow}
+            />
 
             <div className="w-75 mx-auto">
                 <h1 className="w-100 mx-auto" style={styles.investingTitle}>
@@ -403,14 +280,6 @@ var styles = {
     bordersDivs: {
         border: '1px solid black',
         padding: '50px',
-    },
-    stockInfoDiv: {
-        text: 'center',
-        marginTop: '20px',
-        fontSize: '1.5rem',
-        fontWeight: 'bold',
-        color: 'black',
-        textAlign: 'center',
     },
 };
 
