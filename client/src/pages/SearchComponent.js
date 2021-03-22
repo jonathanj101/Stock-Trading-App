@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, InputGroup, ListGroup } from 'react-bootstrap';
 
-const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
+const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     const [textInput, setTextInput] = useState('');
     const [stockPrice, setStockPrice] = useState('');
     const [stockChange, setStockChange] = useState('');
@@ -13,11 +13,11 @@ const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
     const getTextInput = (e) => {
         const { value } = e.currentTarget;
         setTextInput(value);
-        sendSearchRequest(value);
+        sendRequestOnTextInput(value);
         setIsStockSearched(true);
     };
 
-    const sendSearchRequest = (textInput) => {
+    const sendRequestOnTextInput = (textInput) => {
         console.log(textInput);
         fetch(`/testing/${textInput}`)
             .then((resp) => resp.json())
@@ -25,7 +25,7 @@ const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
                 console.log(data);
                 setCompanyName(data.data.company_name);
                 setStockSymbol(data.data.symbol);
-                setStockPrice(data.data.cost);
+                setStockPrice(`$${data.data.cost.toString()}`);
                 setStockChange(data.data.change);
             });
     };
@@ -42,10 +42,11 @@ const SearchComponent = ({ mainState, addStockToInvestingTable }) => {
             stockName: stockName,
             stockCost: stockCost,
         });
-        addStockToInvestingTable({
-            symbol: stockSymbol,
-            companyName: companyName,
-            stockCost: stockPrice,
+        handleShow();
+        getStockFromSearchAddToModal({
+            stockName: companyName,
+            stockSymbol: stockSymbol,
+            stockPrice: stockPrice,
             stockChange: stockChange,
         });
     };
