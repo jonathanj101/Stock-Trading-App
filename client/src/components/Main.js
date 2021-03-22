@@ -55,24 +55,22 @@ class Main extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        let userSearchStock = this.state.searchStock;
         if (this.state.searchStock !== prevState.userSearchStock) {
             console.log(prevState, this.state.searchStock);
         }
-        // if (this.state.searchStock !== prevState.userSearchStock) {
-        //     let searchingStock = await axios.get(`/testing/${userSearchStock}`)
-        //     this.handleRequest(searchingStock)
-        // }
     }
 
     addStockToInvestingTable = (stock) => {
         console.log(stock);
         const newStockInfo = {
             symbol: stock.symbol,
-            stockCost: stock.stockCost,
+            stockPrice: stock.stockPrice,
+            estimatedUserCost: stock.estimatedUserCost,
             companyName: stock.companyName,
-            stockChange: stock.stockChange,
         };
+        // if () {
+
+        // }
         this.setState({
             investingList: [...this.state.investingList, newStockInfo],
         });
@@ -103,6 +101,7 @@ class Main extends Component {
 
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
+        console.log(this.state.investingList);
     };
 
     handleChange = (e) => {
