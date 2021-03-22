@@ -7,7 +7,6 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     const [stockChange, setStockChange] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
     const [companyName, setCompanyName] = useState('');
-    const [stockInfo, setStockInfo] = useState([]);
     const [isStockSearched, setIsStockSearched] = useState(false);
 
     const getTextInput = (e) => {
@@ -31,17 +30,6 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     };
 
     const onSelect = (e) => {
-        // console.log(e.currentTarget.childNodes[0].childNodes);
-        const symbol = e.currentTarget.childNodes[0].childNodes[0].textContent;
-        const stockName =
-            e.currentTarget.childNodes[0].childNodes[1].textContent;
-        const stockCost =
-            e.currentTarget.childNodes[0].childNodes[2].textContent;
-        setStockInfo({
-            symbol: symbol,
-            stockName: stockName,
-            stockCost: stockCost,
-        });
         handleShow();
         getStockFromSearchAddToModal({
             stockName: companyName,
