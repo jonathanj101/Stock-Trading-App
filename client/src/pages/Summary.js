@@ -36,7 +36,9 @@ const SummaryComponent = ({
             companyName: stockName,
             symbol: stockSymbol,
             estimatedUserSharesCost: estimatedCost,
-            stockPrice: stockPrice,
+            stockPrice: stockPrice.includes('.')
+                ? parseFloat(stockPrice.slice(1))
+                : parseInt(stockPrice.slice(1)),
         });
         handleTransactions({
             companyName: stockName,
@@ -57,15 +59,13 @@ const SummaryComponent = ({
 
     const calculateOnTitleChange = (dropDownTitle) => {
         const parseStockInputValue = parseFloat(stockInputValue);
-        // const parseSlicedStockPrice = parseFloat(stockPrice.slice(1, -1));
-        // const stockPrice = parseFloat(stockPrice.slice(1, -1));
+        const parseSliceStockCost = stockPrice.includes('.')
+            ? parseFloat(stockPrice.slice(1))
+            : parseInt(stockPrice.slice(1));
 
         if (!isStockQuantity) {
             console.log('totalShares');
-            const totalShares = parseStockInputValue / stockPrice;
-            // console.log(parseStockInputValue);
-            // console.log(stockPrice);
-            // console.log(totalShares);
+            const totalShares = parseStockInputValue / parseSliceStockCost;
             if (!isNaN(totalShares)) {
                 setEstimatedShares(totalShares);
                 return setEstimatedShares(totalShares);
@@ -75,7 +75,7 @@ const SummaryComponent = ({
             }
         } else {
             console.log('totalCost');
-            const totalCost = stockPrice * parseStockInputValue;
+            const totalCost = parseSliceStockCost * parseStockInputValue;
             console.log(stockPrice);
             console.log(parseStockInputValue);
             console.log(totalCost);
@@ -90,15 +90,13 @@ const SummaryComponent = ({
     };
 
     const calculateCost = (stockInput) => {
-        // console.log(stockPrice);
         const { value } = stockInput.currentTarget;
-        // let slicedStockPrice = stockPrice.slice(1, -1);
-        // console.log(slicedStockPrice);
-        // let parseSlicedStockPrice = parseFloat(slicedStockPrice);
-        // let stockPrice = parseFloat(slicedStockPrice);
         let parseStockInput = parseFloat(value);
+        const parseSliceStockCost = stockPrice.includes('.')
+            ? parseFloat(stockPrice.slice(1))
+            : parseInt(stockPrice.slice(1));
         if (isStockQuantity) {
-            const totalShares = parseStockInput / stockPrice;
+            const totalShares = parseStockInput / parseSliceStockCost;
             if (!isNaN(totalShares)) {
                 console.log(`cost in shares ${totalShares}`);
                 setEstimatedShares(totalShares);
@@ -108,7 +106,7 @@ const SummaryComponent = ({
             }
         } else {
             console.log('calc on input totalCost');
-            const totalCost = stockPrice * parseStockInput;
+            const totalCost = parseSliceStockCost * parseStockInput;
             if (!isNaN(totalCost)) {
                 setEstimatedCost(totalCost);
                 setEstimatedShares(parseStockInput);
@@ -123,11 +121,10 @@ const SummaryComponent = ({
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
             e.currentTarget.childNodes[1].childNodes[0].textContent;
-        const parseSliceStockCost = parseFloat(stockCost.slice(1, -1));
         const stockSymbol =
             e.currentTarget.childNodes[0].childNodes[1].textContent;
         setStockName(stockCompanyName);
-        setStockPrice(parseSliceStockCost);
+        setStockPrice(stockCost);
         setStockSymbol(stockSymbol);
     };
 
