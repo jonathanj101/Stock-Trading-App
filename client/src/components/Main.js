@@ -89,16 +89,6 @@ class Main extends Component {
             // });
             this.state.investingList.map((userStock, index) => {
                 debugger;
-                console.log(userStock, index);
-                // for (
-                //     let index = 0;
-                //     index <= this.state.investingList.length;
-                //     index++
-                // ) {
-                //     const element = this.state.investingList[index];
-                //     console.log(element);
-                //     console.log(index);
-                // }
                 if (stock.companyName === userStock.companyName) {
                     console.log(userStock);
                     console.log(stock);
