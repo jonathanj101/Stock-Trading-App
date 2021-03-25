@@ -87,7 +87,7 @@ class Main extends Component {
             // this.setState({
             //     isInvestingEmpty: false,
             // });
-            this.state.investingList.map((userStock, index) => {
+            this.state.investingList.find((userStock, index) => {
                 debugger;
                 if (stock.companyName === userStock.companyName) {
                     console.log(userStock);
