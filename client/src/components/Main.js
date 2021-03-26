@@ -87,40 +87,57 @@ class Main extends Component {
             // this.setState({
             //     isInvestingEmpty: false,
             // });
-            this.state.investingList.find((userStock, index) => {
+            const sameStock = this.state.investingList.find((userStock) => {
+                return userStock.symbol === stock.symbol;
                 debugger;
-                if (stock.companyName === userStock.companyName) {
-                    console.log(userStock);
-                    console.log(stock);
-                    console.log('same company name');
-                    console.log(`stock price ${stock.stockPrice}`);
-                    console.log(stock.stockPrice);
-                    console.log(
-                        `stock user shares cost${stock.estimatedUserSharesCost}`,
-                    );
-                    console.log(stock.estimatedUserSharesCost);
-                    console.log(
-                        `userstock user holding ${userStock.userEstimatedHolding}`,
-                    );
-                    console.log(userStock.userEstimatedHolding);
-                    console.log(
-                        `userstock user shares ${userStock.userEstimatedShares}`,
-                    );
-                    console.log(userStock.userEstimatedShares);
-                    console.log(
-                        (userStock.userEstimatedHolding =
-                            userStock.userEstimatedHolding +
-                            stock.estimatedUserSharesCost),
-                    );
-                } else {
-                    this.setState({
-                        investingList: [
-                            ...this.state.investingList,
-                            newStockInfoInvestingList,
-                        ],
-                    });
-                }
+                // if (userStock.symbol === stock.symbol) {
+                // if (userStock.symbol === stock.symbol) {
+                //     console.log(
+                //         `user stock symbol ${userStock.symbol} / stock symbol ${stock.symbol}`,
+                //     );
+                // }
+                //     if (stock.companyName === userStock.companyName) {
+                //         console.log(userStock);
+                //         console.log(stock);
+                //         console.log('same company name');
+                //         console.log(`stock price ${stock.stockPrice}`);
+                //         console.log(stock.stockPrice);
+                //         console.log(
+                //             `stock user shares cost${stock.estimatedUserSharesCost}`,
+                //         );
+                //         console.log(stock.estimatedUserSharesCost);
+                //         console.log(
+                //             `userstock user holding ${userStock.userEstimatedHolding}`,
+                //         );
+                //         console.log(userStock.userEstimatedHolding);
+                //         console.log(
+                //             `userstock user shares ${userStock.userEstimatedShares}`,
+                //         );
+                //         console.log(userStock.userEstimatedShares);
+                //         console.log(
+                //             (userStock.userEstimatedHolding =
+                //                 userStock.userEstimatedHolding +
+                //                 stock.estimatedUserSharesCost),
+                //         );
+                //     } else {
+                // this.setState({
+                //     investingList: [
+                //         ...this.state.investingList,
+                //         newStockInfoInvestingList,
+                //     ],
+                // });
+                //     }
             });
+            console.log(sameStock);
+            if (sameStock) {
+                console.log('ok');
+                console.log(sameStock.symbol);
+                sameStock.userEstimatedHolding =
+                    sameStock.userEstimatedHolding +
+                    stock.estimatedUserSharesCost;
+            } else {
+                console.log('idk');
+            }
         } else {
             this.setState({
                 investingList: [
