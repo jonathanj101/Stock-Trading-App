@@ -36,6 +36,7 @@ const SummaryComponent = ({
             companyName: stockName,
             symbol: stockSymbol,
             estimatedUserSharesCost: estimatedCost,
+            estimatedUserShares: estimatedShares,
             stockPrice: stockPrice.includes('.')
                 ? parseFloat(stockPrice.slice(1))
                 : parseInt(stockPrice.slice(1)),
