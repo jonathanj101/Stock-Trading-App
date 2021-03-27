@@ -33,7 +33,6 @@ class Main extends Component {
         this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
             this,
         );
-        this.addStockToUserStockList = this.addStockToUserStockList.bind(this);
     }
 
     async componentDidMount() {
@@ -63,9 +62,6 @@ class Main extends Component {
     }
 
     addStockToInvestingTable = (stock) => {
-        console.log(stock);
-        this.addStockToUserStockList(stock);
-
         const newStockInfoInvestingList = {
             symbol: stock.symbol,
             userEstimatedHolding: stock.estimatedUserSharesCost,
@@ -73,70 +69,30 @@ class Main extends Component {
                 stock.estimatedUserSharesCost / stock.stockPrice,
             companyName: stock.companyName,
         };
-        // if (this.state.isInvestingEmpty) {
-        //     debugger;
-        //     this.setState({
-        //         investingList: [
-        //             ...this.state.investingList,
-        //             newStockInfoInvestingList,
-        //         ],
-        //     });
-        // }
         if (this.state.investingList.length >= 1) {
-            debugger;
-            // this.setState({
-            //     isInvestingEmpty: false,
-            // });
             const sameStock = this.state.investingList.find((userStock) => {
-                return userStock.symbol === stock.symbol;
-                debugger;
-                // if (userStock.symbol === stock.symbol) {
-                // if (userStock.symbol === stock.symbol) {
-                //     console.log(
-                //         `user stock symbol ${userStock.symbol} / stock symbol ${stock.symbol}`,
-                //     );
-                // }
-                //     if (stock.companyName === userStock.companyName) {
-                //         console.log(userStock);
-                //         console.log(stock);
-                //         console.log('same company name');
-                //         console.log(`stock price ${stock.stockPrice}`);
-                //         console.log(stock.stockPrice);
-                //         console.log(
-                //             `stock user shares cost${stock.estimatedUserSharesCost}`,
-                //         );
-                //         console.log(stock.estimatedUserSharesCost);
-                //         console.log(
-                //             `userstock user holding ${userStock.userEstimatedHolding}`,
-                //         );
-                //         console.log(userStock.userEstimatedHolding);
-                //         console.log(
-                //             `userstock user shares ${userStock.userEstimatedShares}`,
-                //         );
-                //         console.log(userStock.userEstimatedShares);
-                //         console.log(
-                //             (userStock.userEstimatedHolding =
-                //                 userStock.userEstimatedHolding +
-                //                 stock.estimatedUserSharesCost),
-                //         );
-                //     } else {
-                // this.setState({
-                //     investingList: [
-                //         ...this.state.investingList,
-                //         newStockInfoInvestingList,
-                //     ],
-                // });
-                //     }
+                if (userStock.symbol === stock.symbol) return true;
+                return false;
             });
-            console.log(sameStock);
             if (sameStock) {
-                console.log('ok');
-                console.log(sameStock.symbol);
+                debugger;
+                const totalHolding =
+                    sameStock.userEstimatedHolding +
+                    stock.estimatedUserSharesCost;
+                const totalSharesHolding =
+                    sameStock.userEstimatedShares + stock.estimatedUserShares;
                 sameStock.userEstimatedHolding =
                     sameStock.userEstimatedHolding +
                     stock.estimatedUserSharesCost;
+                sameStock.userEstimatedHolding = totalHolding;
+                sameStock.userEstimatedShares = totalSharesHolding;
             } else {
-                console.log('idk');
+                this.setState({
+                    investingList: [
+                        ...this.state.investingList,
+                        newStockInfoInvestingList,
+                    ],
+                });
             }
         } else {
             this.setState({
@@ -146,66 +102,6 @@ class Main extends Component {
                 ],
             });
         }
-        //  else if (this.state.investingList.length > 0) {
-        //     this.setState({
-        //         isInvestingEmpty: true,
-        //     });
-        //     debugger;
-        //     this.state.investingList.forEach((userStock) => {
-        //         debugger;
-        //         if (userStock.companyName === stock.companyName) {
-        //             console.log(userStock);
-        //             console.log(stock);
-        //             console.log('same company name');
-        //             console.log(`stock price ${stock.stockPrice}`);
-        //             console.log(stock.stockPrice);
-        //             console.log(
-        //                 `stock user shares cost${stock.estimatedUserSharesCost}`,
-        //             );
-        //             console.log(stock.estimatedUserSharesCost);
-        //             console.log(
-        //                 `userstock user holding ${userStock.userEstimatedHolding}`,
-        //             );
-        //             console.log(userStock.userEstimatedHolding);
-        //             console.log(
-        //                 `userstock user shares ${userStock.userEstimatedShares}`,
-        //             );
-        //             console.log(userStock.userEstimatedShares);
-        //             console.log(
-        //                 (userStock.userEstimatedHolding =
-        //                     userStock.userEstimatedHolding +
-        //                     stock.estimatedUserSharesCost),
-        //             );
-        //         }
-        //     });
-        // }
-        // else {
-        //     debugger;
-        //     this.setState({
-        //         investingList: [
-        //             ...this.state.investingList,
-        //             newStockInfoInvestingList,
-        //         ],
-        //     });
-        // }
-    };
-
-    addStockToUserStockList = (stockInfo) => {
-        const newUserStockDataList = {
-            symbol: stockInfo.symbol,
-            stockPrice: stockInfo.stockPrice,
-            estimatedUserShares: stockInfo.estimatedUserShares,
-            companyName: stockInfo.companyName,
-        };
-        // if (this.state.userStocksData.length > 0) {
-        //     this.state.userStocksData.forEach((userStock) => {
-        //         if (userStock.companyName !== stock.companyName) {
-        //             console.log('ok');
-        //         } else {
-        //             return;
-        //         }
-        //     });
-        // }
     };
 
     handleRequest = async (request) => {
@@ -213,7 +109,6 @@ class Main extends Component {
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
-                    // console.log(stock);
                     return {
                         stockData: stock,
                     };
