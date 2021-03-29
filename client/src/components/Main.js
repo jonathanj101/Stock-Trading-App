@@ -33,6 +33,7 @@ class Main extends Component {
         this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
             this,
         );
+        this.isSameStock = this.isSameStock.bind(this);
     }
 
     async componentDidMount() {
@@ -61,6 +62,25 @@ class Main extends Component {
         }
     }
 
+    isSameStock = (stock) => {
+        const sameStock = this.state.investingList.find(
+            (userStock) => userStock.symbol === stock.symbol,
+        );
+        if (sameStock) {
+            const totalHolding =
+                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
+            const totalSharesHolding =
+                sameStock.userEstimatedShares + stock.estimatedUserShares;
+            sameStock.userEstimatedHolding =
+                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
+            sameStock.userEstimatedHolding = totalHolding;
+            sameStock.userEstimatedShares = totalSharesHolding;
+            return sameStock;
+        } else {
+            return undefined;
+        }
+    };
+
     addStockToInvestingTable = (stock) => {
         const newStockInfoInvestingList = {
             symbol: stock.symbol,
@@ -70,23 +90,8 @@ class Main extends Component {
             companyName: stock.companyName,
         };
         if (this.state.investingList.length >= 1) {
-            const sameStock = this.state.investingList.find((userStock) => {
-                if (userStock.symbol === stock.symbol) return true;
-                return false;
-            });
-            if (sameStock) {
+            if (this.isSameStock(stock) === undefined) {
                 debugger;
-                const totalHolding =
-                    sameStock.userEstimatedHolding +
-                    stock.estimatedUserSharesCost;
-                const totalSharesHolding =
-                    sameStock.userEstimatedShares + stock.estimatedUserShares;
-                sameStock.userEstimatedHolding =
-                    sameStock.userEstimatedHolding +
-                    stock.estimatedUserSharesCost;
-                sameStock.userEstimatedHolding = totalHolding;
-                sameStock.userEstimatedShares = totalSharesHolding;
-            } else {
                 this.setState({
                     investingList: [
                         ...this.state.investingList,
