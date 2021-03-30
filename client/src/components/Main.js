@@ -144,7 +144,6 @@ class Main extends Component {
         this.setState({
             searchStock: value,
         });
-        console.log(this.state);
     };
 
     handleRegister = (firstName, lastName, password, username) => {
