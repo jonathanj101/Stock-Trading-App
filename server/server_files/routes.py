@@ -37,37 +37,14 @@ def main():
 @app.route('/testing/<string:name>', methods=['GET'])
 def testing(name):
     print(name)
-    # f = 'f'
-    # f2 = 'fb'
+
     search_url = "{}/stable/stock/{}/quote?token={}".format(
         base_url, name, api_key)
-    # search_url2 = "{}/stable/stock/{}/quote?token={}".format(
-    #     base_url, name, api_key)
-    # search_url3 = "{}/stable/stock/{}/quote?token={}".format(
-    #     base_url, name, api_key)
 
     req = requests.get(search_url)
 
-    # print(req)
-    # req2 = requests.get(search_url2)
-    # req3 = requests.get(search_url3)
-    # req2 = requests.get(search_url2)
-
     resp = req.json()
-    # resp2 = req2.json()
-    # resp3 = req3.json()
-    # print(resp['companyName'])
 
-    # print(name)
-
-    # print(resp)
-    # print(resp2)
-
-    # response = [
-    #     {"resp1": resp},
-    #     {"resp2": resp2},
-    #     {"resp3": resp3},
-    # ]
     stock_data = {
         "company_name": resp["companyName"],
         "cost": resp["latestPrice"],
