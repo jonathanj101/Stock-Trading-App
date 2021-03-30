@@ -31,7 +31,6 @@ const SummaryComponent = ({
 
     const handleSubmit = () => {
         handleTransactions(stockSymbol);
-        console.log(estimatedCost);
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
@@ -65,7 +64,6 @@ const SummaryComponent = ({
             : parseInt(stockPrice.slice(1));
 
         if (!isStockQuantity) {
-            console.log('totalShares');
             const totalShares = parseStockInputValue / parseSliceStockCost;
             if (!isNaN(totalShares)) {
                 setEstimatedShares(totalShares);
@@ -75,11 +73,7 @@ const SummaryComponent = ({
                 return setEstimatedShares('0.00');
             }
         } else {
-            console.log('totalCost');
             const totalCost = parseSliceStockCost * parseStockInputValue;
-            console.log(stockPrice);
-            console.log(parseStockInputValue);
-            console.log(totalCost);
             if (!isNaN(totalCost)) {
                 setEstimatedCost(totalCost);
                 return setEstimatedCost(totalCost);
