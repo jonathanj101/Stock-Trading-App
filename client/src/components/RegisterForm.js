@@ -7,6 +7,7 @@ const FormComponent = ({ handleRegister, mainState }) => {
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (event) => {
@@ -92,6 +93,31 @@ const FormComponent = ({ handleRegister, mainState }) => {
                             </Form.Control.Feedback>
                             <Form.Control.Feedback type="invalid">
                                 Please type in your Last Name!
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group
+                            as={Col}
+                            sm="12"
+                            md="12"
+                            controlId="email"
+                            style={styles.formGroupStyles}
+                        >
+                            <Form.Control
+                                required
+                                type="email"
+                                placeholder="E-mail"
+                                onChange={(e) => setEmail(e.target.value)}
+                                name="email"
+                                value={email}
+                                style={styles.formControlStyles}
+                            />
+                            <Form.Control.Feedback>
+                                Looks Good!
+                            </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">
+                                Please enter a valid E-mail!
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
