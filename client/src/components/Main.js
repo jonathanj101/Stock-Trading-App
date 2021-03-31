@@ -19,6 +19,7 @@ class Main extends Component {
             lastName: '',
             password: '',
             username: '',
+            email: '',
             isLogged: true,
             isInvestingEmpty: true,
             userStocksData: [],
@@ -146,13 +147,14 @@ class Main extends Component {
         });
     };
 
-    handleRegister = (firstName, lastName, password, username) => {
+    handleRegister = (firstName, lastName, password, username, email) => {
         this.setState(
             {
                 firstName: firstName,
                 lasttName: lastName,
                 password: password,
                 username: username,
+                email: email,
             },
             () => console.log(this.state),
         );
