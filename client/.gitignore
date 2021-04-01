@@ -7,11 +7,14 @@
 
 # testing
 /coverage
+/src/prevForm.txt
 
 # production
 /build
 
 # misc
+.gitignore
+.eslintcache
 .DS_Store
 .env.local
 .env.development.local
