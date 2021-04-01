@@ -9,13 +9,12 @@ main = Blueprint('main', __name__)
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(80), primary_key=True, nullable=False)
+    first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    stocks_id = db.Column(db.Integer, db.ForeignKey("stock.id"))
-    stocks = db.relationship("Stock")
+    stocks = db.relationship("Stock", backref="users")
 
     def __repr__(self):
         return f"User ('{self.first_name}','{self.last_name}','{self.email}', '{self.username}')"
@@ -26,6 +25,8 @@ class Stock(db.Model):
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     stock = db.Column(db.String(255), nullable=False)
     shares = db.Column(db.String(255), nullable=False)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    users = db.relationship("Users", back_populates="stock")
 
     def __repr__(self):
         return f"Stock ('{self.stock}', '{self.shares}', '{self.date}')"
