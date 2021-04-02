@@ -29,7 +29,7 @@ class Main extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleRequest = this.handleRequest.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.handleLogIn = this.handleLogIn.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
         this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
             this,
@@ -147,7 +147,36 @@ class Main extends Component {
         });
     };
 
+    sendRegistrationFormRequest = (
+        firstName,
+        lastName,
+        password,
+        username,
+        email,
+    ) => {
+        // fetch('/submit_form', {
+        //     method: 'post',
+        //     body: JSON.stringify({
+        //         first_name: firstName,
+        //         last_name: lastName,
+        //         password: password,
+        //         username: username,
+        //         email: email,
+        //     }),
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => console.log(data));
+    };
+
     handleRegister = (firstName, lastName, password, username, email) => {
+        if (
+            firstName === '' ||
+            lastName === '' ||
+            password === '' ||
+            username === '' ||
+            email === ''
+        )
+            return;
         this.setState(
             {
                 firstName: firstName,
@@ -158,7 +187,6 @@ class Main extends Component {
             },
             () => console.log(this.state),
         );
-        console.log(this.state);
         fetch('/submit_form', {
             method: 'post',
             body: JSON.stringify({
@@ -166,13 +194,14 @@ class Main extends Component {
                 last_name: lastName,
                 password: password,
                 username: username,
+                email: email,
             }),
         })
             .then((response) => response.json())
             .then((data) => console.log(data));
     };
 
-    onSubmit = () => {
+    handleLogIn = () => {
         const logInInfo = {
             email: this.state.email,
             password: this.state.password,
@@ -196,7 +225,7 @@ class Main extends Component {
                 <NavbarComponent
                     isLogged={this.state.isLogged}
                     handleChange={this.handleChange}
-                    onSubmit={this.onSubmit}
+                    onSubmit={this.handleLogIn}
                 />
                 <Switch>
                     <Route path="/" exact component={() => <Home />} />
@@ -227,7 +256,7 @@ class Main extends Component {
                         component={() => (
                             <FormComponent
                                 handleRegister={this.handleRegister}
-                                onSubmit={this.onSubmit}
+                                onSubmit={this.handleLogIn}
                                 mainState={this.state}
                             />
                         )}
