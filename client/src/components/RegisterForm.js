@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 
 const FormComponent = ({ handleRegister, mainState }) => {
-    console.log(mainState);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
@@ -13,23 +12,28 @@ const FormComponent = ({ handleRegister, mainState }) => {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
+            setValidated(true);
             event.preventDefault();
             event.stopPropagation();
             console.log(validated);
-        }
-        setValidated(true);
-    };
-
-    const onSubmit = (e) => {
-        if (validated === false) {
-            e.preventDefault();
-            console.log('true');
         } else {
             handleRegister(firstName, lastName, password, username);
-            e.preventDefault();
+            event.preventDefault();
             console.log('false');
+            setValidated(false);
         }
     };
+
+    // const onSubmit = (e) => {
+    //     if (validated === false) {
+    //         e.preventDefault();
+    //         console.log('true');
+    //     } else {
+    //         handleRegister(firstName, lastName, password, username);
+    //         e.preventDefault();
+    //         console.log('false');
+    //     }
+    // };
 
     return (
         <div style={styles.mainDiv}>
@@ -39,7 +43,7 @@ const FormComponent = ({ handleRegister, mainState }) => {
                     validated={validated}
                     onSubmit={(e) => {
                         handleSubmit(e);
-                        onSubmit(e);
+                        // onSubmit(e);
                     }}
                     style={styles.formContainer}
                 >
