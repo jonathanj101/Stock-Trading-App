@@ -4,6 +4,7 @@ import base64
 import requests
 from datetime import datetime
 from flask import jsonify, request, render_template, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 from server_files import app
 from server_files.models import Users, Transactions, Stock
 
@@ -52,9 +53,7 @@ def testing(name):
         "symbol": resp["symbol"]
     }
 
-    # return jsonify({"data": response})
     return jsonify({"data": stock_data})
-    # return 'ok'
 
 
 @app.route("/multiple", methods=["GET"])
@@ -130,10 +129,9 @@ def multiple():
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
     # user = User(request.form['email'], request.form['email'])
-    print(request.data)
-    # transactions = Transactions(250)
-    # db.session.add(user)
-    # db.session.add(transactions)
-    # db.session.commit()
-    # return redirect(url_for('testing_tutorial'))
+    print(request.data['first_name'])
+    # print(request.form['password'])
+    # user_details = request.data
+    # print(user_details['password'])
+
     return jsonify({'msg': 'ok'})
