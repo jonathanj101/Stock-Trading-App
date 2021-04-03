@@ -189,13 +189,12 @@ class Main extends Component {
             },
             () => console.log(this.state),
         );
-        fetch('/submit_form', {
+        fetch('/submit_registration', {
             method: 'post',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
-
             body: JSON.stringify({
                 first_name: firstName,
                 last_name: lastName,
