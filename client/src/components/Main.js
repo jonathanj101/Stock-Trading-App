@@ -169,14 +169,16 @@ class Main extends Component {
     };
 
     handleRegister = (firstName, lastName, password, username, email) => {
+        debugger;
         if (
             firstName === '' ||
             lastName === '' ||
             password === '' ||
             username === '' ||
             email === ''
-        )
+        ) {
             return;
+        }
         this.setState(
             {
                 firstName: firstName,
@@ -189,6 +191,11 @@ class Main extends Component {
         );
         fetch('/submit_form', {
             method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+
             body: JSON.stringify({
                 first_name: firstName,
                 last_name: lastName,
@@ -196,9 +203,7 @@ class Main extends Component {
                 username: username,
                 email: email,
             }),
-        })
-            .then((response) => response.json())
-            .then((data) => console.log(data));
+        });
     };
 
     handleLogIn = () => {
