@@ -17,7 +17,7 @@ const FormComponent = ({ handleRegister, mainState }) => {
             event.stopPropagation();
             console.log(validated);
         } else {
-            handleRegister(firstName, lastName, password, username);
+            handleRegister(firstName, lastName, password, username, email);
             event.preventDefault();
             console.log('false');
             setValidated(false);
@@ -45,6 +45,7 @@ const FormComponent = ({ handleRegister, mainState }) => {
                         handleSubmit(e);
                         // onSubmit(e);
                     }}
+                    method="POST"
                     style={styles.formContainer}
                 >
                     <h1 className="text-center">Register</h1>
