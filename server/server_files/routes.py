@@ -126,7 +126,7 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
-@app.route('/submit_form', methods=["POST"])
+@app.route('/submit_registration', methods=["POST"])
 def submit_form():
     print(type(request.get_json()))
     user = request.get_json()
