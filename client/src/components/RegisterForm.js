@@ -24,17 +24,6 @@ const FormComponent = ({ handleRegister, mainState }) => {
         }
     };
 
-    // const onSubmit = (e) => {
-    //     if (validated === false) {
-    //         e.preventDefault();
-    //         console.log('true');
-    //     } else {
-    //         handleRegister(firstName, lastName, password, username);
-    //         e.preventDefault();
-    //         console.log('false');
-    //     }
-    // };
-
     return (
         <div style={styles.mainDiv}>
             <div style={styles.div}>
@@ -43,7 +32,6 @@ const FormComponent = ({ handleRegister, mainState }) => {
                     validated={validated}
                     onSubmit={(e) => {
                         handleSubmit(e);
-                        // onSubmit(e);
                     }}
                     method="POST"
                     style={styles.formContainer}
