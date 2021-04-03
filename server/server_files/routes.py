@@ -128,6 +128,7 @@ def multiple():
 
 @app.route('/submit_registration', methods=["POST"])
 def submit_form():
+    # print(request.headers)
     print(type(request.get_json()))
     user = request.get_json()
     print(user['password'])
