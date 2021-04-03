@@ -128,10 +128,8 @@ def multiple():
 
 @app.route('/submit_form', methods=["POST"])
 def submit_form():
-    # user = User(request.form['email'], request.form['email'])
-    print(request.data['first_name'])
-    # print(request.form['password'])
-    # user_details = request.data
-    # print(user_details['password'])
+    print(type(request.get_json()))
+    user = request.get_json()
+    print(user['password'])
 
     return jsonify({'msg': 'ok'})
