@@ -60,7 +60,6 @@ const BuyStockModal = ({
                             <div className="d-flex justify-content-center">
                                 <DropdownButton
                                     id="dropdown-basic-button"
-                                    // onClick={(e) => handleDropdownTitle(e)}
                                     title={
                                         dropdownTitle
                                             ? dropdownTitle
@@ -96,18 +95,6 @@ const BuyStockModal = ({
                                 </div>
                             </div>
                             <div className="w-100">
-                                {/* <Form.Row>
-                                    <Form.Control
-                                        required
-                                        type="number"
-                                        step="0.01"
-                                        placeholder={
-                                            dropdownTitle === 'Dollars'
-                                                ? 'Amount'
-                                                : 'Shares'
-                                        }
-                                    />
-                                </Form.Row> */}
                                 <div className="w-100 d-flex justify-content-between text-center mx-auto">
                                     <h5>
                                         {dropdownTitle === 'Dollars'
