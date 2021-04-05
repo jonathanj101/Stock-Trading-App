@@ -189,13 +189,17 @@ class Main extends Component {
             },
             () => console.log(this.state),
         );
-        axios.post('/submit_registration', {
-            first_name: firstName,
-            last_name: lastName,
-            password: password,
-            username: username,
-            email: email,
-        });
+        axios
+            .post('/submit_registration', {
+                first_name: firstName,
+                last_name: lastName,
+                password: password,
+                username: username,
+                email: email,
+            })
+            .then((resp) => console.log(resp))
+            .then((err) => console.log(err));
+
         // fetch('/submit_registration', {
         //     method: 'post',
         //     headers: {
