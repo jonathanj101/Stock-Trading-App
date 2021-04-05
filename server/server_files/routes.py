@@ -131,9 +131,26 @@ def submit_form():
     # print(type(request.get_json()))
     user_details = request.get_json()
 
-    user_model = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-                       email=user_details['email'], username=user_details['username'], password=user_details['password'])
-    db.session.add(user_model)
-    db.session.commit()
+    user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
+                 email=user_details['email'], username=user_details['username'],
+                 password=user_details['password'])
+    # user_model = Users.query.all()
+    user_model = Users.query.filter(Users.username)
+    print(user_model['username'])
+    # print(user_model)
+    # q = Users.query.filter(
+    #     Users.username == user_details['username'])
+    # ans = db.session.query(q.exists())
+
+    # if ans == True:
+    #     print(True)
+    # else:
+    #     print(q.username)
+    #     # print(ans.username)
+    #     print(ans)
+    #     print(False)
+    # db.session.add(user)
+
+    # db.session.commit()
 
     return jsonify("Success! You will be redirect to your account shortly! "), 201
