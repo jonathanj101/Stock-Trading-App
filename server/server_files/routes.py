@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from flask import jsonify, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from server_files import app
+from server_files import app, db
 from server_files.models import Users, Transactions, Stock
 
 api_key = os.environ.get('API_KEY')
@@ -128,9 +128,12 @@ def multiple():
 
 @app.route('/submit_registration', methods=["POST"])
 def submit_form():
-    # print(request.headers)
-    print(type(request.get_json()))
-    user = request.get_json()
-    print(user['password'])
+    # print(type(request.get_json()))
+    user_details = request.get_json()
 
-    return jsonify({'msg': 'ok'})
+    user_model = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
+                       email=user_details['email'], username=user_details['username'], password=user_details['password'])
+    db.session.add(user_model)
+    db.session.commit()
+
+    return jsonify("Success! You will be redirect to your account shortly! "), 201
