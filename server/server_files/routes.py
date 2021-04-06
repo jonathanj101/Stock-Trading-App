@@ -128,29 +128,17 @@ def multiple():
 
 @app.route('/submit_registration', methods=["POST"])
 def submit_form():
-    # print(type(request.get_json()))
     user_details = request.get_json()
+    filter_user_model_by_email = Users.query.filter_by(
+        username=user_details['email']).first()
+    filter_user_model_by_username = Users.query.filter_by(
+        username=user_details['username']).first()
 
-    user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-                 email=user_details['email'], username=user_details['username'],
-                 password=user_details['password'])
-    # user_model = Users.query.all()
-    user_model = Users.query.filter(Users.username)
-    print(user_model['username'])
-    # print(user_model)
-    # q = Users.query.filter(
-    #     Users.username == user_details['username'])
-    # ans = db.session.query(q.exists())
-
-    # if ans == True:
-    #     print(True)
-    # else:
-    #     print(q.username)
-    #     # print(ans.username)
-    #     print(ans)
-    #     print(False)
-    # db.session.add(user)
-
-    # db.session.commit()
-
-    return jsonify("Success! You will be redirect to your account shortly! "), 201
+    if filter_user_model_by_email is None or filter_user_model_by_username is None:
+        user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
+                     email=user_details['email'], username=user_details['username'],
+                     password=user_details['password'])
+        db.session.add(user)
+        db.session.commit()
+        return jsonify("Success! You will be redirect to your account shortly! "), 201
+    return jsonify("The username has already been used! Please choose another username!", 500)
