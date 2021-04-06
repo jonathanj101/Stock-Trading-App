@@ -20,6 +20,7 @@ class Main extends Component {
             password: '',
             username: '',
             userID: '',
+            errMsg: '',
             email: '',
             isLogged: true,
             isInvestingEmpty: true,
@@ -201,6 +202,9 @@ class Main extends Component {
             .then((resp) => {
                 console.log(resp);
                 if (resp.status >= 500) {
+                    this.setState({
+                        errMsg: resp.data,
+                    });
                 }
             })
             .then((err) => console.log(err));
@@ -276,8 +280,7 @@ class Main extends Component {
                         component={() => (
                             <FormComponent
                                 handleRegister={this.handleRegister}
-                                onSubmit={this.handleLogIn}
-                                mainState={this.state}
+                                errMsg={this.state.errMsg}
                             />
                         )}
                     />
