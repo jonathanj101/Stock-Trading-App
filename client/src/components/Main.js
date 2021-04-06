@@ -19,6 +19,7 @@ class Main extends Component {
             lastName: '',
             password: '',
             username: '',
+            userID: '',
             email: '',
             isLogged: true,
             isInvestingEmpty: true,
@@ -197,7 +198,11 @@ class Main extends Component {
                 username: username,
                 email: email,
             })
-            .then((resp) => console.log(resp))
+            .then((resp) => {
+                console.log(resp);
+                if (resp.status >= 500) {
+                }
+            })
             .then((err) => console.log(err));
 
         // fetch('/submit_registration', {
