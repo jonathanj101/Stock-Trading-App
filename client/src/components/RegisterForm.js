@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
+import AlertMsgModal from './AlertMsgModal';
 
-const FormComponent = ({ handleRegister, mainState }) => {
+const FormComponent = ({ handleRegister, errMsg }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
@@ -25,147 +26,158 @@ const FormComponent = ({ handleRegister, mainState }) => {
     };
 
     return (
-        <div style={styles.mainDiv}>
-            <div style={styles.div}>
-                <Form
-                    noValidate
-                    validated={validated}
-                    onSubmit={(e) => {
-                        handleSubmit(e);
-                    }}
-                    method="POST"
-                    style={styles.formContainer}
-                >
-                    <h1 className="text-center">Register</h1>
-                    <Form.Row
-                        style={{
-                            marginTop: '50px',
+        <div>
+            <AlertMsgModal errMsg={errMsg} />
+            <div style={styles.mainDiv}>
+                <div style={styles.div}>
+                    <Form
+                        noValidate
+                        validated={validated}
+                        onSubmit={(e) => {
+                            handleSubmit(e);
                         }}
+                        method="POST"
+                        style={styles.formContainer}
                     >
-                        <Form.Group
-                            as={Col}
-                            sm="12"
-                            md="6"
-                            controlId="firstName"
-                            style={styles.formGroupStyles}
+                        <h1 className="text-center">Register</h1>
+                        <Form.Row
+                            style={{
+                                marginTop: '50px',
+                            }}
                         >
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="First name"
-                                onChange={(e) => setFirstName(e.target.value)}
-                                name="firstName"
-                                value={firstName}
-                                style={styles.formControlStyles}
-                            />
-                            <Form.Control.Feedback>
-                                Looks good!
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="invalid">
-                                Please type in your First Name!
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                            as={Col}
-                            sm="12"
-                            md="6"
-                            controlId="lastName"
-                            style={styles.formGroupStyles}
-                        >
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="Last name"
-                                onChange={(e) => setLastName(e.target.value)}
-                                name="lastName"
-                                value={lastName}
-                                style={styles.formControlStyles}
-                            />
-                            <Form.Control.Feedback>
-                                Looks Good!
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="invalid">
-                                Please type in your Last Name!
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
-                        <Form.Group
-                            as={Col}
-                            sm="12"
-                            md="12"
-                            controlId="email"
-                            style={styles.formGroupStyles}
-                        >
-                            <Form.Control
-                                required
-                                type="email"
-                                placeholder="E-mail"
-                                onChange={(e) => setEmail(e.target.value)}
-                                name="email"
-                                value={email}
-                                style={styles.formControlStyles}
-                            />
-                            <Form.Control.Feedback>
-                                Looks Good!
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a valid E-mail!
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
-                        <Form.Group
-                            as={Col}
-                            sm="12"
-                            md="6"
-                            controlId="username"
-                            style={styles.formGroupStyles}
-                        >
-                            <Form.Control
-                                onChange={(e) => setUsername(e.target.value)}
-                                type="text"
-                                placeholder="Username"
-                                name="username"
-                                value={username}
-                                required
-                                style={styles.formControlStyles}
-                            />
-                            <Form.Control.Feedback>
-                                Looks Good!
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="invalid">
-                                Please choose a username.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                            as={Col}
-                            sm="12"
-                            md="6"
-                            controlId="password"
-                            style={styles.formGroupStyles}
-                        >
-                            <Form.Control
-                                onChange={(e) => setPassword(e.target.value)}
-                                name="password"
-                                value={password}
-                                type="password"
-                                placeholder="Password"
-                                style={styles.formControlStyles}
-                                required
-                            />
-                            <Form.Control.Feedback>
-                                Looks Good!
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="invalid">
-                                Please choose a Password.
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Form.Row>
-                    <Button type="submit" block style={styles.btnStyles}>
-                        Submit
-                    </Button>
-                </Form>
+                            <Form.Group
+                                as={Col}
+                                sm="12"
+                                md="6"
+                                controlId="firstName"
+                                style={styles.formGroupStyles}
+                            >
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="First name"
+                                    onChange={(e) =>
+                                        setFirstName(e.target.value)
+                                    }
+                                    name="firstName"
+                                    value={firstName}
+                                    style={styles.formControlStyles}
+                                />
+                                <Form.Control.Feedback>
+                                    Looks good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please type in your First Name!
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group
+                                as={Col}
+                                sm="12"
+                                md="6"
+                                controlId="lastName"
+                                style={styles.formGroupStyles}
+                            >
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="Last name"
+                                    onChange={(e) =>
+                                        setLastName(e.target.value)
+                                    }
+                                    name="lastName"
+                                    value={lastName}
+                                    style={styles.formControlStyles}
+                                />
+                                <Form.Control.Feedback>
+                                    Looks Good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please type in your Last Name!
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group
+                                as={Col}
+                                sm="12"
+                                md="12"
+                                controlId="email"
+                                style={styles.formGroupStyles}
+                            >
+                                <Form.Control
+                                    required
+                                    type="email"
+                                    placeholder="E-mail"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    name="email"
+                                    value={email}
+                                    style={styles.formControlStyles}
+                                />
+                                <Form.Control.Feedback>
+                                    Looks Good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please enter a valid E-mail!
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group
+                                as={Col}
+                                sm="12"
+                                md="6"
+                                controlId="username"
+                                style={styles.formGroupStyles}
+                            >
+                                <Form.Control
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                    type="text"
+                                    placeholder="Username"
+                                    name="username"
+                                    value={username}
+                                    required
+                                    style={styles.formControlStyles}
+                                />
+                                <Form.Control.Feedback>
+                                    Looks Good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a username.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group
+                                as={Col}
+                                sm="12"
+                                md="6"
+                                controlId="password"
+                                style={styles.formGroupStyles}
+                            >
+                                <Form.Control
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    name="password"
+                                    value={password}
+                                    type="password"
+                                    placeholder="Password"
+                                    style={styles.formControlStyles}
+                                    required
+                                />
+                                <Form.Control.Feedback>
+                                    Looks Good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a Password.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Form.Row>
+                        <Button type="submit" block style={styles.btnStyles}>
+                            Submit
+                        </Button>
+                    </Form>
+                </div>
             </div>
         </div>
     );
