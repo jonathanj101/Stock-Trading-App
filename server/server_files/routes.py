@@ -129,12 +129,10 @@ def multiple():
 @app.route('/submit_registration', methods=["POST"])
 def submit_form():
     user_details = request.get_json()
-    filter_user_model_by_email = Users.query.filter_by(
-        username=user_details['email']).first()
     filter_user_model_by_username = Users.query.filter_by(
         username=user_details['username']).first()
 
-    if filter_user_model_by_email is None or filter_user_model_by_username is None:
+    if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
                      email=user_details['email'], username=user_details['username'],
                      password=user_details['password'])
