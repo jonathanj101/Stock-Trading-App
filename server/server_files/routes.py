@@ -132,6 +132,7 @@ def submit_form():
     filter_user_model_by_username = Users.query.filter_by(
         username=user_details['username']).first()
 
+    print(filter_user_model_by_username)
     if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
                      email=user_details['email'], username=user_details['username'],
@@ -139,4 +140,5 @@ def submit_form():
         db.session.add(user)
         db.session.commit()
         return jsonify("Success! You will be redirect to your account shortly! "), 201
-    return jsonify("The username has already been used! Please choose another username!", 500)
+    else:
+        return jsonify("The username has already been used! Please choose another username!"), 500
