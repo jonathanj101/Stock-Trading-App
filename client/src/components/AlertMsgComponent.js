@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-bootstrap';
 
 const AlertMsgComponent = ({ setShow, errMsg, show }) => {
+    console.log(show);
     return (
         <div>
             <Alert show={show} variant="danger">
