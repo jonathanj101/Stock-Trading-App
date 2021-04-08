@@ -94,7 +94,7 @@ class Main extends Component {
         };
         if (this.state.investingList.length >= 1) {
             if (this.isSameStock(stock) === undefined) {
-                debugger;
+                // debugger;
                 this.setState({
                     investingList: [
                         ...this.state.investingList,
@@ -171,7 +171,7 @@ class Main extends Component {
     };
 
     handleRegister = (firstName, lastName, password, username, email) => {
-        debugger;
+        // debugger;
         if (
             firstName === '' ||
             lastName === '' ||
@@ -200,14 +200,19 @@ class Main extends Component {
                 email: email,
             })
             .then((resp) => {
+                debugger;
                 console.log(resp);
-                if (resp.status >= 500) {
-                    this.setState({
-                        errMsg: resp.data,
-                    });
-                }
+                // console.log(resp.status);
+                // console.log(resp.data);
+                // if (resp.status >= 500) {
+                //     console.log(resp.data);
+                //     this.setState({
+                //         errMsg: resp.data,
+                //     });
+                // }
             })
             .then((err) => console.log(err));
+        debugger;
 
         // fetch('/submit_registration', {
         //     method: 'post',
