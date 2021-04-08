@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import AlertMsgModal from './AlertMsgModal';
+import AlertMsgComponent from './AlertMsgComponent';
 
 const FormComponent = ({ handleRegister, errMsg }) => {
     const [firstName, setFirstName] = useState('');
@@ -9,6 +9,7 @@ const FormComponent = ({ handleRegister, errMsg }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
+    const [showAlertMsgComponent, setShow] = useState(false);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -16,18 +17,31 @@ const FormComponent = ({ handleRegister, errMsg }) => {
             setValidated(true);
             event.preventDefault();
             event.stopPropagation();
-            console.log(validated);
+            setShow(true);
+            handleAlertMsg(errMsg);
         } else {
             handleRegister(firstName, lastName, password, username, email);
             event.preventDefault();
             console.log('false');
             setValidated(false);
+            setShow(false);
         }
+    };
+
+    const handleAlertMsg = (errMsg) => {
+        if (errMsg) {
+            console.log('true');
+        }
+        console.log('false');
     };
 
     return (
         <div>
-            <AlertMsgModal errMsg={errMsg} />
+            <AlertMsgComponent
+                setShow={setShow}
+                show={showAlertMsgComponent}
+                errMsg={errMsg}
+            />
             <div style={styles.mainDiv}>
                 <div style={styles.div}>
                     <Form
