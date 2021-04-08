@@ -139,6 +139,6 @@ def submit_form():
                      password=user_details['password'])
         db.session.add(user)
         db.session.commit()
-        return jsonify("Success! You will be redirect to your account shortly! "), 201
+        return jsonify("Success! You will be redirect to your account shortly!", 200)
     else:
-        return jsonify("The username has already been used! Please choose another username!"), 500
+        return jsonify("The username has already been used! Please choose another username!", 500)
