@@ -181,38 +181,39 @@ class Main extends Component {
         ) {
             return;
         }
-        this.setState(
-            {
-                firstName: firstName,
-                lasttName: lastName,
-                password: password,
-                username: username,
-                email: email,
-            },
-            () => console.log(this.state),
-        );
-        axios
-            .post('/submit_registration', {
-                first_name: firstName,
-                last_name: lastName,
-                password: password,
-                username: username,
-                email: email,
-            })
-            .then((resp) => {
-                debugger;
-                console.log(resp);
-                // console.log(resp.status);
-                // console.log(resp.data);
-                // if (resp.status >= 500) {
-                //     console.log(resp.data);
-                //     this.setState({
-                //         errMsg: resp.data,
-                //     });
-                // }
-            })
-            .then((err) => console.log(err));
-        debugger;
+        // else {
+        //     this.setState(
+        //         {
+        //             firstName: firstName,
+        //             lasttName: lastName,
+        //             password: password,
+        //             username: username,
+        //             email: email,
+        //         },
+        //         () => console.log(this.state),
+        //     );
+        // }
+        // debugger;
+        // axios
+        //     .post('/submit_registration', {
+        //         first_name: firstName,
+        //         last_name: lastName,
+        //         password: password,
+        //         username: username,
+        //         email: email,
+        //     })
+        //     .then((resp) => {
+        //         const respMsg = resp.data[0];
+        //         const respStatusCode = resp.data[1];
+        //         console.log(respMsg, respStatusCode);
+        //         if (respStatusCode == 500) {
+        //             this.setState({
+        //                 errMsg: respMsg,
+        //             });
+        //             console.log(this.state.errMsg);
+        //         }
+        //     })
+        //     .then((err) => console.log(err));
 
         // fetch('/submit_registration', {
         //     method: 'post',
