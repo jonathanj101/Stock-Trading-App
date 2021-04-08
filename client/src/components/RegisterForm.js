@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Form, Button, Col } from 'react-bootstrap';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const FormComponent = ({ handleRegister, errMsg }) => {
+const FormComponent = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
@@ -10,30 +11,58 @@ const FormComponent = ({ handleRegister, errMsg }) => {
     const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
     const [showAlertMsgComponent, setShow] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
 
     const handleSubmit = (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            setValidated(true);
-            event.preventDefault();
             event.stopPropagation();
-            setShow(true);
-            handleAlertMsg(errMsg);
-        } else {
-            handleRegister(firstName, lastName, password, username, email);
-            event.preventDefault();
-            console.log('false');
-            setValidated(false);
+            setValidated(true);
             setShow(false);
+        } else {
+            debugger;
+            setShow(true);
+            handleRegister(firstName, lastName, password, username, email);
+            // handleAlertMsg(errMsg);
+            setValidated(false);
         }
     };
 
-    const handleAlertMsg = (errMsg) => {
-        if (errMsg) {
-            console.log('true');
-        }
-        console.log('false');
+    const handleRegister = () => {
+        axios
+            .post('/submit_registration', {
+                first_name: firstName,
+                last_name: lastName,
+                password: password,
+                username: username,
+                email: email,
+            })
+            .then((resp) => {
+                const respMsg = resp.data[0];
+                const respStatusCode = resp.data[1];
+                console.log(respMsg, respStatusCode);
+                if (respStatusCode == 500) {
+                    setErrMsg(respMsg);
+                    // this.setState({
+                    //     errMsg: respMsg,
+                    // });
+                    // console.log(this.state.errMsg);
+                }
+            })
+            .then((err) => console.log(err));
     };
+
+    // const handleAlertMsg = (errMsg) => {
+    //     console.log(errMsg);
+    //     if (errMsg) {
+    //         debugger;
+    //         setShow(true);
+    //         console.log(showAlertMsgComponent);
+    //     }
+    //     debugger;
+    //     console.log(showAlertMsgComponent);
+    // };
 
     return (
         <div>
