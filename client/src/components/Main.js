@@ -93,7 +93,6 @@ class Main extends Component {
         };
         if (this.state.investingList.length >= 1) {
             if (this.isSameStock(stock) === undefined) {
-                // debugger;
                 this.setState({
                     investingList: [
                         ...this.state.investingList,
@@ -135,8 +134,8 @@ class Main extends Component {
 
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
-        console.log(this.state.investingList);
-        console.log(this.state.userStocksData);
+        // console.log(this.state.investingList);
+        // console.log(this.state.userStocksData);
     };
 
     handleChange = (e) => {
