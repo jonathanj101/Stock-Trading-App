@@ -15,54 +15,44 @@ const FormComponent = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        event.stopPropagation();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.stopPropagation();
             setValidated(true);
-            setShow(false);
         } else {
-            debugger;
-            setShow(true);
             handleRegister(firstName, lastName, password, username, email);
-            // handleAlertMsg(errMsg);
             setValidated(false);
         }
     };
 
-    const handleRegister = () => {
-        axios
-            .post('/submit_registration', {
-                first_name: firstName,
-                last_name: lastName,
-                password: password,
-                username: username,
-                email: email,
-            })
-            .then((resp) => {
-                const respMsg = resp.data[0];
-                const respStatusCode = resp.data[1];
-                console.log(respMsg, respStatusCode);
-                if (respStatusCode >= 500) {
-                    setErrMsg(respMsg);
-                    // this.setState({
-                    //     errMsg: respMsg,
-                    // });
-                    // console.log(this.state.errMsg);
-                }
-            })
-            .then((err) => console.log(err));
+    const handleRegister = async (
+        firstName,
+        lastName,
+        password,
+        username,
+        email,
+    ) => {
+        try {
+            const sendRegistrantData = await axios.post(
+                '/submit_registration',
+                {
+                    first_name: firstName,
+                    last_name: lastName,
+                    password: password,
+                    username: username,
+                    email: email,
+                },
+            );
+            const respMsg = sendRegistrantData.data[0];
+            const respStatusCode = sendRegistrantData.data[1];
+            if (respStatusCode >= 500) {
+                setErrMsg(respMsg);
+                setShow(true);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
-
-    // const handleAlertMsg = (errMsg) => {
-    //     console.log(errMsg);
-    //     if (errMsg) {
-    //         debugger;
-    //         setShow(true);
-    //         console.log(showAlertMsgComponent);
-    //     }
-    //     debugger;
-    //     console.log(showAlertMsgComponent);
-    // };
 
     return (
         <div>
