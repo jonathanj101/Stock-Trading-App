@@ -29,7 +29,6 @@ class Main extends Component {
             stocksList: [],
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleRegister = this.handleRegister.bind(this);
         this.handleRequest = this.handleRequest.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
@@ -170,67 +169,6 @@ class Main extends Component {
         //     .then((data) => console.log(data));
     };
 
-    handleRegister = (firstName, lastName, password, username, email) => {
-        // debugger;
-        if (
-            firstName === '' ||
-            lastName === '' ||
-            password === '' ||
-            username === '' ||
-            email === ''
-        ) {
-            return;
-        }
-        // else {
-        //     this.setState(
-        //         {
-        //             firstName: firstName,
-        //             lasttName: lastName,
-        //             password: password,
-        //             username: username,
-        //             email: email,
-        //         },
-        //         () => console.log(this.state),
-        //     );
-        // }
-        // debugger;
-        // axios
-        //     .post('/submit_registration', {
-        //         first_name: firstName,
-        //         last_name: lastName,
-        //         password: password,
-        //         username: username,
-        //         email: email,
-        //     })
-        //     .then((resp) => {
-        //         const respMsg = resp.data[0];
-        //         const respStatusCode = resp.data[1];
-        //         console.log(respMsg, respStatusCode);
-        //         if (respStatusCode == 500) {
-        //             this.setState({
-        //                 errMsg: respMsg,
-        //             });
-        //             console.log(this.state.errMsg);
-        //         }
-        //     })
-        //     .then((err) => console.log(err));
-
-        // fetch('/submit_registration', {
-        //     method: 'post',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         first_name: firstName,
-        //         last_name: lastName,
-        //         password: password,
-        //         username: username,
-        //         email: email,
-        //     }),
-        // });
-    };
-
     handleLogIn = () => {
         const logInInfo = {
             email: this.state.email,
@@ -284,10 +222,7 @@ class Main extends Component {
                         path="/register"
                         exact
                         component={() => (
-                            <FormComponent
-                                handleRegister={this.handleRegister}
-                                errMsg={this.state.errMsg}
-                            />
+                            <FormComponent errMsg={this.state.errMsg} />
                         )}
                     />
                     <Route path="*" component={() => <PageNotFound />} />
