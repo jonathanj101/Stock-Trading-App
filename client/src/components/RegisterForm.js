@@ -42,7 +42,7 @@ const FormComponent = () => {
                 const respMsg = resp.data[0];
                 const respStatusCode = resp.data[1];
                 console.log(respMsg, respStatusCode);
-                if (respStatusCode == 500) {
+                if (respStatusCode >= 500) {
                     setErrMsg(respMsg);
                     // this.setState({
                     //     errMsg: respMsg,
