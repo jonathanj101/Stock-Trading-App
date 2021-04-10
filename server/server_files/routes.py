@@ -126,8 +126,8 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
-@app.route('/submit_registration', methods=["POST"])
-def submit_form():
+@app.route('/signup', methods=["POST"])
+def signup():
     user_details = request.get_json()
     filter_user_model_by_username = Users.query.filter_by(
         username=user_details['username']).first()
@@ -135,10 +135,14 @@ def submit_form():
     print(filter_user_model_by_username)
     if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-                     email=user_details['email'], username=user_details['username'],
-                     password=user_details['password'])
+                     email=user_details['email'], username=user_details['username'], password=user_details['password'])
         db.session.add(user)
         db.session.commit()
         return jsonify("Success! You will be redirect to your account shortly!", 200)
     else:
         return jsonify("The username has already been used! Please choose another username!", 500)
+
+
+@app.route('/login', methods=["GET"])
+def login():
+    return 'ok'
