@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Col } from 'react-bootstrap';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import AlertMsgComponent from './AlertMsgComponent';
 
 const FormComponent = () => {
@@ -47,16 +47,13 @@ const FormComponent = () => {
     ) => {
         try {
             debugger;
-            const sendRegistrantData = await axios.post(
-                '/submit_registration',
-                {
-                    first_name: firstName,
-                    last_name: lastName,
-                    password: password,
-                    username: username,
-                    email: email,
-                },
-            );
+            const sendRegistrantData = await axios.post('/signup', {
+                first_name: firstName,
+                last_name: lastName,
+                password: password,
+                username: username,
+                email: email,
+            });
             const respMsg = sendRegistrantData.data[0];
             const respStatusCode = sendRegistrantData.data[1];
             setShow(true);
@@ -65,7 +62,6 @@ const FormComponent = () => {
             } else {
                 setSuccessMsg(respMsg);
                 clearForm(firstName, lastName, username, password, email);
-                // return <Redirect to="/my-stocks" />;
                 history.push('/my-stocks');
             }
         } catch (err) {
