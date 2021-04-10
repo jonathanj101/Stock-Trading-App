@@ -28,7 +28,6 @@ class Main extends Component {
             investingList: [],
             stocksList: [],
         };
-        this.handleChange = this.handleChange.bind(this);
         this.handleRequest = this.handleRequest.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
@@ -136,15 +135,6 @@ class Main extends Component {
         console.log(stockInfo);
     };
 
-    handleChange = (e) => {
-        const { value } = e.target;
-        console.log(value);
-        console.log(value);
-        this.setState({
-            searchStock: value,
-        });
-    };
-
     sendRegistrationFormRequest = (
         firstName,
         lastName,
@@ -155,22 +145,24 @@ class Main extends Component {
         return;
     };
 
-    handleLogIn = () => {
+    handleLogIn = (e) => {
+        debugger;
+        console.log(e);
         const logInInfo = {
             email: this.state.email,
             password: this.state.password,
         };
         console.log(logInInfo.email);
-        this.setState(
-            {
-                email: logInInfo.email,
-                password: logInInfo.password,
-            },
-            () => {
-                console.log(this.state);
-            },
-        );
-        console.log(this.state);
+        // this.setState(
+        //     {
+        //         email: logInInfo.email,
+        //         password: logInInfo.password,
+        //     },
+        //     () => {
+        //         console.log(this.state);
+        //     },
+        // );
+        // console.log(this.state);
     };
 
     render() {
@@ -178,7 +170,6 @@ class Main extends Component {
             <div style={{ height: `30vh` }}>
                 <NavbarComponent
                     isLogged={this.state.isLogged}
-                    handleChange={this.handleChange}
                     onSubmit={this.handleLogIn}
                 />
                 <Switch>
