@@ -88,7 +88,13 @@ const NavbarComponent = ({
                     >
                         {isLogged ? 'My Stocks' : ''}
                     </NavLink>
-                    <NavLink to="/" exact className="nav-link ">
+                    <NavLink
+                        onClick={handleShow}
+                        to="/"
+                        exact
+                        className="logIn"
+                        // style={logInLink}
+                    >
                         {isLogged ? 'Log Out' : 'Log In'}
                     </NavLink>
                 </Nav>
@@ -113,6 +119,20 @@ var styles = {
     modalHeaderTitle: {
         fontSize: '2rem',
         color: 'black',
+    },
+};
+
+const logInLink = {
+    display: 'block',
+    padding: '.5rem 1rem',
+    color: 'rgba(255,255,255,.5)',
+    paddingRight: '.5rem',
+    paddingLeft: '.5rem',
+    borderRadius: '.25rem',
+    textDecoration: 'none',
+    backgroundColor: 'transparent',
+    ':hover': {
+        backgroundColor: 'white',
     },
 };
 
