@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from flask import jsonify, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from server_files import app, db
+from server_files import app, db, bcrypt
 from server_files.models import Users, Transactions, Stock
 
 api_key = os.environ.get('API_KEY')
@@ -131,16 +131,19 @@ def signup():
     user_details = request.get_json()
     filter_user_model_by_username = Users.query.filter_by(
         username=user_details['username']).first()
+    hashed_password = bcrypt.generate_password_hash(
+        user_details['password']).decode('utf-8')
+    print(hashed_password)
 
-    print(filter_user_model_by_username)
-    if filter_user_model_by_username is None:
-        user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-                     email=user_details['email'], username=user_details['username'], password=user_details['password'])
-        db.session.add(user)
-        db.session.commit()
-        return jsonify("Success! You will be redirect to your account shortly!", 200)
-    else:
-        return jsonify("The username has already been used! Please choose another username!", 500)
+    # print(filter_user_model_by_username)
+    # if filter_user_model_by_username is None:
+    #     user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
+    #                  email=user_details['email'], username=user_details['username'], password=user_details['password'])
+    #     db.session.add(user)
+    #     db.session.commit()
+    #     return jsonify("Success! You will be redirect to your account shortly!", 200)
+    # else:
+    #     return jsonify("The username has already been used! Please choose another username!", 500)
 
 
 @app.route('/login', methods=["GET"])
