@@ -134,8 +134,6 @@ class Main extends Component {
 
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
-        // console.log(this.state.investingList);
-        // console.log(this.state.userStocksData);
     };
 
     handleChange = (e) => {
@@ -154,18 +152,7 @@ class Main extends Component {
         username,
         email,
     ) => {
-        // fetch('/submit_form', {
-        //     method: 'post',
-        //     body: JSON.stringify({
-        //         first_name: firstName,
-        //         last_name: lastName,
-        //         password: password,
-        //         username: username,
-        //         email: email,
-        //     }),
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => console.log(data));
+        return;
     };
 
     handleLogIn = () => {
