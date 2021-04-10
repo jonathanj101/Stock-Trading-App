@@ -1,17 +1,36 @@
 import React, { useState } from 'react';
+import AlertMsgComponent from '../components/AlertMsgComponent';
 import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const NavbarComponent = ({
-    modalClicked,
-    isLogged,
-    handleChange,
-    onSubmit,
-}) => {
+const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [validate, setValidate] = useState(false);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleSubmit = (e) => {
+        debugger;
+
+        const form = e.currentTarget;
+        e.preventDefault();
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+            setValidate(true);
+        } else {
+            onSubmit(e);
+            clearForm();
+        }
+    };
+
+    const clearForm = () => {
+        setUsername('');
+        setPassword('');
+    };
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
@@ -24,36 +43,62 @@ const NavbarComponent = ({
                             </Modal.Title>
                         </Modal.Header>
                         <div>
-                            <Form style={styles.formStyles}>
+                            <Form
+                                style={styles.formStyles}
+                                noValidate
+                                validated={validate}
+                                onSubmit={(e) => {
+                                    handleSubmit(e);
+                                }}
+                            >
+                                <AlertMsgComponent />
                                 <Form.Group
                                     style={styles.formGroupStyles}
-                                    controlId="logInEmail"
+                                    controlId="email"
                                 >
                                     <Form.Control
-                                        onChange={handleChange}
-                                        name="email"
-                                        type="email"
-                                        placeholder="Enter email"
+                                        required
+                                        onChange={(e) =>
+                                            setUsername(e.target.value)
+                                        }
+                                        name="Username"
+                                        type="text"
+                                        value={username}
+                                        placeholder="Enter Username"
                                     />
+                                    <Form.Control.Feedback>
+                                        Looks good!
+                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type in your username!
+                                    </Form.Control.Feedback>
                                 </Form.Group>
-                                <Form.Group controlId="logInPassWord">
+                                <Form.Group controlId="password">
                                     <Form.Control
-                                        style={styles.formGroupStyles}
-                                        onChange={handleChange}
+                                        required
+                                        // style={styles.formGroupStyles}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
                                         name="password"
+                                        value={password}
                                         type="password"
                                         placeholder="Password"
                                     />
+                                    <Form.Control.Feedback>
+                                        Looks good!
+                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please type in your password!
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                                 <Button
+                                    type="submit"
                                     className="mb-auto"
                                     variant="primary"
-                                    onClick={() => {
-                                        handleClose();
-                                        onSubmit();
-                                    }}
                                     size="lg"
                                     block
+                                    style={{ marginTop: '100px' }}
                                 >
                                     Log In
                                 </Button>
@@ -110,29 +155,9 @@ var styles = {
     formGroupStyles: {
         margin: '50px auto 100px auto',
     },
-    // modalDiv: {
-    //     display: 'flex',
-    //     width: '100%',
-    //     height: '75%',
-    //     justifyContent: 'space-between',
-    // },
     modalHeaderTitle: {
         fontSize: '2rem',
         color: 'black',
-    },
-};
-
-const logInLink = {
-    display: 'block',
-    padding: '.5rem 1rem',
-    color: 'rgba(255,255,255,.5)',
-    paddingRight: '.5rem',
-    paddingLeft: '.5rem',
-    borderRadius: '.25rem',
-    textDecoration: 'none',
-    backgroundColor: 'transparent',
-    ':hover': {
-        backgroundColor: 'white',
     },
 };
 
