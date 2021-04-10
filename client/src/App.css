@@ -10,6 +10,22 @@ div.modal-header button span {
 .tableRow:hover {
   cursor: pointer;
 }
+.logIn {
+  display: 'block';
+  padding: .5rem 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding-right: .5rem;
+  padding-left: .5rem;
+  border-radius: .25rem;
+  background-color: transparent;
+}
+
+.navbar-nav a:hover {
+  text-decoration: none;
+  color: white
+}
+
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
