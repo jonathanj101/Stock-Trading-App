@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Col } from 'react-bootstrap';
+import { useHistory, Redirect } from 'react-router-dom';
 import AlertMsgComponent from './AlertMsgComponent';
 
 const FormComponent = () => {
@@ -12,17 +13,29 @@ const FormComponent = () => {
     const [validated, setValidated] = useState(false);
     const [showAlertMsgComponent, setShow] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
+    let history = useHistory();
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        debugger;
+
         const form = event.currentTarget;
+        event.preventDefault();
         if (form.checkValidity() === false) {
+            event.stopPropagation();
             setValidated(true);
         } else {
             handleRegister(firstName, lastName, password, username, email);
             setValidated(false);
         }
+    };
+
+    const clearForm = (firstName, lastName, username, password, email) => {
+        setFirstName('');
+        setLastName('');
+        setPassword('');
+        setUsername('');
+        setEmail('');
     };
 
     const handleRegister = async (
@@ -33,6 +46,7 @@ const FormComponent = () => {
         email,
     ) => {
         try {
+            debugger;
             const sendRegistrantData = await axios.post(
                 '/submit_registration',
                 {
@@ -45,9 +59,14 @@ const FormComponent = () => {
             );
             const respMsg = sendRegistrantData.data[0];
             const respStatusCode = sendRegistrantData.data[1];
+            setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
-                setShow(true);
+            } else {
+                setSuccessMsg(respMsg);
+                clearForm(firstName, lastName, username, password, email);
+                // return <Redirect to="/my-stocks" />;
+                history.push('/my-stocks');
             }
         } catch (err) {
             console.log(err);
@@ -60,6 +79,7 @@ const FormComponent = () => {
                 setShow={setShow}
                 show={showAlertMsgComponent}
                 errMsg={errMsg}
+                successMsg={successMsg}
             />
             <div style={styles.mainDiv}>
                 <div style={styles.div}>
