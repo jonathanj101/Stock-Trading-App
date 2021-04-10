@@ -22,7 +22,7 @@ class Main extends Component {
             userID: '',
             errMsg: '',
             email: '',
-            isLogged: true,
+            isLogged: false,
             isInvestingEmpty: true,
             userStocksData: [],
             investingList: [],
