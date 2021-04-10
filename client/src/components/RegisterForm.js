@@ -30,7 +30,7 @@ const FormComponent = () => {
         }
     };
 
-    const clearForm = (firstName, lastName, username, password, email) => {
+    const clearForm = () => {
         setFirstName('');
         setLastName('');
         setPassword('');
@@ -61,7 +61,7 @@ const FormComponent = () => {
                 setErrMsg(respMsg);
             } else {
                 setSuccessMsg(respMsg);
-                clearForm(firstName, lastName, username, password, email);
+                clearForm();
                 history.push('/my-stocks');
             }
         } catch (err) {
