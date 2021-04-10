@@ -6,10 +6,10 @@ const AlertMsgComponent = ({ successMsg, errMsg, show }) => {
         <div>
             <Alert
                 show={show}
-                variant={successMsg == '' ? 'danger' : 'success'}
+                variant={successMsg === '' ? 'danger' : 'success'}
             >
                 <Alert.Heading>
-                    {successMsg == '' ? errMsg : successMsg}
+                    {successMsg === '' ? errMsg : successMsg}
                 </Alert.Heading>
             </Alert>
         </div>
