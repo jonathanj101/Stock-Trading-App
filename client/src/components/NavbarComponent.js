@@ -1,122 +1,25 @@
 import React, { useState } from 'react';
-import AlertMsgComponent from '../components/AlertMsgComponent';
-import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import LogInModal from '../components/LogInModal';
 
-const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [validate, setValidate] = useState(false);
+const NavbarComponent = ({ isLogged, onSubmit }) => {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const handleSubmit = (e) => {
-        debugger;
-
-        const form = e.currentTarget;
-        e.preventDefault();
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-            setValidate(true);
-        } else {
-            onSubmit(e);
-            handleLogInRequest(username, password);
-            clearForm();
-        }
+    const handleShow = () => {
+        setShow(true);
     };
-
-    const clearForm = () => {
-        setUsername('');
-        setPassword('');
-    };
-
-    const handleLogInRequest = async (username, password) => {
-        debugger;
-        const respData = await axios.get('/login');
-        console.log(respData);
+    const handleClose = (f) => {
+        setShow(f);
     };
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
-            <Modal show={show} onHide={handleClose} centered>
-                <div>
-                    <div className="">
-                        <Modal.Header closeButton>
-                            <Modal.Title style={styles.modalHeaderTitle}>
-                                Log In
-                            </Modal.Title>
-                        </Modal.Header>
-                        <div>
-                            <Form
-                                style={styles.formStyles}
-                                noValidate
-                                validated={validate}
-                                onSubmit={(e) => {
-                                    handleSubmit(e);
-                                }}
-                            >
-                                <AlertMsgComponent />
-                                <Form.Group
-                                    style={styles.formGroupStyles}
-                                    controlId="email"
-                                >
-                                    <Form.Control
-                                        required
-                                        onChange={(e) =>
-                                            setUsername(e.target.value)
-                                        }
-                                        name="Username"
-                                        type="text"
-                                        value={username}
-                                        placeholder="Enter Username"
-                                    />
-                                    <Form.Control.Feedback>
-                                        Looks good!
-                                    </Form.Control.Feedback>
-                                    <Form.Control.Feedback type="invalid">
-                                        Please type in your username!
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                                <Form.Group controlId="password">
-                                    <Form.Control
-                                        required
-                                        // style={styles.formGroupStyles}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                        name="password"
-                                        value={password}
-                                        type="password"
-                                        placeholder="Password"
-                                    />
-                                    <Form.Control.Feedback>
-                                        Looks good!
-                                    </Form.Control.Feedback>
-                                    <Form.Control.Feedback type="invalid">
-                                        Please type in your password!
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                                <Button
-                                    type="submit"
-                                    className="mb-auto"
-                                    variant="primary"
-                                    size="lg"
-                                    block
-                                    style={{ marginTop: '100px' }}
-                                >
-                                    Log In
-                                </Button>
-                            </Form>
-                        </div>
-                    </div>
-                </div>
-                <span className="mx-auto">or</span>
-                <Button href="/register">Register</Button>
-            </Modal>
+            <LogInModal
+                handleClose={handleClose}
+                show={show}
+                onSubmit={onSubmit}
+            />
             <Navbar
                 className="d-flex justify-content-between"
                 bg="dark"
@@ -155,18 +58,4 @@ const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
         </div>
     );
 };
-
-var styles = {
-    formStyles: {
-        marginTop: '90px',
-    },
-    formGroupStyles: {
-        margin: '50px auto 100px auto',
-    },
-    modalHeaderTitle: {
-        fontSize: '2rem',
-        color: 'black',
-    },
-};
-
 export default NavbarComponent;
