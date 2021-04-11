@@ -146,13 +146,13 @@ class Main extends Component {
     };
 
     handleLogIn = (e) => {
-        // debugger;
+        debugger;
         console.log(e);
-        const logInInfo = {
-            email: this.state.email,
-            password: this.state.password,
-        };
-        console.log(logInInfo.email);
+        // const logInInfo = {
+        //     email: this.state.email,
+        //     password: this.state.password,
+        // };
+        // console.log(logInInfo.email);
         // this.setState(
         //     {
         //         email: logInInfo.email,
