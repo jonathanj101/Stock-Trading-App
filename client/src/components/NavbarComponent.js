@@ -3,6 +3,7 @@ import AlertMsgComponent from '../components/AlertMsgComponent';
 import { Navbar, Nav, Modal, Button, Form } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
     const [username, setUsername] = useState('');
@@ -23,6 +24,7 @@ const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
             setValidate(true);
         } else {
             onSubmit(e);
+            handleLogInRequest(username, password);
             clearForm();
         }
     };
@@ -30,6 +32,12 @@ const NavbarComponent = ({ modalClicked, isLogged, onSubmit }) => {
     const clearForm = () => {
         setUsername('');
         setPassword('');
+    };
+
+    const handleLogInRequest = async (username, password) => {
+        debugger;
+        const respData = await axios.get('/login');
+        console.log(respData);
     };
 
     return (
