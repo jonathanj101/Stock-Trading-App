@@ -32,12 +32,12 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
     };
 
     const handleLogInRequest = async (username, password) => {
-        // debugger;
-        console.log('testing');
-        // const respData = await axios.post('/login', {
-        //     username:username,
-        //     password:password
-        // });
+        debugger;
+        // console.log('testing');
+        const respData = await axios.post('/login', {
+            username: username,
+            password: password,
+        });
         // console.log(respData);
     };
 
