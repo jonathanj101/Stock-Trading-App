@@ -17,8 +17,6 @@ const FormComponent = () => {
     let history = useHistory();
 
     const handleSubmit = (event) => {
-        debugger;
-
         const form = event.currentTarget;
         event.preventDefault();
         if (form.checkValidity() === false) {
@@ -46,7 +44,6 @@ const FormComponent = () => {
         email,
     ) => {
         try {
-            debugger;
             const sendRegistrantData = await axios.post('/signup', {
                 first_name: firstName,
                 last_name: lastName,
@@ -62,7 +59,9 @@ const FormComponent = () => {
             } else {
                 setSuccessMsg(respMsg);
                 clearForm();
-                history.push('/my-stocks');
+                setTimeout(() => {
+                    history.push('/my-stocks');
+                }, 3000);
             }
         } catch (err) {
             console.log(err);
