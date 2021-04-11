@@ -148,4 +148,7 @@ def signup():
 
 @app.route('/login', methods=["GET"])
 def login():
-    return 'ok'
+    user = request.get_data()
+    print(user)
+    # user = User.query.filter_by(email=)
+    return jsonify('ok')
