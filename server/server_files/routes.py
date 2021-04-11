@@ -136,19 +136,27 @@ def signup():
     print(hashed_password)
 
     # print(filter_user_model_by_username)
-    # if filter_user_model_by_username is None:
-    #     user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-    #                  email=user_details['email'], username=user_details['username'], password=user_details['password'])
-    #     db.session.add(user)
-    #     db.session.commit()
-    #     return jsonify("Success! You will be redirect to your account shortly!", 200)
-    # else:
-    #     return jsonify("The username has already been used! Please choose another username!", 500)
+    if filter_user_model_by_username is None:
+        user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
+                     email=user_details['email'], username=user_details['username'], password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify("Success! You will be redirect to your account shortly!", 200)
+    else:
+        return jsonify("The username has already been used! Please choose another username!", 500)
 
 
 @app.route('/login', methods=["POST"])
 def login():
-    user = request.get_data()
-    print(user)
-    # user = User.query.filter_by(email=)
-    return jsonify('ok')
+    user_details = request.get_json()
+
+    user = Users.query.filter_by(username=user_details["username"]).first()
+
+    if user and bcrypt.check_password_hash(user.password, user_details['password']):
+        response = {
+            "user_id": user.id,
+            "message": "You are logged in successfully! You will be redirect to your account shortly!"
+        }
+        return jsonify(response, 200)
+    else:
+        return jsonify("hmmm.. We don't recognize that username or password. Please try again!")
