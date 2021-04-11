@@ -146,7 +146,7 @@ def signup():
     #     return jsonify("The username has already been used! Please choose another username!", 500)
 
 
-@app.route('/login', methods=["GET"])
+@app.route('/login', methods=["POST"])
 def login():
     user = request.get_data()
     print(user)
