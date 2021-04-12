@@ -178,6 +178,7 @@ class Main extends Component {
                         exact
                         component={() => (
                             <SummaryComponent
+                                isLogged={this.state.isLogged}
                                 investingList={this.state.investingList}
                                 stocksList={this.state.stocksList}
                                 handleTransactions={this.handleTransactions}
