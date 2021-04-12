@@ -10,9 +10,11 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
     const [validate, setValidate] = useState(false);
     const [errMsg, setErrMsg] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
+    const [showAlertMsgComponent, setShowAlertMsg] = useState(false);
+    let history = useHistory();
 
     const handleSubmit = (e) => {
-        debugger;
+        // debugger;
 
         const form = e.currentTarget;
         e.preventDefault();
@@ -38,7 +40,20 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
             username: username,
             password: password,
         });
-        console.log(respData);
+        const userId = respData.data[0].user_id;
+        const respStatusCode = respData.data[1];
+        if (respStatusCode >= 500) {
+            setErrMsg(respData.data);
+        } else {
+            console.log(userId);
+            const successMesg = respData.data[0].success_msg;
+            setSuccessMsg(successMesg);
+            setShowAlertMsg(true);
+            setTimeout(() => {
+                history.push('/my-stocks');
+                handleClose(false);
+            }, 5000);
+        }
     };
 
     return (
@@ -60,7 +75,11 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
                                 }}
                                 method="POST"
                             >
-                                <AlertMsgComponent />
+                                <AlertMsgComponent
+                                    errMsg={errMsg}
+                                    successMsg={successMsg}
+                                    show={showAlertMsgComponent}
+                                />
                                 <Form.Group
                                     style={styles.formGroupStyles}
                                     controlId="email"
