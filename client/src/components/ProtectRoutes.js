@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 class ProtectRoute extends Component {
     render() {
         const Component = this.props.component;
-        const isAuthenticated = true;
+        console.log(this.props);
+        const isAuthenticated = false;
         return isAuthenticated ? (
             <Component />
         ) : (
