@@ -135,7 +135,6 @@ def signup():
         user_details['password']).decode('utf-8')
     print(hashed_password)
 
-    # print(filter_user_model_by_username)
     if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
                      email=user_details['email'], username=user_details['username'], password=hashed_password)
@@ -155,7 +154,7 @@ def login():
     if user and bcrypt.check_password_hash(user.password, user_details['password']):
         response = {
             "user_id": user.id,
-            "message": "You are logged in successfully! You will be redirect to your account shortly!"
+            "success_msg": "You are logged in successfully! You will be redirect to your account shortly!"
         }
         return jsonify(response, 200)
     else:
