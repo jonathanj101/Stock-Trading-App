@@ -20,7 +20,6 @@ class Main extends Component {
             password: '',
             username: '',
             userID: '',
-            errMsg: '',
             email: '',
             isLogged: false,
             isInvestingEmpty: true,
@@ -146,7 +145,7 @@ class Main extends Component {
     };
 
     handleLogIn = (e) => {
-        debugger;
+        // debugger;
         console.log(e);
         // const logInInfo = {
         //     email: this.state.email,
@@ -198,9 +197,7 @@ class Main extends Component {
                     <Route
                         path="/register"
                         exact
-                        component={() => (
-                            <FormComponent errMsg={this.state.errMsg} />
-                        )}
+                        component={() => <FormComponent />}
                     />
                     <Route path="*" component={() => <PageNotFound />} />
                 </Switch>
