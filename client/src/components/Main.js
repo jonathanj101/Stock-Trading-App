@@ -172,7 +172,7 @@ class Main extends Component {
                     onSubmit={this.handleLogIn}
                 />
                 <Switch>
-                    <Route path="/" exact component={() => <Home />} />
+                    <Route path="/" exact render={() => <Home />} />
                     <ProtectRoute
                         path="/my-stocks"
                         exact
