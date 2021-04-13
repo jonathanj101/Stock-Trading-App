@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 const ProtectRoute = ({ component: Component, ...rest }) => {
+    debugger;
     console.log(Component);
-    console.log(rest.isLogged);
+    console.log({ ...rest });
+    // console.log(isLogged);
     const isAuthenticated = false;
-
-    return isAuthenticated ? (
-        <Component />
-    ) : (
-        <Redirect to={{ pathname: '/page-not-found' }} />
+    return (
+        <Route
+            render={() =>
+                isAuthenticated ? (
+                    <Component />
+                ) : (
+                    <Redirect to={{ pathname: '/page-not-found' }} />
+                )
+            }
+        />
     );
+    //     <Component />
+    // ) : (
+    //     <Redirect to={{ pathname: '/page-not-found' }} />
+    // );
 };
 
 // class ProtectRoute extends Component {
