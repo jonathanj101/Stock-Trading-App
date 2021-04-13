@@ -3,9 +3,6 @@ import { Redirect, Route } from 'react-router-dom';
 
 const ProtectRoute = ({ component: Component, ...rest }) => {
     debugger;
-    console.log(Component);
-    console.log({ ...rest });
-    // console.log(isLogged);
     const isAuthenticated = false;
     return (
         <Route
