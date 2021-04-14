@@ -25,14 +25,7 @@ const NavbarComponent = ({ isLogged, onSubmit }) => {
                 bg="dark"
                 variant="dark"
             >
-                <Navbar.Brand>
-                    {/* <img
-                        alt="twitter bird"
-                        width="125"
-                        height="100"
-                        className="d-inline-block align-top"
-                    /> */}
-                </Navbar.Brand>
+                <Navbar.Brand></Navbar.Brand>
                 <Nav variant="pills" className="">
                     <NavLink to="/" exact className="nav-link mr-3 ">
                         Home
@@ -49,7 +42,6 @@ const NavbarComponent = ({ isLogged, onSubmit }) => {
                         to="/"
                         exact
                         className="logIn"
-                        // style={logInLink}
                     >
                         {isLogged ? 'Log Out' : 'Log In'}
                     </NavLink>
