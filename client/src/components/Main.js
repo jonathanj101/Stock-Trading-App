@@ -37,23 +37,8 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        // fetch(`/testing`)
-        //     .then((response) => {
-        //         response.json();
-        //     })
-        //     .then((data) => console.log(data));
-        // fetch('/testing_data')
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //     });
         let multipleStocksData = await axios.get('/multiple');
         this.handleRequest(multipleStocksData);
-        // fetch('/multiple')
-        //     .then((resp) => resp.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //     });
     }
 
     async componentDidUpdate(prevProps, prevState) {
@@ -109,7 +94,6 @@ class Main extends Component {
     };
 
     handleRequest = async (request) => {
-        // console.log(request.data);
         try {
             const req = Promise.all(
                 request.data.data.map((stock) => {
@@ -118,12 +102,10 @@ class Main extends Component {
                     };
                 }),
             );
-            // console.log(req);
             req.then((stockData) => {
                 this.setState({
                     stocksList: stockData,
                 });
-                // console.log(this.state);
             });
         } catch (err) {
             console.log(err);
@@ -145,7 +127,6 @@ class Main extends Component {
     };
 
     handleLogIn = (e) => {
-        // debugger;
         console.log(e);
         // const logInInfo = {
         //     email: this.state.email,
