@@ -14,8 +14,6 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
     let history = useHistory();
 
     const handleSubmit = (e) => {
-        // debugger;
-
         const form = e.currentTarget;
         e.preventDefault();
         if (form.checkValidity() === false) {
@@ -34,8 +32,6 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
     };
 
     const handleLogInRequest = async (username, password) => {
-        // debugger;
-        // console.log('testing');
         const respData = await axios.post('/login', {
             username: username,
             password: password,
