@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const LogInModal = ({ show, onSubmit, handleClose }) => {
+const LogInModal = ({ show, handleLogIn, handleClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
@@ -20,7 +20,6 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
             e.stopPropagation();
             setValidate(true);
         } else {
-            onSubmit(e);
             handleLogInRequest(username, password);
             clearForm();
         }
@@ -29,6 +28,17 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
     const clearForm = () => {
         setUsername('');
         setPassword('');
+    };
+
+    const redirectToAccountPage = () => {
+        setTimeout(() => {
+            history.push('/my-stocks');
+            handleClose(false);
+        }, 5000);
+    };
+
+    const getDataFromRequest = (userId, username) => {
+        handleLogIn(userId, username);
     };
 
     const handleLogInRequest = async (username, password) => {
@@ -41,14 +51,11 @@ const LogInModal = ({ show, onSubmit, handleClose }) => {
         if (respStatusCode >= 500) {
             setErrMsg(respData.data);
         } else {
-            console.log(userId);
             const successMesg = respData.data[0].success_msg;
             setSuccessMsg(successMesg);
             setShowAlertMsg(true);
-            setTimeout(() => {
-                history.push('/my-stocks');
-                handleClose(false);
-            }, 5000);
+            redirectToAccountPage();
+            getDataFromRequest(userId, username);
         }
     };
 
