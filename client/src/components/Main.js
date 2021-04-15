@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
@@ -19,7 +19,7 @@ class Main extends Component {
             lastName: '',
             password: '',
             username: '',
-            userID: '',
+            userId: '',
             email: '',
             isLogged: false,
             isInvestingEmpty: true,
@@ -34,6 +34,7 @@ class Main extends Component {
             this,
         );
         this.isSameStock = this.isSameStock.bind(this);
+        this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
     async componentDidMount() {
@@ -41,11 +42,15 @@ class Main extends Component {
         this.handleRequest(multipleStocksData);
     }
 
-    async componentDidUpdate(prevProps, prevState) {
-        if (this.state.searchStock !== prevState.userSearchStock) {
-            console.log(prevState, this.state.searchStock);
-        }
-    }
+    // async componentDidUpdate(prevProps, prevState) {
+    //     const isLogged = this.state.isLogged;
+    //     this.isUserAuthenticated(isLogged);
+    //     console.log(isLogged);
+    //     debugger;
+    //     // if (this.state.isLogged !== prevState.isLogged) {
+    //     //     this.isUserAuthenticated(isLogged);
+    //     // }
+    // }
 
     isSameStock = (stock) => {
         const sameStock = this.state.investingList.find(
@@ -126,8 +131,26 @@ class Main extends Component {
         return;
     };
 
-    handleLogIn = (e) => {
-        console.log(e);
+    isUserAuthenticated = (user) => {
+        debugger;
+        console.log(user);
+        if (user) {
+            console.log(true);
+            return true;
+        } else {
+            console.log(false);
+            return false;
+        }
+    };
+
+    handleLogIn = (userId, username) => {
+        debugger;
+        this.setState({
+            userId: userId,
+            username: username,
+            isLogged: true,
+        });
+        this.isUserAuthenticated(true);
         // const logInInfo = {
         //     email: this.state.email,
         //     password: this.state.password,
@@ -146,30 +169,35 @@ class Main extends Component {
     };
 
     render() {
+        const isAunthenticated = this.isUserAuthenticated();
+        console.log(isAunthenticated);
         return (
             <div style={{ height: `30vh` }}>
                 <NavbarComponent
                     isLogged={this.state.isLogged}
-                    onSubmit={this.handleLogIn}
+                    handleLogIn={this.handleLogIn}
                 />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
                     <ProtectRoute
                         path="/my-stocks"
                         exact
-                        component={() => (
-                            <SummaryComponent
-                                isLogged={this.state.isLogged}
-                                investingList={this.state.investingList}
-                                stocksList={this.state.stocksList}
-                                handleTransactions={this.handleTransactions}
-                                handleRequest={this.handleRequest}
-                                mainState={this.state}
-                                addStockToInvestingTable={
-                                    this.addStockToInvestingTable
-                                }
-                            />
-                        )}
+                        component={() =>
+                            isAunthenticated ? (
+                                <SummaryComponent
+                                    investingList={this.state.investingList}
+                                    stocksList={this.state.stocksList}
+                                    handleTransactions={this.handleTransactions}
+                                    handleRequest={this.handleRequest}
+                                    mainState={this.state}
+                                    addStockToInvestingTable={
+                                        this.addStockToInvestingTable
+                                    }
+                                />
+                            ) : (
+                                <Redirect to="/" />
+                            )
+                        }
                     />
                     <ProtectRoute
                         path="/my-stocks"
