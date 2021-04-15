@@ -3,7 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import LogInModal from '../components/LogInModal';
 
-const NavbarComponent = ({ isLogged, onSubmit }) => {
+const NavbarComponent = ({ isLogged, handleLogIn }) => {
     const [show, setShow] = useState(false);
 
     const handleShow = () => {
@@ -18,7 +18,7 @@ const NavbarComponent = ({ isLogged, onSubmit }) => {
             <LogInModal
                 handleClose={handleClose}
                 show={show}
-                onSubmit={onSubmit}
+                handleLogIn={handleLogIn}
             />
             <Navbar
                 className="d-flex justify-content-between"
