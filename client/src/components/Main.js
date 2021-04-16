@@ -151,21 +151,6 @@ class Main extends Component {
             isLogged: true,
         });
         this.isUserAuthenticated(true);
-        // const logInInfo = {
-        //     email: this.state.email,
-        //     password: this.state.password,
-        // };
-        // console.log(logInInfo.email);
-        // this.setState(
-        //     {
-        //         email: logInInfo.email,
-        //         password: logInInfo.password,
-        //     },
-        //     () => {
-        //         console.log(this.state);
-        //     },
-        // );
-        // console.log(this.state);
     };
 
     render() {
