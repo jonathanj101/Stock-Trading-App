@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-const ProtectRoute = ({ component: Component, ...rest }) => {
-    // debugger;
-    const isAuthenticated = true;
-    return isAuthenticated ? (
+const ProtectRoute = ({ component: Component, isUserAuthenticated }) => {
+    return isUserAuthenticated ? (
         <Component />
     ) : (
         <Redirect to={{ pathname: '/page-not-found' }} />
