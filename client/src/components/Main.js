@@ -14,7 +14,6 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchStock: '',
             firstName: '',
             lastName: '',
             password: '',
@@ -22,25 +21,17 @@ class Main extends Component {
             userId: '',
             email: '',
             isLogged: false,
-            isInvestingEmpty: true,
             userStocksData: [],
-            investingList: [],
-            stocksList: [],
         };
-        this.handleRequest = this.handleRequest.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
-        this.addStockToInvestingTable = this.addStockToInvestingTable.bind(
-            this,
-        );
-        this.isSameStock = this.isSameStock.bind(this);
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
-    async componentDidMount() {
-        let multipleStocksData = await axios.get('/multiple');
-        this.handleRequest(multipleStocksData);
-    }
+    // async componentDidMount() {
+    //     let multipleStocksData = await axios.get('/multiple');
+    //     this.handleRequest(multipleStocksData);
+    // }
 
     // async componentDidUpdate(prevProps, prevState) {
     //     const isLogged = this.state.isLogged;
@@ -52,70 +43,24 @@ class Main extends Component {
     //     // }
     // }
 
-    isSameStock = (stock) => {
-        const sameStock = this.state.investingList.find(
-            (userStock) => userStock.symbol === stock.symbol,
-        );
-        if (sameStock) {
-            const totalHolding =
-                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
-            const totalSharesHolding =
-                sameStock.userEstimatedShares + stock.estimatedUserShares;
-            sameStock.userEstimatedHolding =
-                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
-            sameStock.userEstimatedHolding = totalHolding;
-            sameStock.userEstimatedShares = totalSharesHolding;
-            return sameStock;
-        } else {
-            return undefined;
-        }
-    };
-
-    addStockToInvestingTable = (stock) => {
-        const newStockInfoInvestingList = {
-            symbol: stock.symbol,
-            userEstimatedHolding: stock.estimatedUserSharesCost,
-            userEstimatedShares:
-                stock.estimatedUserSharesCost / stock.stockPrice,
-            companyName: stock.companyName,
-        };
-        if (this.state.investingList.length >= 1) {
-            if (this.isSameStock(stock) === undefined) {
-                this.setState({
-                    investingList: [
-                        ...this.state.investingList,
-                        newStockInfoInvestingList,
-                    ],
-                });
-            }
-        } else {
-            this.setState({
-                investingList: [
-                    ...this.state.investingList,
-                    newStockInfoInvestingList,
-                ],
-            });
-        }
-    };
-
-    handleRequest = async (request) => {
-        try {
-            const req = Promise.all(
-                request.data.data.map((stock) => {
-                    return {
-                        stockData: stock,
-                    };
-                }),
-            );
-            req.then((stockData) => {
-                this.setState({
-                    stocksList: stockData,
-                });
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // handleRequest = async (request) => {
+    //     try {
+    //         const req = Promise.all(
+    //             request.data.data.map((stock) => {
+    //                 return {
+    //                     stockData: stock,
+    //                 };
+    //             }),
+    //         );
+    //         req.then((stockData) => {
+    //             this.setState({
+    //                 stocksList: stockData,
+    //             });
+    //         });
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
@@ -132,7 +77,7 @@ class Main extends Component {
     };
 
     isUserAuthenticated = (user) => {
-        debugger;
+        // debugger;
         console.log(user);
         if (user) {
             console.log(true);
@@ -167,22 +112,7 @@ class Main extends Component {
                     <ProtectRoute
                         path="/my-stocks"
                         exact
-                        component={() =>
-                            isAunthenticated ? (
-                                <SummaryComponent
-                                    investingList={this.state.investingList}
-                                    stocksList={this.state.stocksList}
-                                    handleTransactions={this.handleTransactions}
-                                    handleRequest={this.handleRequest}
-                                    mainState={this.state}
-                                    addStockToInvestingTable={
-                                        this.addStockToInvestingTable
-                                    }
-                                />
-                            ) : (
-                                <Redirect to="/" />
-                            )
-                        }
+                        component={() => <SummaryComponent />}
                     />
                     <ProtectRoute
                         path="/my-stocks"
