@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Card, Button, Table } from 'react-bootstrap';
 import SearchComponent from '../pages/SearchComponent';
 import BuyStockModal from '../pages/BuyStockModal';
-import { Card, Button, Table } from 'react-bootstrap';
 
 const SummaryComponent = ({
-    investingList,
-    stocksList,
+    // investingList,
+    // stocksList,
     handleTransactions,
     mainState,
-    addStockToInvestingTable,
+    // addStockToInvestingTable,
 }) => {
     const [show, setShow] = useState(false);
     const [estimatedShares, setEstimatedShares] = useState('0.00');
@@ -18,6 +19,16 @@ const SummaryComponent = ({
     const [stockPrice, setStockPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
     const [isStockQuantity, setIsStockQuantity] = useState(true);
+    const [stocksList, setStocksList] = useState([]);
+    const [investingList, setInvestingList] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let multipleStocksData = await axios.get('/multiple');
+            handleRequest(multipleStocksData);
+        };
+        fetchData();
+    }, []);
 
     const handleShow = () => {
         setShow(true);
@@ -27,6 +38,64 @@ const SummaryComponent = ({
         setStockName(e.stockName);
         setStockSymbol(e.stockSymbol);
         setStockPrice(e.stockPrice);
+    };
+
+    const handleRequest = async (request) => {
+        try {
+            const resp = Promise.all(
+                request.data.data.map((stock) => {
+                    return {
+                        stockData: stock,
+                    };
+                }),
+            );
+            resp.then((stockData) => {
+                setStocksList(stockData);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const isSameStock = (stock) => {
+        debugger;
+        const sameStock = investingList.find(
+            (userStock) => userStock.symbol === stock.symbol,
+        );
+        if (sameStock) {
+            const totalHolding =
+                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
+
+            const totalSharesHolding =
+                sameStock.userEstimatedShares + stock.estimatedUserShares;
+
+            sameStock.userEstimatedHolding =
+                sameStock.userEstimatedHolding + stock.estimatedUserSharesCost;
+
+            sameStock.userEstimatedHolding = totalHolding;
+            sameStock.userEstimatedShares = totalSharesHolding;
+            return sameStock;
+        } else {
+            return undefined;
+        }
+    };
+
+    const addStockToInvestingTable = (stock) => {
+        debugger;
+        const newStockInfoInvestingList = {
+            symbol: stock.symbol,
+            userEstimatedHolding: stock.estimatedUserSharesCost,
+            userEstimatedShares:
+                stock.estimatedUserSharesCost / stock.stockPrice,
+            companyName: stock.companyName,
+        };
+        if (investingList.length >= 1) {
+            if (isSameStock(stock) === undefined) {
+                setInvestingList([...investingList, newStockInfoInvestingList]);
+            }
+        } else {
+            setInvestingList([...investingList, newStockInfoInvestingList]);
+        }
     };
 
     const handleSubmit = () => {
