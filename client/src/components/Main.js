@@ -8,7 +8,7 @@ import SummaryComponent from '../pages/Summary';
 import FormComponent from './RegisterForm';
 import ProtectRoute from './ProtectRoutes';
 import PageNotFound from '../pages/PageNotFound';
-import SearchComponent from '../pages/SearchComponent';
+import SearchComponent from './SearchComponent';
 
 class Main extends Component {
     constructor(props) {
@@ -76,31 +76,25 @@ class Main extends Component {
         return;
     };
 
-    isUserAuthenticated = (user) => {
-        // debugger;
-        console.log(user);
-        if (user) {
-            console.log(true);
+    isUserAuthenticated = () => {
+        const userId = JSON.parse(localStorage.getItem('user'));
+        if (userId) {
             return true;
         } else {
-            console.log(false);
             return false;
         }
     };
 
     handleLogIn = (userId, username) => {
-        debugger;
         this.setState({
             userId: userId,
             username: username,
             isLogged: true,
         });
-        this.isUserAuthenticated(true);
+        localStorage.setItem('user', JSON.stringify(userId));
     };
 
     render() {
-        const isAunthenticated = this.isUserAuthenticated();
-        console.log(isAunthenticated);
         return (
             <div style={{ height: `30vh` }}>
                 <NavbarComponent
@@ -112,6 +106,7 @@ class Main extends Component {
                     <ProtectRoute
                         path="/my-stocks"
                         exact
+                        isUserAuthenticated={this.isUserAuthenticated()}
                         component={() => <SummaryComponent />}
                     />
                     <ProtectRoute
