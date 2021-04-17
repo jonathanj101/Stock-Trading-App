@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Table } from 'react-bootstrap';
-import SearchComponent from '../pages/SearchComponent';
+import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../pages/BuyStockModal';
 
-const SummaryComponent = ({
-    // investingList,
-    // stocksList,
-    handleTransactions,
-    mainState,
-    // addStockToInvestingTable,
-}) => {
+const SummaryComponent = () => {
     const [show, setShow] = useState(false);
     const [estimatedShares, setEstimatedShares] = useState('0.00');
     const [estimatedCost, setEstimatedCost] = useState('$0.00');
@@ -99,7 +93,6 @@ const SummaryComponent = ({
     };
 
     const handleSubmit = () => {
-        handleTransactions(stockSymbol);
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
@@ -108,12 +101,6 @@ const SummaryComponent = ({
             stockPrice: stockPrice.includes('.')
                 ? parseFloat(stockPrice.slice(1))
                 : parseInt(stockPrice.slice(1)),
-        });
-        handleTransactions({
-            companyName: stockName,
-            symbol: stockSymbol,
-            estimatetShares: estimatedShares,
-            stockPrice: stockPrice,
         });
     };
 
@@ -267,7 +254,6 @@ const SummaryComponent = ({
     return (
         <div>
             <SearchComponent
-                mainState={mainState}
                 addStockToInvestingTable={addStockToInvestingTable}
                 handleShow={handleShow}
                 getStockFromSearchAddToModal={getStockFromSearchAddToModal}
