@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import LogInModal from '../components/LogInModal';
+import LogInModal from './LogInModal';
+import LogOutModal from './LogOutModal';
 
-const NavbarComponent = ({ isLogged, handleLogIn }) => {
-    const [show, setShow] = useState(false);
+const NavbarComponent = ({ handleLogIn }) => {
+    const [showLogInModal, setShowLogInModal] = useState(false);
+    const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [userId, setUserId] = useState('');
+    const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
     const [logInTitle, setLogInTitle] = useState('Log In');
     const [logOutTitle, setLogOutTitle] = useState('Log Out');
 
     const handleShow = () => {
-        setShow(true);
+        setShowLogInModal(true);
     };
     const handleClose = (e) => {
-        setShow(e);
+        setShowLogInModal(e);
     };
 
     const handleLogOut = () => {
         setTimeout(() => {
-            alert("You've benn successfully logged out!");
+            setShowLogOutModal(false);
         }, 2000);
         const localStorageUserId = JSON.parse(localStorage.getItem('user'));
-        console.log(`localstorage > ${localStorageUserId}, user id ${userId}`);
+        if (localStorageUserId !== null) {
+            localStorage.clear();
+            setIsUserAuthenticated(false);
+        }
     };
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
             <LogInModal
                 handleClose={handleClose}
-                show={show}
+                show={showLogInModal}
                 handleLogIn={handleLogIn}
                 setUserId={setUserId}
+                setIsUserAuthenticated={setIsUserAuthenticated}
             />
+
+            <LogOutModal show={showLogOutModal} handleClose={handleClose} />
             <Navbar
                 className="d-flex justify-content-between"
                 bg="dark"
@@ -43,19 +52,19 @@ const NavbarComponent = ({ isLogged, handleLogIn }) => {
                         Home
                     </NavLink>
                     <NavLink
-                        to={isLogged ? '/my-stocks' : '/'}
+                        to={isUserAuthenticated ? '/my-stocks' : '/'}
                         exact
-                        className={isLogged ? 'nav-link mr-3' : ''}
+                        className={isUserAuthenticated ? 'nav-link mr-3' : ''}
                     >
-                        {isLogged ? 'My Stocks' : ''}
+                        {isUserAuthenticated ? 'My Stocks' : ''}
                     </NavLink>
                     <NavLink
                         onClick={(e) => {
-                            debugger;
                             const title = e.currentTarget.innerHTML;
                             if (title === logInTitle) {
                                 handleShow();
                             } else {
+                                setShowLogOutModal(true);
                                 handleLogOut();
                             }
                         }}
@@ -63,7 +72,7 @@ const NavbarComponent = ({ isLogged, handleLogIn }) => {
                         exact
                         className="logIn"
                     >
-                        {isLogged ? logOutTitle : logInTitle}
+                        {isUserAuthenticated ? logOutTitle : logInTitle}
                     </NavLink>
                 </Nav>
             </Navbar>
