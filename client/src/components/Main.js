@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
+import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
