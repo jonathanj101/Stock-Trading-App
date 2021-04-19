@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const LogInModal = ({ show, handleLogIn, handleClose }) => {
+const LogInModal = ({ show, handleLogIn, handleClose, setUserId }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
@@ -28,6 +28,8 @@ const LogInModal = ({ show, handleLogIn, handleClose }) => {
     const clearForm = () => {
         setUsername('');
         setPassword('');
+        setErrMsg('');
+        setSuccessMsg('');
     };
 
     const redirectToAccountPage = () => {
@@ -56,6 +58,7 @@ const LogInModal = ({ show, handleLogIn, handleClose }) => {
             setShowAlertMsg(true);
             redirectToAccountPage();
             getDataFromRequest(userId, username);
+            setUserId(userId);
         }
     };
 
