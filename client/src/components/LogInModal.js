@@ -46,8 +46,8 @@ const LogInModal = ({
         }, 5000);
     };
 
-    const getDataFromRequest = (userId, username) => {
-        handleLogIn(userId, username);
+    const getDataFromRequest = (userId) => {
+        handleLogIn(userId);
     };
 
     const handleLogInRequest = async (username, password) => {
@@ -64,7 +64,7 @@ const LogInModal = ({
             setSuccessMsg(successMesg);
             setShowAlertMsg(true);
             redirectToAccountPage();
-            getDataFromRequest(userId, username);
+            getDataFromRequest(userId);
             setIsUserAuthenticated(true);
         }
     };
