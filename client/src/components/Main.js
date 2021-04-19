@@ -20,7 +20,6 @@ class Main extends Component {
             username: '',
             userId: '',
             email: '',
-            isLogged: false,
             userStocksData: [],
         };
         this.handleLogIn = this.handleLogIn.bind(this);
@@ -77,7 +76,6 @@ class Main extends Component {
     };
 
     isUserAuthenticated = () => {
-        debugger;
         const userId = JSON.parse(localStorage.getItem('user'));
         if (userId) {
             return true;
@@ -87,22 +85,18 @@ class Main extends Component {
     };
 
     handleLogIn = (userId, username) => {
-        debugger;
+        localStorage.setItem('user', JSON.stringify(userId));
         this.setState({
             userId: userId,
             username: username,
             isLogged: true,
         });
-        localStorage.setItem('user', JSON.stringify(userId));
     };
 
     render() {
         return (
             <div style={{ height: `30vh` }}>
-                <NavbarComponent
-                    isLogged={this.state.isLogged}
-                    handleLogIn={this.handleLogIn}
-                />
+                <NavbarComponent handleLogIn={this.handleLogIn} />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
                     <ProtectRoute
