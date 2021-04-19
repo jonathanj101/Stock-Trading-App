@@ -5,12 +5,23 @@ import LogInModal from '../components/LogInModal';
 
 const NavbarComponent = ({ isLogged, handleLogIn }) => {
     const [show, setShow] = useState(false);
+    const [userId, setUserId] = useState('');
+    const [logInTitle, setLogInTitle] = useState('Log In');
+    const [logOutTitle, setLogOutTitle] = useState('Log Out');
 
     const handleShow = () => {
         setShow(true);
     };
-    const handleClose = (f) => {
-        setShow(f);
+    const handleClose = (e) => {
+        setShow(e);
+    };
+
+    const handleLogOut = () => {
+        setTimeout(() => {
+            alert("You've benn successfully logged out!");
+        }, 2000);
+        const localStorageUserId = JSON.parse(localStorage.getItem('user'));
+        console.log(`localstorage > ${localStorageUserId}, user id ${userId}`);
     };
 
     return (
@@ -19,6 +30,7 @@ const NavbarComponent = ({ isLogged, handleLogIn }) => {
                 handleClose={handleClose}
                 show={show}
                 handleLogIn={handleLogIn}
+                setUserId={setUserId}
             />
             <Navbar
                 className="d-flex justify-content-between"
@@ -38,12 +50,20 @@ const NavbarComponent = ({ isLogged, handleLogIn }) => {
                         {isLogged ? 'My Stocks' : ''}
                     </NavLink>
                     <NavLink
-                        onClick={handleShow}
+                        onClick={(e) => {
+                            debugger;
+                            const title = e.currentTarget.innerHTML;
+                            if (title === logInTitle) {
+                                handleShow();
+                            } else {
+                                handleLogOut();
+                            }
+                        }}
                         to="/"
                         exact
                         className="logIn"
                     >
-                        {isLogged ? 'Log Out' : 'Log In'}
+                        {isLogged ? logOutTitle : logInTitle}
                     </NavLink>
                 </Nav>
             </Navbar>
