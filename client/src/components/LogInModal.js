@@ -8,7 +8,6 @@ const LogInModal = ({
     show,
     handleLogIn,
     handleClose,
-    setUserId,
     setIsUserAuthenticated,
 }) => {
     const [username, setUsername] = useState('');
@@ -66,7 +65,6 @@ const LogInModal = ({
             setShowAlertMsg(true);
             redirectToAccountPage();
             getDataFromRequest(userId, username);
-            setUserId(userId);
             setIsUserAuthenticated(true);
         }
     };
