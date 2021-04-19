@@ -41,37 +41,8 @@ class Main extends Component {
     //     // }
     // }
 
-    // handleRequest = async (request) => {
-    //     try {
-    //         const req = Promise.all(
-    //             request.data.data.map((stock) => {
-    //                 return {
-    //                     stockData: stock,
-    //                 };
-    //             }),
-    //         );
-    //         req.then((stockData) => {
-    //             this.setState({
-    //                 stocksList: stockData,
-    //             });
-    //         });
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
-    };
-
-    sendRegistrationFormRequest = (
-        firstName,
-        lastName,
-        password,
-        username,
-        email,
-    ) => {
-        return;
     };
 
     isUserAuthenticated = () => {
@@ -83,11 +54,9 @@ class Main extends Component {
         }
     };
 
-    handleLogIn = (userId, username) => {
+    handleLogIn = (userId) => {
         localStorage.setItem('user', JSON.stringify(userId));
         this.setState({
-            userId: userId,
-            username: username,
             isLogged: true,
         });
     };
