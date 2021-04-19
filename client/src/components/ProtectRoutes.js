@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 const ProtectRoute = ({ component: Component, isUserAuthenticated }) => {
     return isUserAuthenticated ? (
