@@ -7,10 +7,7 @@ import LogOutModal from './LogOutModal';
 const NavbarComponent = ({ handleLogIn }) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
-    const [userId, setUserId] = useState('');
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-    const [logInTitle, setLogInTitle] = useState('Log In');
-    const [logOutTitle, setLogOutTitle] = useState('Log Out');
 
     const handleShow = () => {
         setShowLogInModal(true);
@@ -36,7 +33,6 @@ const NavbarComponent = ({ handleLogIn }) => {
                 handleClose={handleClose}
                 show={showLogInModal}
                 handleLogIn={handleLogIn}
-                setUserId={setUserId}
                 setIsUserAuthenticated={setIsUserAuthenticated}
             />
 
@@ -61,7 +57,7 @@ const NavbarComponent = ({ handleLogIn }) => {
                     <NavLink
                         onClick={(e) => {
                             const title = e.currentTarget.innerHTML;
-                            if (title === logInTitle) {
+                            if (title === 'Log In') {
                                 handleShow();
                             } else {
                                 setShowLogOutModal(true);
@@ -72,7 +68,7 @@ const NavbarComponent = ({ handleLogIn }) => {
                         exact
                         className="logIn"
                     >
-                        {isUserAuthenticated ? logOutTitle : logInTitle}
+                        {isUserAuthenticated ? 'Log Out' : 'Log In'}
                     </NavLink>
                 </Nav>
             </Navbar>
