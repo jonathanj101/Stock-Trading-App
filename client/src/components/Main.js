@@ -77,6 +77,7 @@ class Main extends Component {
     };
 
     isUserAuthenticated = () => {
+        debugger;
         const userId = JSON.parse(localStorage.getItem('user'));
         if (userId) {
             return true;
@@ -86,6 +87,7 @@ class Main extends Component {
     };
 
     handleLogIn = (userId, username) => {
+        debugger;
         this.setState({
             userId: userId,
             username: username,
