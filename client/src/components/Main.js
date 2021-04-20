@@ -13,9 +13,6 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            password: '',
             username: '',
             userId: '',
             email: '',
@@ -26,13 +23,13 @@ class Main extends Component {
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
-    // async componentDidMount() {
-    //     let multipleStocksData = await axios.get('/multiple');
-    //     this.handleRequest(multipleStocksData);
+    // componentDidMount() {
+    //     debugger;
+    //     this.isUserAuthenticated();
     // }
 
-    // async componentDidUpdate(prevProps, prevState) {
-    //     const isLogged = this.state.isLogged;
+    // componentDidUpdate(prevProps, prevState) {
+    //     const userId= this.state.isLogged;
     //     this.isUserAuthenticated(isLogged);
     //     console.log(isLogged);
     //     debugger;
@@ -55,9 +52,10 @@ class Main extends Component {
     };
 
     handleLogIn = (userId) => {
+        debugger;
         localStorage.setItem('user', JSON.stringify(userId));
         this.setState({
-            isLogged: true,
+            userId: userId,
         });
     };
 
