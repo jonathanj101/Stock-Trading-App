@@ -12,27 +12,36 @@ const SummaryComponent = () => {
     const [stockName, setStockName] = useState('');
     const [stockPrice, setStockPrice] = useState('');
     const [stockSymbol, setStockSymbol] = useState('');
+    const [userBuyingPower, setUserBuyingPower] = useState('');
     const [isStockQuantity, setIsStockQuantity] = useState(true);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
+    // useEffect(() => {
+    //     if (investingList.length >= 1) {
+    //         const addStockListToDB = async () => {
+    //             const stockList = await axios.post('/add_stock', {
+    //                 company_name: stockName,
+    //                 stockSymbol: stockSymbol,
+    //                 stockPrice: stockPrice,
+    //                 estimatedShares: estimatedShares,
+    //                 estimatedCost: estimatedCost,
+    //             });
+    //             console.log(stockList);
+    //         };
+    //         addStockListToDB();
+    //     }
+    //     return;
+    // }, []);
+
     useEffect(() => {
-        const fetchData = async () => {
-            let multipleStocksData = await axios.get('/multiple');
+        const fetchMultipleStocks = async () => {
+            let multipleStocksData = await axios.get('/multiple_stocks');
             handleRequest(multipleStocksData);
         };
-        fetchData();
+
+        fetchMultipleStocks();
     }, []);
-
-    const handleShow = () => {
-        setShow(true);
-    };
-
-    const getStockFromSearchAddToModal = (e) => {
-        setStockName(e.stockName);
-        setStockSymbol(e.stockSymbol);
-        setStockPrice(e.stockPrice);
-    };
 
     const handleRequest = async (request) => {
         try {
@@ -49,6 +58,16 @@ const SummaryComponent = () => {
         } catch (err) {
             console.log(err);
         }
+    };
+
+    const handleShow = () => {
+        setShow(true);
+    };
+
+    const getStockFromSearchAddToModal = (e) => {
+        setStockName(e.stockName);
+        setStockSymbol(e.stockSymbol);
+        setStockPrice(e.stockPrice);
     };
 
     const isSameStock = (stock) => {
@@ -74,6 +93,18 @@ const SummaryComponent = () => {
         }
     };
 
+    const handleSubmit = () => {
+        addToInvesting({
+            companyName: stockName,
+            symbol: stockSymbol,
+            estimatedUserSharesCost: estimatedCost,
+            estimatedUserShares: estimatedShares,
+            stockPrice: stockPrice.includes('.')
+                ? parseFloat(stockPrice.slice(1))
+                : parseInt(stockPrice.slice(1)),
+        });
+    };
+
     const addStockToInvestingTable = (stock) => {
         debugger;
         const newStockInfoInvestingList = {
@@ -90,18 +121,6 @@ const SummaryComponent = () => {
         } else {
             setInvestingList([...investingList, newStockInfoInvestingList]);
         }
-    };
-
-    const handleSubmit = () => {
-        addToInvesting({
-            companyName: stockName,
-            symbol: stockSymbol,
-            estimatedUserSharesCost: estimatedCost,
-            estimatedUserShares: estimatedShares,
-            stockPrice: stockPrice.includes('.')
-                ? parseFloat(stockPrice.slice(1))
-                : parseInt(stockPrice.slice(1)),
-        });
     };
 
     const addToInvesting = (stockInfo) => {
