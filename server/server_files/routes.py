@@ -13,50 +13,7 @@ api_key = os.environ.get('API_KEY')
 base_url = "https://cloud.iexapis.com"
 
 
-@app.route('/testing_data', methods=['GET'])
-def main():
-
-    tesla = "Tsla"
-    apple = "aapl"
-    search_url = "{}/stable/stock/{}/quote?token={}".format(
-        base_url, tesla, api_key)
-
-    req = requests.get(search_url)
-
-    resp = req.json()
-
-    test_list = {
-        "company_name": resp["companyName"],
-        "symbol": resp["symbol"],
-        "cost": resp["latestPrice"],
-        "change": resp["change"],
-    }
-
-    return jsonify(test_list)
-
-
-@app.route('/testing/<string:name>', methods=['GET'])
-def testing(name):
-    print(name)
-
-    search_url = "{}/stable/stock/{}/quote?token={}".format(
-        base_url, name, api_key)
-
-    req = requests.get(search_url)
-
-    resp = req.json()
-
-    stock_data = {
-        "company_name": resp["companyName"],
-        "cost": resp["latestPrice"],
-        "change": resp["change"],
-        "symbol": resp["symbol"]
-    }
-
-    return jsonify({"data": stock_data})
-
-
-@app.route("/multiple", methods=["GET"])
+@app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     tesla = "tsla"
     apple = "aapl"
@@ -126,6 +83,14 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
+@app.route('/add_stock', methods={'POST'})
+def add_stock():
+    user_detail = request.get_json()
+    filter_by_id = Users.query.filter_by(id=user_detail['id'])
+    print(user_detail)
+    return jsonify("ok")
+
+
 @app.route('/signup', methods=["POST"])
 def signup():
     user_details = request.get_json()
@@ -133,14 +98,13 @@ def signup():
         username=user_details['username']).first()
     hashed_password = bcrypt.generate_password_hash(
         user_details['password']).decode('utf-8')
-    print(hashed_password)
 
     if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
                      email=user_details['email'], username=user_details['username'], password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        return jsonify("Success! You will be redirect to your account shortly!", 200)
+        return jsonify("Success! You will be redirect to your account shortly!", user.id, 200)
     else:
         return jsonify("The username has already been used! Please choose another username!", 500)
 
