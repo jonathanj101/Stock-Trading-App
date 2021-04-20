@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Col } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const FormComponent = () => {
+const FormComponent = ({ handleRegister }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
@@ -23,7 +23,13 @@ const FormComponent = () => {
             event.stopPropagation();
             setValidated(true);
         } else {
-            handleRegister(firstName, lastName, password, username, email);
+            handleRegistrantData(
+                firstName,
+                lastName,
+                password,
+                username,
+                email,
+            );
             setValidated(false);
         }
     };
@@ -36,7 +42,7 @@ const FormComponent = () => {
         setEmail('');
     };
 
-    const handleRegister = async (
+    const handleRegistrantData = async (
         firstName,
         lastName,
         password,
@@ -52,16 +58,19 @@ const FormComponent = () => {
                 email: email,
             });
             const respMsg = sendRegistrantData.data[0];
-            const respStatusCode = sendRegistrantData.data[1];
+            const userId = sendRegistrantData.data[1];
+            const respStatusCode = sendRegistrantData.data[2];
             setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
             } else {
+                debugger;
                 setSuccessMsg(respMsg);
-                clearForm();
+                handleRegister(userId);
                 setTimeout(() => {
                     history.push('/my-stocks');
                 }, 3000);
+                clearForm();
             }
         } catch (err) {
             console.log(err);
