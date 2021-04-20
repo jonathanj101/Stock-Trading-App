@@ -20,6 +20,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    transactions = db.relationship('Transactions', backref="transactions")
     stocks = db.relationship("Stock", backref="users")
 
     def __repr__(self):
@@ -41,6 +42,7 @@ class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
         return f"Transactions ('{self.amount}','{self.data}')"
