@@ -49,6 +49,7 @@ const FormComponent = ({ handleRegister }) => {
         username,
         email,
     ) => {
+        debugger;
         try {
             const sendRegistrantData = await axios.post('/signup', {
                 first_name: firstName,
@@ -58,19 +59,21 @@ const FormComponent = ({ handleRegister }) => {
                 email: email,
             });
             const respMsg = sendRegistrantData.data[0];
-            const userId = sendRegistrantData.data[1];
             const respStatusCode = sendRegistrantData.data[2];
             setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
             } else {
-                debugger;
+                console.log(handleRegister);
+                console.log(sendRegistrantData.data);
                 setSuccessMsg(respMsg);
-                handleRegister(userId);
                 setTimeout(() => {
                     history.push('/my-stocks');
                 }, 3000);
+                const userId = sendRegistrantData.data[1];
+                localStorage.setItem('userId', JSON.stringify(userId));
                 clearForm();
+                handleRegister(userId);
             }
         } catch (err) {
             console.log(err);
