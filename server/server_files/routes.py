@@ -122,4 +122,4 @@ def login():
         }
         return jsonify(response, 200)
     else:
-        return jsonify("hmmm.. We don't recognize that username or password. Please try again!")
+        return jsonify("hmmm.. We don't recognize that username or password. Please try again!", 500)
