@@ -19,14 +19,15 @@ class Main extends Component {
             userStocksData: [],
         };
         this.handleLogIn = this.handleLogIn.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
-    // componentDidMount() {
-    //     debugger;
-    //     this.isUserAuthenticated();
-    // }
+    componentDidMount() {
+        debugger;
+        this.isUserAuthenticated();
+    }
 
     // componentDidUpdate(prevProps, prevState) {
     //     const userId= this.state.isLogged;
@@ -43,20 +44,43 @@ class Main extends Component {
     };
 
     isUserAuthenticated = () => {
-        const userId = JSON.parse(localStorage.getItem('user'));
-        if (userId) {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (localStorageUserId === this.state.userId) {
+            console.log(true);
             return true;
         } else {
+            console.log(false);
             return false;
+        }
+    };
+
+    handleRegister = (userId) => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+
+        if (localStorageUserId !== null) {
+            this.setState({
+                userId: localStorageUserId,
+            });
+        } else if (userId !== undefined) {
+            this.setState({
+                userId: userId,
+            });
+        } else {
+            return;
         }
     };
 
     handleLogIn = (userId) => {
         debugger;
-        localStorage.setItem('user', JSON.stringify(userId));
-        this.setState({
-            userId: userId,
-        });
+        if (userId) {
+            localStorage.setItem('userId', JSON.stringify(userId));
+            this.setState({
+                userId: userId,
+            });
+        }
+        return;
     };
 
     render() {
@@ -79,7 +103,11 @@ class Main extends Component {
                     <Route
                         path="/register"
                         exact
-                        component={() => <FormComponent />}
+                        component={() => (
+                            <FormComponent
+                                handleRegister={this.handleRegister}
+                            />
+                        )}
                     />
                     <Route path="*" component={() => <PageNotFound />} />
                 </Switch>
