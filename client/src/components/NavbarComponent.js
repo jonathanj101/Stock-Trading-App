@@ -9,6 +9,16 @@ const NavbarComponent = ({ handleLogIn }) => {
     const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
+    useEffect(() => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (localStorageUserId !== null) {
+            setIsUserAuthenticated(true);
+        } else {
+            setIsUserAuthenticated(false);
+        }
+    });
+
     const handleShow = () => {
         setShowLogInModal(true);
     };
@@ -20,7 +30,7 @@ const NavbarComponent = ({ handleLogIn }) => {
         setTimeout(() => {
             setShowLogOutModal(false);
         }, 2000);
-        const localStorageUserId = JSON.parse(localStorage.getItem('user'));
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
             localStorage.clear();
             setIsUserAuthenticated(false);
