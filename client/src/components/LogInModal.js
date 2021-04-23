@@ -8,7 +8,7 @@ const LogInModal = ({
     show,
     handleLogIn,
     handleClose,
-    setIsUserAuthenticated,
+    // setIsUserAuthenticated,
 }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -46,26 +46,29 @@ const LogInModal = ({
         }, 5000);
     };
 
-    const getDataFromRequest = (userId) => {
-        handleLogIn(userId);
-    };
+    // const getDataFromRequest = (userId) => {
+    //     handleLogIn(userId);
+    // };
 
     const handleLogInRequest = async (username, password) => {
+        debugger;
         const respData = await axios.post('/login', {
             username: username,
             password: password,
         });
         const userId = respData.data[0].user_id;
         const respStatusCode = respData.data[1];
+        setShowAlertMsg(true);
         if (respStatusCode >= 500) {
-            setErrMsg(respData.data);
+            const respErrMsg = respData.data[0];
+            setErrMsg(respErrMsg);
         } else {
             const successMesg = respData.data[0].success_msg;
             setSuccessMsg(successMesg);
-            setShowAlertMsg(true);
             redirectToAccountPage();
-            getDataFromRequest(userId);
-            setIsUserAuthenticated(true);
+            localStorage.setItem('userId', JSON.stringify(userId));
+            handleLogIn(userId);
+            // setIsUserAuthenticated(true);
         }
     };
 
