@@ -23,7 +23,7 @@ SET row_security = off;
 -- Name: fantasy_stock_app; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE fantasy_stock_app WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
+CREATE DATABASE fantasy_stock_app
 
 
 ALTER DATABASE fantasy_stock_app OWNER TO postgres;
