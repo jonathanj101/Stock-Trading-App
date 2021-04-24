@@ -17,22 +17,36 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
-    // useEffect(() => {
-    //     if (investingList.length >= 1) {
-    //         const addStockListToDB = async () => {
-    //             const stockList = await axios.post('/add_stock', {
-    //                 company_name: stockName,
-    //                 stockSymbol: stockSymbol,
-    //                 stockPrice: stockPrice,
-    //                 estimatedShares: estimatedShares,
-    //                 estimatedCost: estimatedCost,
-    //             });
-    //             console.log(stockList);
-    //         };
-    //         addStockListToDB();
-    //     }
-    //     return;
-    // }, []);
+    useEffect(() => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (investingList.length >= 1 && localStorageUserId !== null) {
+            const mapInvestingList = investingList.map((stock) => {
+                const stockData = {
+                    company_name: stock.companyName,
+                    symbol: stock.symbol,
+                    cost: stock.userEstimatedHolding,
+                    shares: stock.userEstimatedShares,
+                };
+                return stockData;
+            });
+            console.log(mapInvestingList);
+            console.log(mapInvestingList.company_name);
+            // const addStockListToDB = async () => {
+            //     const stockList = await axios.post('/add_stock', {
+            //         company_name: mapInvestingList.companyName,
+            //         symbol: mapInvestingList.symbol,
+            //         cost: mapInvestingList.userEstimatedHolding,
+            //         shares: mapInvestingList.userEstimatedShares,
+            //         id: localStorageUserId,
+            //     });
+            //     console.log(stockList);
+            // };
+            // addStockListToDB();
+        } else {
+            return;
+        }
+    }, [investingList]);
 
     useEffect(() => {
         const fetchMultipleStocks = async () => {
