@@ -26,7 +26,12 @@ class Main extends Component {
 
     componentDidMount() {
         debugger;
-        this.isUserAuthenticated();
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (localStorageUserId !== null) {
+            this.setState({
+                userId: localStorageUserId,
+            });
+        }
     }
 
     // componentDidUpdate(prevProps, prevState) {
@@ -46,7 +51,7 @@ class Main extends Component {
     isUserAuthenticated = () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        if (localStorageUserId === this.state.userId) {
+        if (localStorageUserId !== null) {
             console.log(true);
             return true;
         } else {
