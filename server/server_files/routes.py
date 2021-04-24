@@ -86,7 +86,7 @@ def multiple():
 @app.route('/add_stock', methods={'POST'})
 def add_stock():
     user_detail = request.get_json()
-    filter_by_id = Users.query.filter_by(id=user_detail['id'])
+    filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
     print(user_detail)
     return jsonify("ok")
 
