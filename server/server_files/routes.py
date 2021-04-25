@@ -83,21 +83,38 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
+@app.route("/search_stock/<string:stock>", methods={'GET'})
+def search_stock(stock):
+
+    search_url = "{}/stable/stock/{}/quote?token={}".format(
+        base_url, stock, api_key)
+    req = requests.get(search_url)
+    resp = req.json()
+    stock_data = {
+        "company_name": resp["companyName"],
+        "cost": resp["latestPrice"],
+        "change": resp["change"],
+        "symbol": resp["symbol"]
+    }
+    return jsonify({"data": stock_data})
+
+
 @app.route('/add_stock', methods={'POST'})
 def add_stock():
     user_detail = request.get_json()
-    # filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
-    # print(type(req['mapInvestingList']))
-    # print(type(request))
-    # user_detail = req['mapInvestingList']
-    print(user_detail)
-
-    # lst = []
-    # for item in user_detail:
-    #     print(item)
-    #     print(type(item))
-    # print(lst)
-    return jsonify("ok")
+    filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
+    # print(filter_by_id)
+    if filter_by_id:
+        user = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
+                     shares=user_detail['userShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
+        transaction = Transactions(
+            user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
+        db.session.add(user)
+        db.session.add(transaction)
+        db.session.commit()
+        return jsonify("Success! Stock added to db", 200)
+    else:
+        return jsonify('Something went wrong on our end! Please try again later.', 500)
 
 
 @app.route('/signup', methods=["POST"])
