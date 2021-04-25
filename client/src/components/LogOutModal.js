@@ -8,9 +8,6 @@ const LogOutModal = ({ show, handleClose }) => {
                 <Modal.Header>
                     <Modal.Title>Successfully Loggged-off</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    You will be redirect to the Home page shortly!
-                </Modal.Body>
             </Modal>
         </div>
     );
