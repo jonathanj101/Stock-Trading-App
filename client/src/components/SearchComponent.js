@@ -17,7 +17,7 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     };
 
     const sendRequestOnTextInput = (textInput) => {
-        fetch(`/testing/${textInput}`)
+        fetch(`/search_stock/${textInput}`)
             .then((resp) => resp.json())
             .then((data) => {
                 console.log(data);
