@@ -30,19 +30,21 @@ class Users(db.Model, UserMixin):
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    stock = db.Column(db.String(255), nullable=False)
-    shares = db.Column(db.String(255), nullable=False)
+    stock_symbol = db.Column(db.String(255), nullable=False)
+    stock_cost = db.Column(db.Integer, nullable=False)
+    shares = db.Column(db.Integer, nullable=False)
+    userEstimatedCost = db.Column(db.Integer, nullable=False)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return f"Stock ('{self.stock}', '{self.shares}', '{self.date}')"
+        return f"Stock ('{self.stock_symbol}', '{self.shares}', {self.stock_cost} , {self.userEstimatedCost} ,  , '{self.date}')"
 
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    amount = db.Column(db.Integer)
+    user_holdings = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return f"Transactions ('{self.amount}','{self.data}')"
+        return f"Transactions ('{self.amount}','{self.data}, {self.user_id}')"
