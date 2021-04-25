@@ -103,7 +103,7 @@ def search_stock(stock):
 def add_stock():
     user_detail = request.get_json()
     filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
-    # print(filter_by_id)
+    print(user_detail)
     if filter_by_id:
         user = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                      shares=user_detail['userShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
