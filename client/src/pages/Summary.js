@@ -39,9 +39,8 @@ const SummaryComponent = () => {
             // console.log(mapInvestingList);
             // console.log(mapInvestingList.company_name);
             // const mapping = mapInvestingList.map((stock) => {
-            //     return stock
-            // })
-            // con
+            //     return sto
+            //
             const parsed = parseFloat(stockPrice.slice(1));
             console.log(parsed);
             const addStockListToDB = async () => {
@@ -59,7 +58,7 @@ const SummaryComponent = () => {
         } else {
             return;
         }
-    }, [investingList]);
+    }, [stockName]);
 
     useEffect(() => {
         const fetchMultipleStocks = async () => {
