@@ -21,7 +21,11 @@ const SummaryComponent = () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (investingList.length >= 1 && localStorageUserId !== null) {
+            // console.log(
+            //     `user cost ${estimatedCost} , user shares ${estimatedShares}, stockname ${stockName}, stock cost ${stockPrice}, stocksymbol ${stockSymbol}`,
+            // );
             const mapInvestingList = investingList.map((stock) => {
+                console.log(stock);
                 const stockData = {
                     company_name: stock.companyName,
                     symbol: stock.symbol,
@@ -31,18 +35,18 @@ const SummaryComponent = () => {
                 return stockData;
             });
             console.log(mapInvestingList);
-            console.log(mapInvestingList.company_name);
-            // const addStockListToDB = async () => {
-            //     const stockList = await axios.post('/add_stock', {
-            //         company_name: mapInvestingList.companyName,
-            //         symbol: mapInvestingList.symbol,
-            //         cost: mapInvestingList.userEstimatedHolding,
-            //         shares: mapInvestingList.userEstimatedShares,
-            //         id: localStorageUserId,
-            //     });
-            //     console.log(stockList);
-            // };
-            // addStockListToDB();
+            // console.log(mapInvestingList.company_name);
+            // const mapping = mapInvestingList.map((stock) => {
+            //     return stock;
+            // })
+            // console.lo
+            const addStockListToDB = async () => {
+                const stockList = await axios.post('/add_stock', {
+                    mapInvestingList,
+                });
+                console.log(stockList);
+            };
+            addStockListToDB();
         } else {
             return;
         }
