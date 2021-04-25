@@ -23,26 +23,33 @@ const SummaryComponent = () => {
         if (investingList.length >= 1 && localStorageUserId !== null) {
             // console.log(
             //     `user cost ${estimatedCost} , user shares ${estimatedShares}, stockname ${stockName}, stock cost ${stockPrice}, stocksymbol ${stockSymbol}`,
-            // );
+            // )
             const mapInvestingList = investingList.map((stock) => {
                 console.log(stock);
                 const stockData = {
                     company_name: stock.companyName,
                     symbol: stock.symbol,
-                    cost: stock.userEstimatedHolding,
+                    stockCost: stock.stockPrice,
+                    userEstimatedcost: stock.userEstimatedHolding,
                     shares: stock.userEstimatedShares,
+                    id: localStorageUserId,
                 };
-                return stockData;
+                return stock;
             });
             console.log(mapInvestingList);
             // console.log(mapInvestingList.company_name);
             // const mapping = mapInvestingList.map((stock) => {
             //     return stock;
             // })
-            // console.lo
+            // console.l
             const addStockListToDB = async () => {
                 const stockList = await axios.post('/add_stock', {
-                    mapInvestingList,
+                    id: localStorageUserId,
+                    company_name: stockName,
+                    stockCost: stockPrice,
+                    stockSymbol: stockSymbol,
+                    userShares: estimatedShares,
+                    estimatedCost: estimatedCost,
                 });
                 console.log(stockList);
             };
@@ -115,6 +122,7 @@ const SummaryComponent = () => {
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
+            stockPrice: stockPrice,
             estimatedUserSharesCost: estimatedCost,
             estimatedUserShares: estimatedShares,
             stockPrice: stockPrice.includes('.')
@@ -125,8 +133,11 @@ const SummaryComponent = () => {
 
     const addStockToInvestingTable = (stock) => {
         debugger;
+        setEstimatedCost(stock.estimatedUserSharesCost);
+        setEstimatedShares(stock.estimatedUserSharesCost / stock.stockPrice);
         const newStockInfoInvestingList = {
             symbol: stock.symbol,
+            stockPrice: stock.stockPrice,
             userEstimatedHolding: stock.estimatedUserSharesCost,
             userEstimatedShares:
                 stock.estimatedUserSharesCost / stock.stockPrice,
