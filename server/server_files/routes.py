@@ -90,6 +90,7 @@ def add_stock():
     # print(type(req['mapInvestingList']))
     # print(type(request))
     # user_detail = req['mapInvestingList']
+    print(user_detail)
 
     # lst = []
     # for item in user_detail:
