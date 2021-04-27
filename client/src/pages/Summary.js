@@ -21,26 +21,6 @@ const SummaryComponent = () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (investingList.length >= 1 && localStorageUserId !== null) {
-            // console.log(
-            //     `user cost ${estimatedCost} , user shares ${estimatedShares}, stockname ${stockName}, stock cost ${stockPrice}, stocksymbol ${stockSymbol}`,
-            // )
-            // const mapInvestingList = investingList.map((stock) => {
-            //     console.log(stock);
-            //     const stockData = {
-            //         company_name: stock.companyName,
-            //         symbol: stock.symbol,
-            //         stockCost: stock.stockPrice,
-            //         userEstimatedcost: stock.userEstimatedHolding,
-            //         shares: stock.userEstimatedShares,
-            //         id: localStorageUserId,
-            //     };
-            //     return stock;
-            // });
-            // console.log(mapInvestingList);
-            // console.log(mapInvestingList.company_name);
-            // const mapping = mapInvestingList.map((stock) => {
-            //     return sto
-            //
             const parsed = parseFloat(stockPrice.slice(1));
             console.log(parsed);
             const addStockListToDB = async () => {
