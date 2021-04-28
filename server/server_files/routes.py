@@ -102,14 +102,17 @@ def search_stock(stock):
 @app.route('/add_stock', methods={'POST'})
 def add_stock():
     user_detail = request.get_json()
+
     filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
-    print(user_detail)
     if filter_by_id:
         filter_by_stock_symbol = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
-        # print(filter_by_stock_symbol.stock_symbol)
-        # print(filter_by_stock_symbol)
-        if filter_by_stock_symbol.stock_symbol == user_detail['stockSymbol']:
+        print(user_detail)
+        print(filter_by_stock_symbol)
+        print(filter_by_stock_symbol.stock_symbol)
+        if filter_by_stock_symbol == user_detail['stockSymbol']:
+            print(True)
+            print()
             update_user_cost = filter_by_stock_symbol.userEstimatedCost + \
                 user_detail['estimatedCost']
             update_user_shares = filter_by_stock_symbol.shares + \
@@ -119,14 +122,14 @@ def add_stock():
             db.session.commit()
             return 'true'
         else:
-            user = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
-                         shares=user_detail['userShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
+            user_stock = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
+                               shares=user_detail['estimatedShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
             transaction = Transactions(
                 user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
-            db.session.add(user)
+            db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
-            return jsonify("Success! Stock added to db", 200)
+        return jsonify("Success! Stock added to db", 200)
     else:
         return jsonify('Something went wrong on our end! Please try again later.', 500)
 
