@@ -64,8 +64,6 @@ const FormComponent = ({ handleRegister }) => {
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
             } else {
-                console.log(handleRegister);
-                console.log(sendRegistrantData.data);
                 setSuccessMsg(respMsg);
                 setTimeout(() => {
                     history.push('/my-stocks');
