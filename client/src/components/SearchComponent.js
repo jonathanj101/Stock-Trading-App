@@ -20,7 +20,6 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
         fetch(`/search_stock/${textInput}`)
             .then((resp) => resp.json())
             .then((data) => {
-                console.log(data);
                 setCompanyName(data.data.company_name);
                 setStockSymbol(data.data.symbol);
                 setStockPrice(`$${data.data.cost.toString()}`);
