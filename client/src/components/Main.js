@@ -34,16 +34,6 @@ class Main extends Component {
         }
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     const userId= this.state.isLogged;
-    //     this.isUserAuthenticated(isLogged);
-    //     console.log(isLogged);
-    //     debugger;
-    //     // if (this.state.isLogged !== prevState.isLogged) {
-    //     //     this.isUserAuthenticated(isLogged);
-    //     // }
-    // }
-
     handleTransactions = (stockInfo) => {
         console.log(stockInfo);
     };
