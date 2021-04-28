@@ -46,10 +46,6 @@ const LogInModal = ({
         }, 5000);
     };
 
-    // const getDataFromRequest = (userId) => {
-    //     handleLogIn(userId);
-    // };
-
     const handleLogInRequest = async (username, password) => {
         debugger;
         const respData = await axios.post('/login', {
@@ -68,7 +64,6 @@ const LogInModal = ({
             redirectToAccountPage();
             localStorage.setItem('userId', JSON.stringify(userId));
             handleLogIn(userId);
-            // setIsUserAuthenticated(true);
         }
     };
 
