@@ -109,14 +109,14 @@ def add_stock():
             stock_symbol=user_detail['stockSymbol']).first()
         print(user_detail)
         print(filter_by_stock_symbol)
-        print(filter_by_stock_symbol.stock_symbol)
-        if filter_by_stock_symbol == user_detail['stockSymbol']:
-            print(True)
-            print()
+        # print(filter_by_stock_symbol.stock_symbol)
+        # if filter_by_stock_symbol == user_detail['stockSymbol']:
+        if filter_by_stock_symbol != None:
+            print("line 115 {}".format(filter_by_stock_symbol.stock_symbol))
             update_user_cost = filter_by_stock_symbol.userEstimatedCost + \
                 user_detail['estimatedCost']
             update_user_shares = filter_by_stock_symbol.shares + \
-                user_detail['userShares']
+                user_detail['estimatedShares']
             filter_by_stock_symbol.userEstimatedCost = update_user_cost
             filter_by_stock_symbol.shares = update_user_shares
             db.session.commit()
