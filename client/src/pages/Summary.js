@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Table } from 'react-bootstrap';
 import SearchComponent from '../components/SearchComponent';
-import BuyStockModal from '../pages/BuyStockModal';
+import BuyStockModal from '../components/BuyStockModal';
 
 const SummaryComponent = () => {
     const [show, setShow] = useState(false);
@@ -146,7 +146,7 @@ const SummaryComponent = () => {
         setStockInputValue(value);
     };
 
-    const calculateOnTitleChange = (dropDownTitle) => {
+    const calculateOnTitleChange = () => {
         const parseStockInputValue = parseFloat(stockInputValue);
         const parseSliceStockCost = stockPrice.includes('.')
             ? parseFloat(stockPrice.slice(1))
