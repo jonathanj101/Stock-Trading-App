@@ -22,7 +22,6 @@ const SummaryComponent = () => {
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (investingList.length >= 1 && localStorageUserId !== null) {
             const parsed = parseFloat(stockPrice.slice(1));
-            console.log(parsed);
             const addStockListToDB = async () => {
                 const stockList = await axios.post('/add_stock', {
                     id: localStorageUserId,
@@ -32,7 +31,6 @@ const SummaryComponent = () => {
                     userShares: estimatedShares,
                     estimatedCost: estimatedCost,
                 });
-                console.log(stockList);
             };
             addStockListToDB();
         } else {
@@ -178,14 +176,12 @@ const SummaryComponent = () => {
         if (isStockQuantity) {
             const totalShares = parseStockInput / parseSliceStockCost;
             if (!isNaN(totalShares)) {
-                console.log(`cost in shares ${totalShares}`);
                 setEstimatedShares(totalShares);
                 setEstimatedCost(parseStockInput);
             } else {
                 return;
             }
         } else {
-            console.log('calc on input totalCost');
             const totalCost = parseSliceStockCost * parseStockInput;
             if (!isNaN(totalCost)) {
                 setEstimatedCost(totalCost);
@@ -326,7 +322,6 @@ const SummaryComponent = () => {
                         </div>
                     ) : (
                         investingTable
-                        // 'ok'
                     )}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
