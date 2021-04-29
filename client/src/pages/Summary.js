@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Card, Button, Table } from 'react-bootstrap';
 import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
+import SellStockModal from '../components/SellStockModal';
 
 const SummaryComponent = () => {
-    const [show, setShow] = useState(false);
+    const [showBuyStockModal, setBuyStockModal] = useState(false);
+    const [showSellStockModal, setSellStockModal] = useState(false);
     const [estimatedShares, setEstimatedShares] = useState('0.00');
     const [estimatedCost, setEstimatedCost] = useState('$0.00');
     const [stockInputValue, setStockInputValue] = useState('0.00');
@@ -18,8 +20,7 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
-    useEffect(() => {
-        debugger;
+    const onBuyHandler = () => {
         console.log(buyButton);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (stockName !== '') {
@@ -42,7 +43,7 @@ const SummaryComponent = () => {
         } else {
             return;
         }
-    }, [buyButton]);
+    };
 
     useEffect(() => {
         const fetchMultipleStocks = async () => {
@@ -71,7 +72,7 @@ const SummaryComponent = () => {
     };
 
     const handleShow = () => {
-        setShow(true);
+        setBuyStockModal(true);
     };
 
     const getStockFromSearchAddToModal = (e) => {
@@ -232,7 +233,13 @@ const SummaryComponent = () => {
                     >
                         (Total Shares: {stock.userEstimatedShares})
                     </Card.Subtitle>
-                    <Button href="#" block>
+                    <Button
+                        onClick={() => {
+                            console.log('clicked');
+                            setSellStockModal(true);
+                        }}
+                        block
+                    >
                         sell
                     </Button>
                 </Card.Body>
@@ -288,11 +295,11 @@ const SummaryComponent = () => {
                 addStockToInvestingTable={addStockToInvestingTable}
                 handleShow={handleShow}
                 getStockFromSearchAddToModal={getStockFromSearchAddToModal}
-                show={show}
+                showBuyStockModal={showBuyStockModal}
             />
 
             <BuyStockModal
-                show={show}
+                showBuyStockModal={showBuyStockModal}
                 stockName={stockName}
                 stockSymbol={stockSymbol}
                 stockPrice={stockPrice}
@@ -307,8 +314,10 @@ const SummaryComponent = () => {
                 setStockInputValue={setStockInputValue}
                 setEstimatedCost={setEstimatedCost}
                 setEstimatedShares={setEstimatedShares}
-                setShow={setShow}
+                setShow={setBuyStockModal}
             />
+
+            <SellStockModal show={showSellStockModal} />
 
             <div className="w-75 mx-auto">
                 <h1 className="w-100 mx-auto" style={styles.investingTitle}>
