@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 
 const BuyStockModal = ({
-    show,
+    showBuyStockModal,
     setIsStockQuantity,
     calculateCost,
     calculateOnTitleChange,
@@ -40,7 +40,7 @@ const BuyStockModal = ({
     return (
         <div>
             <Modal
-                show={show}
+                show={showBuyStockModal}
                 onHide={handleClose}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
