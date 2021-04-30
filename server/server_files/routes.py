@@ -99,7 +99,7 @@ def search_stock(stock):
     return jsonify({"data": stock_data})
 
 
-@app.route('/add_stock', methods={'POST'})
+@app.route('/add_stock', methods=['POST'])
 def add_stock():
     user_detail = request.get_json()
 
@@ -130,6 +130,17 @@ def add_stock():
         return jsonify("Success! Stock added to db", 200)
     else:
         return jsonify('Something went wrong on our end! Please try again later.', 500)
+
+
+@app.route('/sell_stock', methods=["POST"])
+def sell_stock():
+    user_detail = request.get_json()
+    filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
+
+    if filter_by_id:
+        return "ok", 200
+    else:
+        return 'nope', 500
 
 
 @app.route('/signup', methods=["POST"])
