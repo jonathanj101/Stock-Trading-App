@@ -109,8 +109,6 @@ def add_stock():
             stock_symbol=user_detail['stockSymbol']).first()
         print(user_detail)
         print(filter_by_stock_symbol)
-        # print(filter_by_stock_symbol.stock_symbol)
-        # if filter_by_stock_symbol == user_detail['stockSymbol']:
         if filter_by_stock_symbol != None:
             print("line 115 {}".format(filter_by_stock_symbol.stock_symbol))
             update_user_cost = filter_by_stock_symbol.userEstimatedCost + \
