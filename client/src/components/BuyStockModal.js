@@ -22,8 +22,7 @@ const BuyStockModal = ({
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
 
-    const handleDropdownTitle = (e) => {
-        const ele = e.currentTarget.textContent;
+    const handleDropdownTitle = () => {
         calculateOnTitleChange();
         setDropdownTitle(dropdownItemTitle);
         setDropdownItemTitle(dropdownTitle);
@@ -67,7 +66,7 @@ const BuyStockModal = ({
                                     }
                                 >
                                     <Dropdown.Item
-                                        onClick={(e) => handleDropdownTitle(e)}
+                                        onClick={(e) => handleDropdownTitle()}
                                         as="button"
                                         eventKey="Shares"
                                     >
