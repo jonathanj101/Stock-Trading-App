@@ -20,7 +20,6 @@ class Main extends Component {
         };
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
-        this.handleTransactions = this.handleTransactions.bind(this);
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
@@ -33,10 +32,6 @@ class Main extends Component {
             });
         }
     }
-
-    handleTransactions = (stockInfo) => {
-        console.log(stockInfo);
-    };
 
     isUserAuthenticated = () => {
         debugger;

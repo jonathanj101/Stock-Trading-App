@@ -4,12 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const LogInModal = ({
-    show,
-    handleLogIn,
-    handleClose,
-    // setIsUserAuthenticated,
-}) => {
+const LogInModal = ({ show, handleLogIn, handleClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
@@ -114,8 +109,6 @@ const LogInModal = ({
                                 </Form.Group>
                                 <Form.Group controlId="password">
                                     <Form.Control
-                                        required
-                                        // style={styles.formGroupStyles}
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
