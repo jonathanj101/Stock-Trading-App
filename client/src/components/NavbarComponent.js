@@ -42,7 +42,6 @@ const NavbarComponent = ({ handleLogIn }) => {
                 handleClose={handleClose}
                 show={showLogInModal}
                 handleLogIn={handleLogIn}
-                setIsUserAuthenticated={setIsUserAuthenticated}
             />
 
             <LogOutModal show={showLogOutModal} handleClose={handleClose} />
