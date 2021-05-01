@@ -18,6 +18,7 @@ const BuyStockModal = ({
     setEstimatedShares,
     setEstimatedCost,
     setShow,
+    onBuyHandler,
 }) => {
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
@@ -117,6 +118,7 @@ const BuyStockModal = ({
                             onClick={() => {
                                 handleClose();
                                 handleSubmit();
+                                onBuyHandler();
                             }}
                             block
                         >
