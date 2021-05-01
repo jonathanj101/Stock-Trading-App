@@ -21,29 +21,44 @@ const SummaryComponent = () => {
     const [investingList, setInvestingList] = useState([]);
 
     const onBuyHandler = () => {
-        console.log(buyButton);
+        debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        if (stockName !== '') {
-            if (investingList.length >= 1) {
-                const parsed = parseFloat(stockPrice.slice(1));
-                const addStockListToDB = async () => {
-                    const stockList = await axios.post('/add_stock', {
+        try {
+            const parsed = parseFloat(stockPrice.slice(1));
+            const addStockListToDB = async () => {
+                await axios
+                    .post('/add_stock', {
                         id: localStorageUserId,
                         company_name: stockName,
                         stockCost: parsed,
                         stockSymbol: stockSymbol,
                         estimatedShares: estimatedShares,
                         estimatedCost: estimatedCost,
-                    });
-                };
-                addStockListToDB();
-                setBuyButton(false);
-                setStockName('');
-            }
-        } else {
-            return;
+                    })
+                    .then((data) => console.log(data));
+            };
+            addStockListToDB();
+            console.log(addStockListToDB());
+        } catch (error) {
+            console.log(error);
         }
     };
+
+    useEffect(() => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (localStorageUserId !== null) {
+            const fetchUserInvestingList = async () => {
+                const stockData = await axios.post('/user_stock', {
+                    id: localStorageUserId,
+                });
+
+                console.log(stockData);
+            };
+
+            fetchUserInvestingList();
+        }
+    }, []);
 
     useEffect(() => {
         const fetchMultipleStocks = async () => {
@@ -114,7 +129,6 @@ const SummaryComponent = () => {
                 ? parseFloat(stockPrice.slice(1))
                 : parseInt(stockPrice.slice(1)),
         });
-        setBuyButton(true);
     };
 
     const addStockToInvestingTable = (stock) => {
@@ -315,6 +329,7 @@ const SummaryComponent = () => {
                 setEstimatedCost={setEstimatedCost}
                 setEstimatedShares={setEstimatedShares}
                 setShow={setBuyStockModal}
+                onBuyHandler={onBuyHandler}
             />
 
             <SellStockModal show={showSellStockModal} />
