@@ -143,6 +143,15 @@ def sell_stock():
         return 'nope', 500
 
 
+@app.route('/user_stock', methods=['POST'])
+def user_stock():
+    user_detail = request.get_json()
+    user = Users.query.filter_by(id=user_detail['id']).first()
+    print(user)
+    print(user.stocks)
+    return 'ok'
+
+
 @app.route('/signup', methods=["POST"])
 def signup():
     user_details = request.get_json()
