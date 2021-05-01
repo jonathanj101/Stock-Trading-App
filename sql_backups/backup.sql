@@ -5,7 +5,7 @@
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-04-21 19:28:36
+-- Started on 2021-04-30 23:50:14
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 3012 (class 1262 OID 32768)
+-- TOC entry 3011 (class 1262 OID 32768)
 -- Name: fantasy_stock_app; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -46,15 +46,17 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 203 (class 1259 OID 33565)
+-- TOC entry 203 (class 1259 OID 34347)
 -- Name: stock; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.stock (
     id integer NOT NULL,
     date timestamp without time zone NOT NULL,
-    stock character varying(255) NOT NULL,
-    shares character varying(255) NOT NULL,
+    stock_symbol character varying(255) NOT NULL,
+    stock_cost double precision NOT NULL,
+    shares double precision NOT NULL,
+    "userEstimatedCost" double precision NOT NULL,
     users_id integer
 );
 
@@ -62,7 +64,7 @@ CREATE TABLE public.stock (
 ALTER TABLE public.stock OWNER TO postgres;
 
 --
--- TOC entry 202 (class 1259 OID 33563)
+-- TOC entry 202 (class 1259 OID 34345)
 -- Name: stock_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -78,7 +80,7 @@ CREATE SEQUENCE public.stock_id_seq
 ALTER TABLE public.stock_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3013 (class 0 OID 0)
+-- TOC entry 3012 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: stock_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -87,13 +89,13 @@ ALTER SEQUENCE public.stock_id_seq OWNED BY public.stock.id;
 
 
 --
--- TOC entry 205 (class 1259 OID 33581)
+-- TOC entry 205 (class 1259 OID 34360)
 -- Name: transactions; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.transactions (
     id integer NOT NULL,
-    amount integer,
+    user_holdings double precision NOT NULL,
     date timestamp without time zone NOT NULL,
     user_id integer
 );
@@ -102,7 +104,7 @@ CREATE TABLE public.transactions (
 ALTER TABLE public.transactions OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 33579)
+-- TOC entry 204 (class 1259 OID 34358)
 -- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -118,7 +120,7 @@ CREATE SEQUENCE public.transactions_id_seq
 ALTER TABLE public.transactions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3014 (class 0 OID 0)
+-- TOC entry 3013 (class 0 OID 0)
 -- Dependencies: 204
 -- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -127,7 +129,7 @@ ALTER SEQUENCE public.transactions_id_seq OWNED BY public.transactions.id;
 
 
 --
--- TOC entry 201 (class 1259 OID 33552)
+-- TOC entry 201 (class 1259 OID 34334)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -144,7 +146,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 33550)
+-- TOC entry 200 (class 1259 OID 34332)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -160,7 +162,7 @@ CREATE SEQUENCE public.users_id_seq
 ALTER TABLE public.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3015 (class 0 OID 0)
+-- TOC entry 3014 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -169,7 +171,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- TOC entry 2865 (class 2604 OID 33568)
+-- TOC entry 2864 (class 2604 OID 34350)
 -- Name: stock id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -177,7 +179,7 @@ ALTER TABLE ONLY public.stock ALTER COLUMN id SET DEFAULT nextval('public.stock_
 
 
 --
--- TOC entry 2866 (class 2604 OID 33584)
+-- TOC entry 2865 (class 2604 OID 34363)
 -- Name: transactions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -185,7 +187,7 @@ ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- TOC entry 2864 (class 2604 OID 33555)
+-- TOC entry 2863 (class 2604 OID 34337)
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -193,7 +195,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- TOC entry 2872 (class 2606 OID 33573)
+-- TOC entry 2871 (class 2606 OID 34352)
 -- Name: stock stock_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -202,7 +204,7 @@ ALTER TABLE ONLY public.stock
 
 
 --
--- TOC entry 2874 (class 2606 OID 33586)
+-- TOC entry 2873 (class 2606 OID 34365)
 -- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -211,7 +213,7 @@ ALTER TABLE ONLY public.transactions
 
 
 --
--- TOC entry 2868 (class 2606 OID 33560)
+-- TOC entry 2867 (class 2606 OID 34342)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -220,7 +222,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 2870 (class 2606 OID 33562)
+-- TOC entry 2869 (class 2606 OID 34344)
 -- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -229,7 +231,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 2875 (class 2606 OID 33574)
+-- TOC entry 2874 (class 2606 OID 34353)
 -- Name: stock stock_users_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -238,7 +240,7 @@ ALTER TABLE ONLY public.stock
 
 
 --
--- TOC entry 2876 (class 2606 OID 33587)
+-- TOC entry 2875 (class 2606 OID 34366)
 -- Name: transactions transactions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -246,7 +248,7 @@ ALTER TABLE ONLY public.transactions
     ADD CONSTRAINT transactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- Completed on 2021-04-21 19:28:36
+-- Completed on 2021-04-30 23:50:14
 
 --
 -- PostgreSQL database dump complete
