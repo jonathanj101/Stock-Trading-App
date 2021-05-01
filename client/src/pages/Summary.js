@@ -20,25 +20,19 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
-    const onBuyHandler = () => {
+    const onBuyHandler = async () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        const parsed = parseFloat(stockPrice.slice(1));
         try {
-            const parsed = parseFloat(stockPrice.slice(1));
-            const addStockListToDB = async () => {
-                await axios
-                    .post('/add_stock', {
-                        id: localStorageUserId,
-                        company_name: stockName,
-                        stockCost: parsed,
-                        stockSymbol: stockSymbol,
-                        estimatedShares: estimatedShares,
-                        estimatedCost: estimatedCost,
-                    })
-                    .then((data) => console.log(data));
-            };
-            addStockListToDB();
-            console.log(addStockListToDB());
+            const request = await axios.post('/add_stock', {
+                id: localStorageUserId,
+                company_name: stockName,
+                stockCost: parsed,
+                stockSymbol: stockSymbol,
+                estimatedShares: estimatedShares,
+                estimatedCost: estimatedCost,
+            });
         } catch (error) {
             console.log(error);
         }
