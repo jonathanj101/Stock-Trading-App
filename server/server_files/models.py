@@ -30,21 +30,24 @@ class Users(db.Model, UserMixin):
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    companyName = db.Column(db.String(255), nullable=False)
     stock_symbol = db.Column(db.String(255), nullable=False)
     stock_cost = db.Column(db.Float(precision='32'), nullable=False)
-    shares = db.Column(db.Float(precision='32'), nullable=False)
+    userEstimatedshares = db.Column(db.Float(precision='32'), nullable=False)
     userEstimatedCost = db.Column(db.Float(precision='32'), nullable=False)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return f"Stock ('{self.stock_symbol}', '{self.shares}', {self.stock_cost} , {self.userEstimatedCost} ,  , '{self.date}')"
+        return f"Stock (' {self.companyName}, {self.stock_symbol}', '{self.userEstimatedShares}', {self.stock_cost} , {self.userEstimatedCost} , '{self.date}')"
 
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    stock_symbol = db.Column(db.String(255), nullable=False)
+    userEstimatedCost = db.Column(db.Float(precision='32'), nullable=False)
     user_holdings = db.Column(db.Float(precision='32'), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
-        return f"Transactions ('{self.user_holdings}','{self.date}, {self.user_id}')"
+        return f"Transactions (' {self.userEstimatedCost}, {self.stock_symbol} ,{self.user_holdings}','{self.date}, {self.user_id}')"
