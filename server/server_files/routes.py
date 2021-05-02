@@ -107,8 +107,6 @@ def add_stock():
     if filter_by_id:
         filter_by_stock_symbol = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
-        print(user_detail)
-        print(filter_by_stock_symbol)
         if filter_by_stock_symbol != None:
             print("line 115 {}".format(filter_by_stock_symbol.stock_symbol))
             update_user_cost = filter_by_stock_symbol.userEstimatedCost + \
@@ -120,10 +118,16 @@ def add_stock():
             db.session.commit()
             return 'true'
         else:
+            """
+            Transactions model param > user_holdings
+            has to be the amount of $ the user currently has after
+            each transaction is complete.
+            Leaving as is, working on the client side first
+            """
             user_stock = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                                shares=user_detail['estimatedShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
-            transaction = Transactions(
-                user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
+            transaction = Transactions(stock_symbol=user_detail['stockSymbol'], userEstimatedCost=user_detail['estimatedCost'],
+                                       user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
@@ -138,6 +142,9 @@ def sell_stock():
     filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
 
     if filter_by_id:
+        filter_by_stock = Stock.query.filter_by(
+            stock_symbol=user_detail['stockSymbol']).first()
+        print('line 140 filter_by_stock {}'.format(filter_by_stock))
         return "ok", 200
     else:
         return 'nope', 500
@@ -147,9 +154,24 @@ def sell_stock():
 def user_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
+    stock = Stock.query.filter_by(users_id=user_detail['id']).all()
     print(user)
     print(user.stocks)
-    return 'ok'
+    print(stock)
+
+    stock_list = []
+
+    for data in stock:
+        stock_obj = {
+            "companyName": data.companyName,
+            "symbol": data.stock_symbol,
+            "cost": data.stock_cost,
+            "userEstimatedShares": data.userEstimatedShares,
+            "userEstimatedHolding": data.userEstimatedCost,
+        }
+        stock_list.append(stock_obj)
+
+    return jsonify({"stock": stock_list})
 
 
 @app.route('/signup', methods=["POST"])
