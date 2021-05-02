@@ -124,9 +124,9 @@ def add_stock():
             each transaction is complete.
             Leaving as is, working on the client side first
             """
-            user_stock = Stock(stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
-                               shares=user_detail['estimatedShares'], userEstimatedCost=user_detail['estimatedCost'], users_id=user_detail['id'])
-            transaction = Transactions(stock_symbol=user_detail['stockSymbol'], userEstimatedCost=user_detail['estimatedCost'],
+            user_stock = Stock(company_name=user_detail['company_name'], stock_cost=user_detail['stockCost'],
+                               user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], users_id=user_detail['id'])
+            transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(user_stock)
             db.session.add(transaction)
