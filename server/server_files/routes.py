@@ -108,13 +108,26 @@ def add_stock():
         filter_by_stock_symbol = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
         if filter_by_stock_symbol != None:
-            print("line 115 {}".format(filter_by_stock_symbol.stock_symbol))
-            update_user_cost = filter_by_stock_symbol.userEstimatedCost + \
-                user_detail['estimatedCost']
-            update_user_shares = filter_by_stock_symbol.shares + \
-                user_detail['estimatedShares']
-            filter_by_stock_symbol.userEstimatedCost = update_user_cost
-            filter_by_stock_symbol.shares = update_user_shares
+
+            # print("line 115 {}".format(filter_by_stock_symbol.stock_symbol))
+            print("line 112 {}".format(filter_by_stock_symbol.stock_symbol))
+
+            print("line 114 db user Estimated cost before commit {}. recieved from client user cost {}".format(
+                filter_by_stock_symbol.user_estimated_cost, user_detail["estimatedCost"]))
+            print("line 115 db user estimated shares before commit {}. recieved from client user shares {} ".format(
+                filter_by_stock_symbol.user_estimated_shares, user_detail["estimatedShares"]))
+
+            update_user_cost = (filter_by_stock_symbol.user_estimated_cost +
+                                user_detail['estimatedCost'])
+            print("update user cost {}".format(update_user_cost))
+            update_user_shares = (filter_by_stock_symbol.user_estimated_shares +
+                                  user_detail['estimatedShares'])
+            print("update user shares {}".format(update_user_shares))
+            filter_by_stock_symbol.user_estimated_cost = update_user_cost
+            filter_by_stock_symbol.user_estimated_shares = update_user_shares
+            transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
+                                       user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
+            db.session.add(transaction)
             db.session.commit()
             return 'true'
         else:
