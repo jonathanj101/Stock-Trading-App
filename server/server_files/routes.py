@@ -124,7 +124,8 @@ def add_stock():
             each transaction is complete.
             Leaving as is, working on the client side first
             """
-            user_stock = Stock(company_name=user_detail['company_name'], stock_cost=user_detail['stockCost'],
+            user_stock = Stock(company_name=user_detail['company_name'],
+                               stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                                user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], users_id=user_detail['id'])
             transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
@@ -163,11 +164,11 @@ def user_stock():
 
     for data in stock:
         stock_obj = {
-            "companyName": data.companyName,
+            "companyName": data.company_name,
             "symbol": data.stock_symbol,
             "cost": data.stock_cost,
-            "userEstimatedShares": data.userEstimatedShares,
-            "userEstimatedHolding": data.userEstimatedCost,
+            "userEstimatedShares": data.user_estimated_shares,
+            "userEstimatedHolding": data.user_estimated_cost,
         }
         stock_list.append(stock_obj)
 
