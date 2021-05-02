@@ -16,7 +16,6 @@ const SummaryComponent = () => {
     const [stockSymbol, setStockSymbol] = useState('');
     const [userBuyingPower, setUserBuyingPower] = useState('');
     const [isStockQuantity, setIsStockQuantity] = useState(true);
-    const [buyButton, setBuyButton] = useState(false);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
@@ -42,19 +41,28 @@ const SummaryComponent = () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
-            const fetchUserInvestingList = async () => {
-                const stockData = await axios.post('/user_stock', {
-                    id: localStorageUserId,
-                });
+            try {
+                const fetchUserInvestingList = async () => {
+                    const stockData = await axios
+                        .post('/user_stock', {
+                            id: localStorageUserId,
+                        })
+                        .then((data) => {
+                            console.log(data.data.stock);
+                            setInvestingList(data.data.stock);
+                            console.log(investingList);
+                        });
+                };
 
-                console.log(stockData);
-            };
-
-            fetchUserInvestingList();
+                fetchUserInvestingList();
+            } catch (err) {
+                console.log(err);
+            }
         }
     }, []);
 
     useEffect(() => {
+        debugger;
         const fetchMultipleStocks = async () => {
             let multipleStocksData = await axios.get('/multiple_stocks');
             handleRequest(multipleStocksData);
@@ -220,6 +228,8 @@ const SummaryComponent = () => {
     };
 
     const investingTable = investingList.map((stock, num) => {
+        console.log(investingList);
+        debugger;
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
@@ -336,7 +346,7 @@ const SummaryComponent = () => {
                     className="d-flex justify-content-around flex-wrap mb-5"
                     style={styles.bordersDivs}
                 >
-                    {investingTable.length === 0 ? (
+                    {/* {investingTable.length === 0 ? (
                         <div>
                             <h1>
                                 Search for a stock and start investing with
@@ -346,7 +356,7 @@ const SummaryComponent = () => {
                         </div>
                     ) : (
                         investingTable
-                    )}
+                    )} */}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
