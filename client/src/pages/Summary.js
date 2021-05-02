@@ -346,7 +346,7 @@ const SummaryComponent = () => {
                     className="d-flex justify-content-around flex-wrap mb-5"
                     style={styles.bordersDivs}
                 >
-                    {/* {investingTable.length === 0 ? (
+                    {investingTable.length === 0 ? (
                         <div>
                             <h1>
                                 Search for a stock and start investing with
@@ -356,7 +356,7 @@ const SummaryComponent = () => {
                         </div>
                     ) : (
                         investingTable
-                    )} */}
+                    )}
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
