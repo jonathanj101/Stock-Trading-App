@@ -8,16 +8,18 @@ const NavbarComponent = ({ handleLogIn }) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+    const [userId, setUserId] = useState('');
 
     useEffect(() => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
             setIsUserAuthenticated(true);
+            setUserId(localStorageUserId);
         } else {
             setIsUserAuthenticated(false);
         }
-    }, []);
+    }, [userId]);
 
     const handleShow = () => {
         setShowLogInModal(true);
