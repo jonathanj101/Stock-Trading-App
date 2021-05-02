@@ -16,7 +16,7 @@ const NavbarComponent = ({ handleLogIn }) => {
         } else {
             setIsUserAuthenticated(false);
         }
-    }, []);
+    });
 
     const handleShow = () => {
         setShowLogInModal(true);
