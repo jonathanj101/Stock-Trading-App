@@ -50,7 +50,6 @@ const SummaryComponent = () => {
                         .then((data) => {
                             console.log(data.data.stock);
                             setInvestingList(data.data.stock);
-                            console.log(investingList);
                         });
                 };
 
@@ -229,7 +228,6 @@ const SummaryComponent = () => {
 
     const investingTable = investingList.map((stock, num) => {
         console.log(investingList);
-        debugger;
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
