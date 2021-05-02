@@ -126,7 +126,7 @@ def add_stock():
             """
             user_stock = Stock(company_name=user_detail['company_name'],
                                stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
-                               user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], users_id=user_detail['id'])
+                               user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], user_id=user_detail['id'])
             transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(user_stock)
@@ -155,24 +155,29 @@ def sell_stock():
 def user_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
-    stock = Stock.query.filter_by(users_id=user_detail['id']).all()
-    print(user)
-    print(user.stocks)
-    print(stock)
+    stock = Stock.query.filter_by(user_id=user_detail['id']).all()
 
     stock_list = []
+    if user:
 
-    for data in stock:
-        stock_obj = {
-            "companyName": data.company_name,
-            "symbol": data.stock_symbol,
-            "cost": data.stock_cost,
-            "userEstimatedShares": data.user_estimated_shares,
-            "userEstimatedHolding": data.user_estimated_cost,
-        }
-        stock_list.append(stock_obj)
+        for data in stock:
+            stock_obj = {
+                "companyName": data.company_name,
+                "symbol": data.stock_symbol,
+                "cost": data.stock_cost,
+                "userEstimatedShares": data.user_estimated_shares,
+                "userEstimatedHolding": data.user_estimated_cost,
+            }
 
-    return jsonify({"stock": stock_list})
+            stock_list.append(stock_obj)
+
+        if stock_list != '':
+            return jsonify({"stock": stock_list})
+        else:
+            return jsonify("An issue has occurred on our end! Please try again late", 500)
+
+    else:
+        return jsonify('User not found in our record! You will be redirected to the home page.', 500)
 
 
 @app.route('/signup', methods=["POST"])
