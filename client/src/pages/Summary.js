@@ -37,6 +37,10 @@ const SummaryComponent = () => {
         }
     };
 
+    const onSellHandler = () => {
+        console.log('selling');
+    };
+
     useEffect(() => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
@@ -87,8 +91,12 @@ const SummaryComponent = () => {
         }
     };
 
-    const handleShow = () => {
+    const handleShowBuyStockModal = () => {
         setBuyStockModal(true);
+    };
+
+    const handleShowSellStockModal = () => {
+        setSellStockModal(true);
     };
 
     const getStockFromSearchAddToModal = (e) => {
@@ -214,7 +222,7 @@ const SummaryComponent = () => {
         }
     };
 
-    const handleStockInfoOnSelect = (e) => {
+    const handleStockListInfoOnSelect = (e) => {
         const stockCompanyName =
             e.currentTarget.childNodes[0].childNodes[0].textContent;
         const stockCost =
@@ -226,8 +234,26 @@ const SummaryComponent = () => {
         setStockSymbol(stockSymbol);
     };
 
+    const handleSellStockInfoOnSelect = (e) => {
+        debugger;
+        console.log(e.currentTarget.parentElement.childNodes);
+        const stockCompanyName =
+            e.currentTarget.parentElement.childNodes[0].childNodes[0]
+                .textContent;
+        const selectedStockSymbol = e.currentTarget.parentElement.childNodes[0].childNodes[1].textContent.slice(
+            1,
+            -1,
+        );
+        const userEstimatedCost =
+            e.currentTarget.parentElement.childNodes[1].childNodes[1]
+                .textContent;
+        console.log(userEstimatedCost);
+        setStockName(stockCompanyName);
+        setStockSymbol(selectedStockSymbol);
+        setEstimatedCost(userEstimatedCost);
+    };
+
     const investingTable = investingList.map((stock, num) => {
-        console.log(investingList);
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
@@ -250,9 +276,10 @@ const SummaryComponent = () => {
                         (Total Shares: {stock.userEstimatedShares})
                     </Card.Subtitle>
                     <Button
-                        onClick={() => {
-                            console.log('clicked');
-                            setSellStockModal(true);
+                        onClick={(e) => {
+                            // debugger;
+                            handleShowSellStockModal();
+                            handleSellStockInfoOnSelect(e);
                         }}
                         block
                     >
@@ -272,8 +299,8 @@ const SummaryComponent = () => {
                 title="Want to buy? Just click!"
                 className="tableRow"
                 onClick={(e) => {
-                    handleShow();
-                    handleStockInfoOnSelect(e);
+                    handleShowBuyStockModal();
+                    handleStockListInfoOnSelect(e);
                 }}
             >
                 <td className="d-flex flex-column">
@@ -309,7 +336,7 @@ const SummaryComponent = () => {
         <div>
             <SearchComponent
                 addStockToInvestingTable={addStockToInvestingTable}
-                handleShow={handleShow}
+                handleShow={handleShowBuyStockModal}
                 getStockFromSearchAddToModal={getStockFromSearchAddToModal}
                 showBuyStockModal={showBuyStockModal}
             />
@@ -334,7 +361,14 @@ const SummaryComponent = () => {
                 onBuyHandler={onBuyHandler}
             />
 
-            <SellStockModal show={showSellStockModal} />
+            <SellStockModal
+                showSellStockModal={showSellStockModal}
+                setSellStockModal={setSellStockModal}
+                stockName={stockName}
+                stockSymbol={stockSymbol}
+                estimatedCost={estimatedCost}
+                onSellHandler={onSellHandler}
+            />
 
             <div className="w-75 mx-auto">
                 <h1 className="w-100 mx-auto" style={styles.investingTitle}>
