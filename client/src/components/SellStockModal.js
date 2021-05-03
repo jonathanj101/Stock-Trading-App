@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 
 const SellStockModal = ({
@@ -7,12 +8,14 @@ const SellStockModal = ({
     stockName,
     stockSymbol,
     estimatedCost,
-    onSellHandler,
 }) => {
+    const onSellHandler = () => {
+        console.log('selling');
+    };
+
     const handleClose = () => {
         setSellStockModal(false);
     };
-    console.log(stockName, estimatedCost);
 
     return (
         <div>
