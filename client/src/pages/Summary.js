@@ -213,7 +213,6 @@ const SummaryComponent = () => {
     };
 
     const handleSellStockInfoOnSelect = (e) => {
-        debugger;
         console.log(e.currentTarget.parentElement.childNodes);
         const stockCompanyName =
             e.currentTarget.parentElement.childNodes[0].childNodes[0]
