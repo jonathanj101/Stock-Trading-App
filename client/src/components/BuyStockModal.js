@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Button, Modal, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 
 const BuyStockModal = ({
@@ -18,10 +19,27 @@ const BuyStockModal = ({
     setEstimatedShares,
     setEstimatedCost,
     setShow,
-    onBuyHandler,
 }) => {
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
+
+    const onBuyHandler = async () => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        const parsed = parseFloat(stockPrice.slice(1));
+        try {
+            const request = await axios.post('/add_stock', {
+                id: localStorageUserId,
+                company_name: stockName,
+                stockCost: parsed,
+                stockSymbol: stockSymbol,
+                estimatedShares: estimatedShares,
+                estimatedCost: estimatedCost,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleDropdownTitle = () => {
         calculateOnTitleChange();
