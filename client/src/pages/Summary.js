@@ -19,28 +19,6 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
 
-    const onBuyHandler = async () => {
-        debugger;
-        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        const parsed = parseFloat(stockPrice.slice(1));
-        try {
-            const request = await axios.post('/add_stock', {
-                id: localStorageUserId,
-                company_name: stockName,
-                stockCost: parsed,
-                stockSymbol: stockSymbol,
-                estimatedShares: estimatedShares,
-                estimatedCost: estimatedCost,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const onSellHandler = () => {
-        console.log('selling');
-    };
-
     useEffect(() => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
@@ -358,7 +336,6 @@ const SummaryComponent = () => {
                 setEstimatedCost={setEstimatedCost}
                 setEstimatedShares={setEstimatedShares}
                 setShow={setBuyStockModal}
-                onBuyHandler={onBuyHandler}
             />
 
             <SellStockModal
@@ -367,7 +344,6 @@ const SummaryComponent = () => {
                 stockName={stockName}
                 stockSymbol={stockSymbol}
                 estimatedCost={estimatedCost}
-                onSellHandler={onSellHandler}
             />
 
             <div className="w-75 mx-auto">
