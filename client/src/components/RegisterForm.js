@@ -59,7 +59,7 @@ const FormComponent = ({ handleRegister }) => {
                 email: email,
             });
             const respMsg = sendRegistrantData.data[0];
-            const respStatusCode = sendRegistrantData.data[2];
+            const respStatusCode = sendRegistrantData.data[1];
             setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
