@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const LogInModal = ({ show, handleLogIn, handleClose }) => {
+const LogInModal = ({ show, handleClose, handleLogIn }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
@@ -34,6 +34,7 @@ const LogInModal = ({ show, handleLogIn, handleClose }) => {
     };
 
     const redirectToAccountPage = () => {
+        debugger;
         setTimeout(() => {
             history.push('/my-stocks');
             handleClose(false);
