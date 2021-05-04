@@ -4,22 +4,27 @@ import { NavLink } from 'react-router-dom';
 import LogInModal from './LogInModal';
 import LogOutModal from './LogOutModal';
 
-const NavbarComponent = ({ handleLogIn }) => {
+const NavbarComponent = ({ handleLogIn, userId }) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
-    const [userId, setUserId] = useState('');
 
+    const isUserId = (userId) => {
+        debugger;
+        console.log(userId);
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (userId !== '') {
+            if (localStorageUserId !== null) {
+                setIsUserAuthenticated(true);
+            } else {
+                setIsUserAuthenticated(false);
+            }
+        }
+    };
     useEffect(() => {
         debugger;
-        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        if (localStorageUserId !== null) {
-            setIsUserAuthenticated(true);
-            setUserId(localStorageUserId);
-        } else {
-            setIsUserAuthenticated(false);
-        }
-    }, [userId]);
+        isUserId(userId);
+    });
 
     const handleShow = () => {
         setShowLogInModal(true);
