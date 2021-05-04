@@ -169,10 +169,8 @@ def user_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
     stock = Stock.query.filter_by(user_id=user_detail['id']).all()
-
     stock_list = []
     if user:
-
         for data in stock:
             stock_obj = {
                 "companyName": data.company_name,
@@ -187,7 +185,7 @@ def user_stock():
         if stock_list != '':
             return jsonify({"stock": stock_list})
         else:
-            return jsonify("An issue has occurred on our end! Please try again late", 500)
+            return jsonify("An issue has occurred on our end! Please try again later", 500)
 
     else:
         return jsonify('User not found in our record! You will be redirected to the home page.', 500)
