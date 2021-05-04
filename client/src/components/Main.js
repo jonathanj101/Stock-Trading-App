@@ -16,7 +16,7 @@ class Main extends Component {
             username: '',
             userId: '',
             email: '',
-            userStocksData: [],
+            userId: '',
         };
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -47,13 +47,7 @@ class Main extends Component {
 
     handleRegister = (userId) => {
         debugger;
-        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-
-        if (localStorageUserId !== null) {
-            this.setState({
-                userId: localStorageUserId,
-            });
-        } else if (userId !== undefined) {
+        if (userId !== undefined) {
             this.setState({
                 userId: userId,
             });
@@ -76,7 +70,10 @@ class Main extends Component {
     render() {
         return (
             <div style={{ height: `30vh` }}>
-                <NavbarComponent handleLogIn={this.handleLogIn} />
+                <NavbarComponent
+                    userId={this.state.userId}
+                    handleLogIn={this.handleLogIn}
+                />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
                     <ProtectRoute
