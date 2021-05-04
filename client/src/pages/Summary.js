@@ -30,7 +30,7 @@ const SummaryComponent = () => {
                             id: localStorageUserId,
                         })
                         .then((data) => {
-                            console.log(data.data.stock);
+                            console.log(data);
                             setInvestingList(data.data.stock);
                         });
                 };
