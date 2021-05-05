@@ -8,12 +8,13 @@ const SellStockModal = ({
     stockName,
     stockSymbol,
     estimatedCost,
+    estimatedShares,
 }) => {
     const [stockPrice, setStockPrice] = useState('');
     const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
     const [userInput, setUserInput] = useState('');
-    const [totalSelling, setTotalSelling] = useState('$0.00');
-    const [totalOwned, setTotalOwned] = useState('$0.00');
+    const [totalSelling, setTotalSelling] = useState('0.00');
+    const [totalOwned, setTotalOwned] = useState('0.00');
 
     const onSellHandler = () => {
         console.log('selling');
@@ -48,7 +49,6 @@ const SellStockModal = ({
     };
 
     const sellAll = () => {
-        debugger;
         const parsedEstimatedCost = parseFloat(estimatedCost);
         const totalSelling = parsedEstimatedCost - parsedEstimatedCost;
         setTotalSelling(parsedEstimatedCost);
@@ -72,7 +72,10 @@ const SellStockModal = ({
                 </Modal.Header>
                 <Modal.Body className="mb-5 mt-5">
                     <div style={styles.stockInfoDiv}>
-                        {stockSymbol} = ${estimatedCost}
+                        <div>
+                            {stockSymbol} = ${estimatedCost}
+                        </div>
+                        <div>Shares = {estimatedShares}</div>
                     </div>
                     <div className="w-75 mx-auto">
                         <Form.Row>
@@ -122,12 +125,18 @@ const SellStockModal = ({
 
 var styles = {
     stockInfoDiv: {
-        text: 'center',
-        marginTop: '20px',
+        display: 'flex',
+        justifyContent: 'around',
+        flexDirection: 'column',
+        margin: '20px auto 20px auto',
         fontSize: '1.5rem',
         fontWeight: 'bold',
-        color: 'black',
         textAlign: 'center',
+        color: 'black',
+        width: '50%',
+    },
+    stockInfo: {
+        fontWeight: 'normal',
     },
 };
 
