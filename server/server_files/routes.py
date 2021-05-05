@@ -153,12 +153,19 @@ def add_stock():
 @app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     user_detail = request.get_json()
-    filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
+    user = Users.query.filter_by(id=user_detail['id']).first()
+    search_url = "{}/stable/stock/{}/quote?token={}".format(
+        base_url, user_detail['stockSymbol'], api_key)
+    req = requests.get(search_url)
+    resp = req.json()
+    actual_stock_cost = resp['latestPrice']
+    # print("line 157 {}".format(user_detail))
 
-    if filter_by_id:
+    if user:
         filter_by_stock = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
         print('line 140 filter_by_stock {}'.format(filter_by_stock))
+
         return "ok", 200
     else:
         return 'nope', 500
