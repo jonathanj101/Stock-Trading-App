@@ -213,7 +213,6 @@ const SummaryComponent = () => {
     };
 
     const handleSellStockInfoOnSelect = (e) => {
-        console.log(e.currentTarget.parentElement.childNodes);
         const stockCompanyName =
             e.currentTarget.parentElement.childNodes[0].childNodes[0]
                 .textContent;
@@ -224,10 +223,13 @@ const SummaryComponent = () => {
         const userEstimatedCost =
             e.currentTarget.parentElement.childNodes[1].childNodes[1]
                 .textContent;
-        console.log(userEstimatedCost);
+        const userEstimatedShares =
+            e.currentTarget.parentElement.childNodes[2].childNodes[1]
+                .textContent;
         setStockName(stockCompanyName);
         setStockSymbol(selectedStockSymbol);
         setEstimatedCost(userEstimatedCost);
+        setEstimatedShares(userEstimatedShares);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -343,6 +345,7 @@ const SummaryComponent = () => {
                 stockName={stockName}
                 stockSymbol={stockSymbol}
                 estimatedCost={estimatedCost}
+                estimatedShares={estimatedShares}
             />
 
             <div className="w-75 mx-auto">
