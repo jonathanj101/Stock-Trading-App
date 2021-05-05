@@ -10,29 +10,47 @@ const SellStockModal = ({
     estimatedCost,
     estimatedShares,
 }) => {
-    const [stockPrice, setStockPrice] = useState('');
+    const [userSellingAmount, setUserSellingAmount] = useState('');
     const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
     const [userInput, setUserInput] = useState('');
     const [totalSelling, setTotalSelling] = useState('0.00');
     const [totalOwned, setTotalOwned] = useState('0.00');
 
-    const onSellHandler = () => {
-        console.log('selling');
+    const onSellHandler = async () => {
+        debugger;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        const sellStockData = await axios
+            .post('/sell_stock', {
+                id: localStorageUserId,
+                companyName: stockName,
+                stockSymbol: stockSymbol,
+                estimatedShares: estimatedShares,
+                userSellingAmount: userSellingAmount,
+            })
+
+            .then((data) => console.log(data));
     };
 
     const handleClose = () => {
-        setStockPrice('');
+        setUserSellingAmount('');
         setTotalHoldingsOnSell('');
         setUserInput('');
-        setTotalSelling('$0.00');
+        setTotalSelling('0.00');
+        setTotalOwned('0.00');
         setSellStockModal(false);
     };
 
     const getTextInput = (e) => {
+        // debugger;
         const { value } = e.currentTarget;
         const parsedValue = parseFloat(value);
-        setUserInput(parsedValue);
-        calculateAmountSellingOnInputChange(parsedValue);
+        console.log(value);
+        if (value !== '+' || value !== '-') {
+            setUserInput(parsedValue);
+            calculateAmountSellingOnInputChange(parsedValue);
+        } else {
+            return;
+        }
     };
 
     const calculateAmountSellingOnInputChange = (value) => {
@@ -41,6 +59,7 @@ const SellStockModal = ({
         if (value !== '' && value <= parsedEstimatedCost) {
             console.log(totalSelling);
             setTotalSelling(value);
+            setUserSellingAmount(value);
             setTotalOwned(totalSelling);
         } else {
             console.log('greater');
@@ -53,6 +72,7 @@ const SellStockModal = ({
         const totalSelling = parsedEstimatedCost - parsedEstimatedCost;
         setTotalSelling(parsedEstimatedCost);
         setTotalOwned(totalSelling);
+        setUserSellingAmount(parsedEstimatedCost);
         console.log('clicked');
     };
 
@@ -113,7 +133,14 @@ const SellStockModal = ({
                 <Modal.Footer>
                     <div className="text-center mx-auto">
                         <h4>$0.00 available of Holdings</h4>
-                        <Button className="mt-5" variant="primary" block>
+                        <Button
+                            className="mt-5"
+                            variant="primary"
+                            block
+                            onClick={() => {
+                                onSellHandler();
+                            }}
+                        >
                             Sell
                         </Button>
                     </div>
