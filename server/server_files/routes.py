@@ -85,18 +85,22 @@ def multiple():
 
 @app.route("/search_stock/<string:stock>", methods={'GET'})
 def search_stock(stock):
-
-    search_url = "{}/stable/stock/{}/quote?token={}".format(
-        base_url, stock, api_key)
-    req = requests.get(search_url)
+    print(stock)
+    req = requests.get(stock)
     resp = req.json()
-    stock_data = {
-        "company_name": resp["companyName"],
-        "cost": resp["latestPrice"],
-        "change": resp["change"],
-        "symbol": resp["symbol"]
-    }
-    return jsonify({"data": stock_data})
+    # search_url = "{}/stable/stock/{}/quote?token={}".format(
+    #     base_url, stock, api_key)
+    # req = requests.get(search_url)
+    # resp = req.json()
+    print(resp)
+    # stock_data = {
+    #     "company_name": resp["companyName"],
+    #     "cost": resp["latestPrice"],
+    #     "change": resp["change"],
+    #     "symbol": resp["symbol"]
+    # }
+    # return jsonify({"data": stock_data})
+    return 'ok'
 
 
 @app.route('/add_stock', methods=['POST'])
@@ -185,6 +189,27 @@ def sell_stock():
         return "ok", 200
     else:
         return 'nope', 500
+
+
+@app.route('/testing', methods=['POST'])
+def testing():
+    user_detail = request.get_json()
+    stock = Stock.query.filter_by(user_id=user_detail['id']).all()
+
+    for data in stock:
+
+        search_url = "{}/stable/stock/{}/quote?token={}".format(
+            base_url, data.stock_symbol, api_key)
+        req = requests.get(search_url)
+        resp = req.json()
+        # print(resp)
+        difference_in_cost = (
+            resp['latestPrice'] - data.stock_cost) * data.user_estimated_shares
+        print(resp['symbol'])
+        print(resp['latestPrice'])
+        print('difference in cost {}'.format(difference_in_cost))
+
+    return 'ok'
 
 
 @app.route('/user_stock', methods=['POST'])
