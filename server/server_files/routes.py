@@ -154,11 +154,21 @@ def add_stock():
 def sell_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
-    search_url = "{}/stable/stock/{}/quote?token={}".format(
+    stock = Stock.query.filter_by(
+        stock_symbol=user_detail['stockSymbol']).first()
+    search_stock = "{}/stable/stock/{}/quote?token={}".format(
         base_url, user_detail['stockSymbol'], api_key)
-    req = requests.get(search_url)
+    req = requests.get(search_stock)
     resp = req.json()
+    user_estimated_shares = user_detail['estimatedShares']
     actual_stock_cost = resp['latestPrice']
+    user_selling_ammout = user_detail['userSellingAmount']
+    stock_bought_at = stock.stock_cost
+    # print("line 162 {}".format(resp))
+    print("line 166 {}".format(actual_stock_cost))
+    difference = (actual_stock_cost - stock_bought_at) * user_estimated_shares
+    print('line 168 {} - {}'.format(actual_stock_cost, user_selling_ammout))
+    print(difference)
     # print("line 157 {}".format(user_detail))
 
     if user:
