@@ -154,27 +154,33 @@ def add_stock():
 def sell_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
-    stock = Stock.query.filter_by(
+    filter_by_stock = Stock.query.filter_by(
         stock_symbol=user_detail['stockSymbol']).first()
     search_stock = "{}/stable/stock/{}/quote?token={}".format(
         base_url, user_detail['stockSymbol'], api_key)
     req = requests.get(search_stock)
     resp = req.json()
-    user_estimated_shares = user_detail['estimatedShares']
+    user_estimated_shares = filter_by_stock.user_estimated_shares
     actual_stock_cost = resp['latestPrice']
     user_selling_ammout = user_detail['userSellingAmount']
-    stock_bought_at = stock.stock_cost
-    # print("line 162 {}".format(resp))
-    print("line 166 {}".format(actual_stock_cost))
-    difference = (actual_stock_cost - stock_bought_at) * user_estimated_shares
-    print('line 168 {} - {}'.format(actual_stock_cost, user_selling_ammout))
-    print(difference)
-    # print("line 157 {}".format(user_detail))
+    stock_bought_at = filter_by_stock.stock_cost
+    difference_in_cost = (actual_stock_cost -
+                          stock_bought_at) * user_estimated_shares
+    difference_in_shares = (filter_by_stock.user_estimated_cost -
+                            user_selling_ammout) / filter_by_stock.stock_cost
 
     if user:
-        filter_by_stock = Stock.query.filter_by(
-            stock_symbol=user_detail['stockSymbol']).first()
-        print('line 140 filter_by_stock {}'.format(filter_by_stock))
+        filter_by_stock.user_estimated_cost = filter_by_stock.user_estimated_cost - \
+            user_selling_ammout
+        filter_by_stock.user_estimated_shares = difference_in_shares
+        if filter_by_stock.user_estimated_cost == 0:
+            stock = Stock.query.filter_by(
+                stock_symbol=user_detail['stockSymbol']).delete()
+            db.session.commit()
+            print("deleted stock {}".format(user_detail['stockSymbol']))
+        else:
+            print("updated stock {}".format(user_detail['stockSymbol']))
+            db.session.commit()
 
         return "ok", 200
     else:
