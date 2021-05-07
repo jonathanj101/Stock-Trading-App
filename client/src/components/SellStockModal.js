@@ -15,6 +15,20 @@ const SellStockModal = ({
     const [userInput, setUserInput] = useState('');
     const [totalSelling, setTotalSelling] = useState('0.00');
     const [totalOwned, setTotalOwned] = useState('0.00');
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (e) => {
+        debugger;
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+            setValidated(true);
+        } else {
+            onSellHandler();
+            setValidated(false);
+        }
+    };
 
     const onSellHandler = async () => {
         debugger;
@@ -32,12 +46,17 @@ const SellStockModal = ({
     };
 
     const handleClose = () => {
+        setSellStockModal(false);
+        clearForm();
+    };
+
+    const clearForm = () => {
         setUserSellingAmount('');
         setTotalHoldingsOnSell('');
         setUserInput('');
         setTotalSelling('0.00');
         setTotalOwned('0.00');
-        setSellStockModal(false);
+        setValidated(false);
     };
 
     const getTextInput = (e) => {
@@ -85,66 +104,80 @@ const SellStockModal = ({
                 centered
                 onHide={handleClose}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Sell {stockName}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="mb-5 mt-5">
-                    <div style={styles.stockInfoDiv}>
-                        <div>
-                            {stockSymbol} = ${estimatedCost}
-                        </div>
-                        <div>Shares = {estimatedShares}</div>
-                    </div>
-                    <div className="w-75 mx-auto">
-                        <Form.Row>
-                            <Form.Control
-                                id="userSelling"
-                                required
-                                type="number"
-                                placeholder="$0.00"
-                                name={userInput}
-                                value={userInput}
-                                onChange={(e) => {
-                                    getTextInput(e);
-                                }}
-                            />
-                        </Form.Row>
-                        <div>
-                            <div className="d-flex justify-content-between">
-                                <h4>Total Selling: ${totalSelling}</h4>
-                                <h4>Total Owned: ${totalOwned}</h4>
+                <Form
+                    noValidate
+                    validated={validated}
+                    onSubmit={(e) => {
+                        handleSubmit(e);
+                        console.log('clicked');
+                    }}
+                    method="POST"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Sell {stockName}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className="mb-5 mt-5">
+                        <div style={styles.stockInfoDiv}>
+                            <div>
+                                {stockSymbol} = ${estimatedCost}
                             </div>
-                            <div className="text-center mt-5">
-                                <Button
-                                    className="w-50"
-                                    variant="primary"
-                                    onClick={() => {
-                                        sellAll();
+                            <div>Shares = {estimatedShares}</div>
+                        </div>
+                        <div className="w-75 mx-auto">
+                            <Form.Row className="mb-5">
+                                <Form.Control
+                                    id="userSelling"
+                                    required
+                                    type="number"
+                                    placeholder="$0.00"
+                                    name={userInput}
+                                    value={userInput}
+                                    onChange={(e) => {
+                                        getTextInput(e);
                                     }}
-                                >
-                                    Sell all
-                                </Button>
+                                />
+                                <Form.Control.Feedback>
+                                    Looks good!
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please type in the amount you want to sell!!
+                                </Form.Control.Feedback>
+                            </Form.Row>
+                            <div>
+                                <div className="d-flex justify-content-between">
+                                    <h4>Total Selling: ${totalSelling}</h4>
+                                    <h4>Total Owned: ${totalOwned}</h4>
+                                </div>
+                                <div className="text-center mt-5">
+                                    <Button
+                                        className="w-50"
+                                        variant="primary"
+                                        onClick={() => {
+                                            sellAll();
+                                        }}
+                                    >
+                                        Sell all
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <div className="text-center mx-auto">
-                        <h4>$0.00 available of Holdings</h4>
-                        <Button
-                            className="mt-5"
-                            variant="primary"
-                            block
-                            onClick={() => {
-                                onSellHandler();
-                            }}
-                        >
-                            Sell
-                        </Button>
-                    </div>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <div className="text-center mx-auto">
+                            <h4>$0.00 available of Holdings</h4>
+                            <Button
+                                className="mt-5"
+                                variant="primary"
+                                block
+                                type="submit"
+                            >
+                                Sell
+                            </Button>
+                        </div>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </div>
     );
