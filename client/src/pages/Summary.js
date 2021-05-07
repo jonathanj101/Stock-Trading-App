@@ -18,6 +18,7 @@ const SummaryComponent = () => {
     const [isStockQuantity, setIsStockQuantity] = useState(true);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
+    const [testing, setTesting] = useState(false);
 
     useEffect(() => {
         debugger;
@@ -35,15 +36,36 @@ const SummaryComponent = () => {
                         });
                 };
 
+                const fetchDifference = async () => {
+                    const request = await axios
+                        .post('/testing', {
+                            id: localStorageUserId,
+                        })
+                        .then((data) => console.log(data));
+                };
+
                 fetchUserInvestingList();
+                fetchDifference();
             } catch (err) {
                 console.log(err);
             }
         }
     }, []);
 
+    // useEffect(() => {
+    //     if (investingList.length > 0) {
+    //         const loopInvestingList = investingList.map((stock) => {
+    //             // console.log(stock);
+    //             return {
+    //                 symbol: stock.symbol,
+    //             };
+    //         });
+    //         fetch(`/testing/${loopInvestingList}`);
+    //     }
+    // });
+
     useEffect(() => {
-        debugger;
+        // debugger;
         const fetchMultipleStocks = async () => {
             let multipleStocksData = await axios.get('/multiple_stocks');
             handleRequest(multipleStocksData);
@@ -51,6 +73,16 @@ const SummaryComponent = () => {
 
         fetchMultipleStocks();
     }, []);
+
+    // useEffect(() => {
+    //     debugger;
+    //     setInterval(() => {
+    //         console.log('in interval');
+    //         setTesting(true);
+    //     }, 60000);
+    //     console.log('out interval')
+    //     setTesting(false);
+    // }, [testing]);
 
     const handleRequest = async (request) => {
         try {
