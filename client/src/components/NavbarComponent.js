@@ -21,6 +21,9 @@ const NavbarComponent = ({ handleLogIn, userId }) => {
             }
         }
     };
+
+    // const
+
     useEffect(() => {
         debugger;
         isUserId(userId);
@@ -67,6 +70,7 @@ const NavbarComponent = ({ handleLogIn, userId }) => {
                         to={isUserAuthenticated ? '/my-stocks' : '/'}
                         exact
                         className={isUserAuthenticated ? 'nav-link mr-3' : ''}
+                        onClick={() => {}}
                     >
                         {isUserAuthenticated ? 'My Stocks' : ''}
                     </NavLink>
