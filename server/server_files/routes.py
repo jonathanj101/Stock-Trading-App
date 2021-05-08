@@ -221,14 +221,27 @@ def user_stock():
     user = Users.query.filter_by(id=user_detail['id']).first()
     stock = Stock.query.filter_by(user_id=user_detail['id']).all()
     stock_list = []
+
     if user:
         for data in stock:
+            search_url = "{}/stable/stock/{}/quote?token={}".format(
+                base_url, data.stock_symbol, api_key)
+            req = requests.get(search_url)
+            resp = req.json()
+            # print(resp)
+            difference_in_cost = (
+                resp['latestPrice'] - data.stock_cost) * data.user_estimated_shares
+            print(resp['symbol'])
+            print(resp['latestPrice'])
+            print('difference in cost {}'.format(difference_in_cost))
+
             stock_obj = {
                 "companyName": data.company_name,
                 "symbol": data.stock_symbol,
                 "cost": data.stock_cost,
                 "userEstimatedShares": data.user_estimated_shares,
                 "userEstimatedHolding": data.user_estimated_cost,
+                "differenceInCost": difference_in_cost
             }
 
             stock_list.append(stock_obj)
