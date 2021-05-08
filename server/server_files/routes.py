@@ -195,6 +195,9 @@ def sell_stock():
 def testing():
     user_detail = request.get_json()
     stock = Stock.query.filter_by(user_id=user_detail['id']).all()
+    print(user_detail['id'])
+
+    print(user_detail)
 
     for data in stock:
 
