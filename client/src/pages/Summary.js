@@ -19,6 +19,7 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
     const [testing, setTesting] = useState(false);
+    const [counter, setCounter] = useState(0);
 
     useEffect(() => {
         debugger;
@@ -35,14 +36,17 @@ const SummaryComponent = () => {
             );
             if (investingList.length >= 1) {
                 const fetchDifference = async () => {
-                    setInterval(async () => {
+                    setTimeout(async () => {
                         const response = await axios.post('/user_stock', {
                             id: localStorageUserId,
                         });
                         return response;
                     }, 20000);
                 };
+
                 fetchDifference().then((data) => {
+                    setCounter((c) => c + 1);
+                    console.log(counter);
                     console.log(data);
                     // isProfit(data.stock);
                 });
