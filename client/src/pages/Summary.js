@@ -23,46 +23,36 @@ const SummaryComponent = () => {
     useEffect(() => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        if (localStorageUserId !== null) {
-            try {
-                const fetchUserInvestingList = async () => {
-                    const stockData = await axios
-                        .post('/user_stock', {
-                            id: localStorageUserId,
-                        })
-                        .then((data) => {
-                            console.log(data);
-                            setInvestingList(data.data.stock);
-                        });
-                };
-
+        try {
+            const fetchUserInvestingList = async () => {
+                const response = await axios.post('/user_stock', {
+                    id: localStorageUserId,
+                });
+                return response;
+            };
+            fetchUserInvestingList().then((data) =>
+                setInvestingList(data.data.stock),
+            );
+            if (investingList.length >= 1) {
                 const fetchDifference = async () => {
-                    const request = await axios
-                        .post('/testing', {
+                    setInterval(async () => {
+                        const response = await axios.post('/user_stock', {
                             id: localStorageUserId,
-                        })
-                        .then((data) => console.log(data));
+                        });
+                        return response;
+                    }, 20000);
                 };
-
-                fetchUserInvestingList();
-                fetchDifference();
-            } catch (err) {
-                console.log(err);
+                fetchDifference().then((data) => {
+                    console.log(data);
+                    // isProfit(data.stock);
+                });
+            } else {
+                return;
             }
+        } catch (err) {
+            console.log(err);
         }
     }, []);
-
-    // useEffect(() => {
-    //     if (investingList.length > 0) {
-    //         const loopInvestingList = investingList.map((stock) => {
-    //             // console.log(stock);
-    //             return {
-    //                 symbol: stock.symbol,
-    //             };
-    //         });
-    //         fetch(`/testing/${loopInvestingList}`);
-    //     }
-    // });
 
     useEffect(() => {
         // debugger;
@@ -74,15 +64,18 @@ const SummaryComponent = () => {
         fetchMultipleStocks();
     }, []);
 
-    // useEffect(() => {
-    //     debugger;
-    //     setInterval(() => {
-    //         console.log('in interval');
-    //         setTesting(true);
-    //     }, 60000);
-    //     console.log('out interval')
-    //     setTesting(false);
-    // }, [testing]);
+    const isProfit = (stock) => {
+        debugger;
+        console.log(stock);
+        // const sameStock = investingList.find(userStock => userStock.symbol === stock.symbol)
+        // if (sameStock) {
+        //     const differenceInCost = stock.difference_in_cost
+        //     sameStock.differenceInCost = differenceInCost
+        //     return sameStock
+        // } else {
+        //     undefined
+        // }
+    };
 
     const handleRequest = async (request) => {
         try {
@@ -265,6 +258,7 @@ const SummaryComponent = () => {
     };
 
     const investingTable = investingList.map((stock, num) => {
+        // console.log(stock);
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
@@ -278,7 +272,13 @@ const SummaryComponent = () => {
                         className="mb-2 text-muted"
                         stlye={{ height: '2rem' }}
                     >
-                        (${stock.userEstimatedHolding}) Today
+                        (${stock.userEstimatedHolding})
+                    </Card.Subtitle>
+                    <Card.Subtitle
+                        className="mb-2 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (${stock.differenceInCost}) Today
                     </Card.Subtitle>
                     <Card.Subtitle
                         className="mb-5 text-muted"
