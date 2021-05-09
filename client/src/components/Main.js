@@ -15,9 +15,9 @@ class Main extends Component {
         this.state = {
             username: '',
             userId: '',
-            email: '',
             userId: '',
         };
+        this.handleLogOut = this.handleLogOut.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
@@ -56,23 +56,33 @@ class Main extends Component {
         }
     };
 
-    handleLogIn = (userId) => {
+    handleLogIn = (userId, username) => {
         debugger;
+        console.log(username);
         if (userId) {
             localStorage.setItem('userId', JSON.stringify(userId));
             this.setState({
                 userId: userId,
+                username: username,
             });
         }
         return;
+    };
+
+    handleLogOut = () => {
+        this.setState({
+            username: '',
+        });
     };
 
     render() {
         return (
             <div style={{ height: `30vh` }}>
                 <NavbarComponent
+                    username={this.state.username}
                     userId={this.state.userId}
                     handleLogIn={this.handleLogIn}
+                    handleLogOut={this.handleLogOut}
                 />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
