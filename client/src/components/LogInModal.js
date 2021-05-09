@@ -50,6 +50,8 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
         });
         const userId = respData.data[0].user_id;
         const respStatusCode = respData.data[1];
+        const respDataUsername = respData.data[0].username;
+        console.log(respData.data);
         setShowAlertMsg(true);
         if (respStatusCode >= 500) {
             const respErrMsg = respData.data[0];
@@ -59,7 +61,7 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
             setSuccessMsg(successMesg);
             redirectToAccountPage();
             localStorage.setItem('userId', JSON.stringify(userId));
-            handleLogIn(userId);
+            handleLogIn(userId, respDataUsername);
         }
     };
 
