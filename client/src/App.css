@@ -20,12 +20,16 @@ div.modal-header button span {
   background-color: transparent;
 }
 
+.nav-link:hover {
+  cursor: pointer;
+  color: 'white'
+}
+
+
 .navbar-nav a:hover {
   text-decoration: none;
   color: white
 }
-
-
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
