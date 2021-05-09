@@ -19,7 +19,7 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
     const [testing, setTesting] = useState(false);
-    const [counter, setCounter] = useState(0);
+    const [counter, setCounter] = useState(false);
 
     useEffect(() => {
         debugger;
@@ -31,32 +31,42 @@ const SummaryComponent = () => {
                 });
                 return response;
             };
-            fetchUserInvestingList().then((data) =>
-                setInvestingList(data.data.stock),
-            );
-            if (investingList.length >= 1) {
-                const fetchDifference = async () => {
-                    setTimeout(async () => {
-                        const response = await axios.post('/user_stock', {
-                            id: localStorageUserId,
-                        });
-                        return response;
-                    }, 20000);
-                };
+            fetchUserInvestingList().then((data) => {
+                console.log(data);
+                setInvestingList(data.data.stock);
+                setCounter(false);
+            });
+            // if (counter) {
+            //     const fetchDifference = async () => {
+            //         // setTimeout(async () => {
+            //         const response = await axios
+            //             .post('/user_stock', {
+            //                 id: localStorageUserId,
+            //             })
+            //             .then((data) => {
+            //                 console.log(data);
+            //                 console.log(counter);
+            //                 setCounter(false);
+            //                 console.log(counter);
+            //             });
+            //         return response;
+            //         // }, 20000);
+            //     };
 
-                fetchDifference().then((data) => {
-                    setCounter((c) => c + 1);
-                    console.log(counter);
-                    console.log(data);
-                    // isProfit(data.stock);
-                });
-            } else {
-                return;
-            }
+            //     fetchDifference();
+            // .then((data) => {
+            //     setCounter(false);
+            //     console.log(counter);
+            //     console.log(data);
+            //     // isProfit(data.stock);
+            // });
+            // } else {
+            //     return;
+            // }
         } catch (err) {
             console.log(err);
         }
-    }, []);
+    }, [counter]);
 
     useEffect(() => {
         // debugger;
@@ -136,6 +146,7 @@ const SummaryComponent = () => {
     };
 
     const handleSubmit = () => {
+        setCounter(true);
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
