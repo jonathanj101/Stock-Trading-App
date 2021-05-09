@@ -191,30 +191,6 @@ def sell_stock():
         return 'nope', 500
 
 
-@app.route('/testing', methods=['POST'])
-def testing():
-    user_detail = request.get_json()
-    stock = Stock.query.filter_by(user_id=user_detail['id']).all()
-    print(user_detail['id'])
-
-    print(user_detail)
-
-    for data in stock:
-
-        search_url = "{}/stable/stock/{}/quote?token={}".format(
-            base_url, data.stock_symbol, api_key)
-        req = requests.get(search_url)
-        resp = req.json()
-        # print(resp)
-        difference_in_cost = (
-            resp['latestPrice'] - data.stock_cost) * data.user_estimated_shares
-        print(resp['symbol'])
-        print(resp['latestPrice'])
-        print('difference in cost {}'.format(difference_in_cost))
-
-    return 'ok'
-
-
 @app.route('/user_stock', methods=['POST'])
 def user_stock():
     user_detail = request.get_json()
@@ -278,11 +254,13 @@ def login():
     user_details = request.get_json()
 
     user = Users.query.filter_by(username=user_details["username"]).first()
+    print(user.username)
 
     if user and bcrypt.check_password_hash(user.password, user_details['password']):
         response = {
             "user_id": user.id,
-            "success_msg": "You are logged in successfully! You will be redirect to your account shortly!"
+            "success_msg": "You are logged in successfully! You will be redirect to your account shortly!",
+            "username": user.username
         }
         return jsonify(response, 200)
     else:
