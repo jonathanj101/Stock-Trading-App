@@ -1,3 +1,9 @@
+
+#root {
+  width:100%;
+  height:100%
+}
+
 .lindkedIn_div:hover {
   color: white;
 }
@@ -24,7 +30,49 @@ div.modal-header button span {
   cursor: pointer;
   color: 'white'
 }
+.fa-business-time::before {
+  margin-right: 10px;
+}
 
+.fa-sign-out-alt::before {
+  margin-right: 10px;
+}
+
+.fa-sign-in-alt:before {
+  margin-right: 10px;
+}
+
+.fa-house-user::before {
+    margin-right: 10px;
+}
+
+.fa-user::before {
+  color:white;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* a.dropdown-item {
+  color:red
+} */
+
+/* .dropdown-item:hover {
+  background-color: red;
+  
+} */
+.dropdown-menu {
+  text-align: center;
+  font-size: 1.5rem;
+  width: 500px;
+  left: -385px;
+}
+a.dropdown-item {
+  color:black;
+}
+
+a.dropdown-item:hover {
+  background-color:grey;
+}
 
 .navbar-nav a:hover {
   text-decoration: none;
