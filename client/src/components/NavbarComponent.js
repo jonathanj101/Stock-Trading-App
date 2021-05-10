@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { NavLink, useHistory } from 'react-router-dom';
 import LogInModal from './LogInModal';
 import LogOutModal from './LogOutModal';
+import AccountDropDown from './AccountDropDown';
 
-const NavbarComponent = ({ handleLogIn, handleLogOut, userId, username }) => {
+const NavbarComponent = ({
+    handleLogIn,
+    handleLogOut: handleLogOutOnMain,
+    userId,
+    username,
+}) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+
     let history = useHistory();
     debugger;
 
@@ -38,10 +45,10 @@ const NavbarComponent = ({ handleLogIn, handleLogOut, userId, username }) => {
         setShowLogInModal(e);
     };
 
-    const handleLogOutFunc = () => {
+    const handleLogOutOnNav = () => {
         localStorage.clear();
         setIsUserAuthenticated(false);
-        handleLogOut();
+        handleLogOutOnMain();
         setTimeout(() => {
             history.push('/');
             setShowLogOutModal(false);
@@ -64,54 +71,50 @@ const NavbarComponent = ({ handleLogIn, handleLogOut, userId, username }) => {
             >
                 <Navbar.Brand></Navbar.Brand>
                 <Nav variant="pills" className="">
-                    {username !== '' ? (
-                        <Nav.Item className="nav-link mr-3">
-                            Logged In as {username}
-                        </Nav.Item>
-                    ) : (
-                        <Nav.Item></Nav.Item>
-                    )}
                     <NavLink to="/" exact className="nav-link mr-3 ">
-                        Home
+                        <div>
+                            <i class="fas fa-house-user"></i>
+                            Home
+                        </div>
                     </NavLink>
                     <NavLink
                         to={isUserAuthenticated ? '/my-stocks' : '/'}
                         exact
                         className={isUserAuthenticated ? 'nav-link mr-3' : ''}
-                        onClick={() => {}}
                     >
-                        {isUserAuthenticated ? 'My Stocks' : ''}
+                        {isUserAuthenticated ? (
+                            <div>
+                                <i class="fas fa-business-time"></i>
+                                My Stocks
+                            </div>
+                        ) : (
+                            ''
+                        )}
                     </NavLink>
-                    <Nav.Item
-                        className="nav-link"
-                        onClick={(e) => {
-                            const title = e.currentTarget.innerHTML;
-                            if (title === 'Log In') {
+                    {!isUserAuthenticated ? (
+                        <Nav.Item
+                            className="nav-link"
+                            onClick={() => {
+                                debugger;
                                 handleShow();
-                            } else {
-                                setShowLogOutModal(true);
-                                handleLogOutFunc();
-                            }
-                        }}
-                    >
-                        {isUserAuthenticated ? 'Log Out' : 'Log In'}
-                    </Nav.Item>
-                    {/* <NavLink
-                        onClick={(e) => {
-                            const title = e.currentTarget.innerHTML;
-                            if (title === 'Log In') {
-                                handleShow();
-                            } else {
-                                setShowLogOutModal(true);
-                                handleLogOut();
-                            }
-                        }}
-                        to="/"
-                        exact
-                        className="logIn"
-                    >
-                        {isUserAuthenticated ? 'Log Out' : 'Log In'}
-                    </NavLink> */}
+                            }}
+                        >
+                            <div>
+                                <i class="fas fa-sign-in-alt"></i>
+                                Log In
+                            </div>
+                        </Nav.Item>
+                    ) : (
+                        <Nav.Item className="d-flex align-items-center">
+                            <div className="d-flex align-items-center">
+                                <i className="fas fa-user"></i>
+                            </div>
+                            <AccountDropDown
+                                username={username}
+                                handleLogOutOnNav={handleLogOutOnNav}
+                            />
+                        </Nav.Item>
+                    )}
                 </Nav>
             </Navbar>
         </div>
