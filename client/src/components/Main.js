@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
@@ -15,7 +16,6 @@ class Main extends Component {
         this.state = {
             username: '',
             userId: '',
-            userId: '',
         };
         this.handleLogOut = this.handleLogOut.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
@@ -23,13 +23,23 @@ class Main extends Component {
         this.isUserAuthenticated = this.isUserAuthenticated.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
+            const response = await axios
+                .post('/user', {
+                    id: localStorageUserId,
+                })
+                .then((data) => {
+                    return data.data;
+                });
             this.setState({
                 userId: localStorageUserId,
+                username: response.user,
             });
+        } else {
+            return;
         }
     }
 
@@ -102,7 +112,7 @@ class Main extends Component {
                         exact
                         component={() => (
                             <FormComponent
-                                handleRegister={this.handleRegister}
+                                handleRegisterOnMain={this.handleRegister}
                             />
                         )}
                     />
