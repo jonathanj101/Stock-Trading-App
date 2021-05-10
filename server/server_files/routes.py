@@ -265,3 +265,15 @@ def login():
         return jsonify(response, 200)
     else:
         return jsonify("hmmm.. We don't recognize that username or password. Please try again!", 500)
+
+
+@app.route('/user', methods=["POST"])
+def user():
+    user_detail = request.get_json()
+
+    user = Users.query.filter_by(id=user_detail['id']).first()
+
+    if user:
+        return jsonify({'user': user.username})
+    else:
+        return "User not found!", 500
