@@ -36,33 +36,6 @@ const SummaryComponent = () => {
                 setInvestingList(data.data.stock);
                 setCounter(false);
             });
-            // if (counter) {
-            //     const fetchDifference = async () => {
-            //         // setTimeout(async () => {
-            //         const response = await axios
-            //             .post('/user_stock', {
-            //                 id: localStorageUserId,
-            //             })
-            //             .then((data) => {
-            //                 console.log(data);
-            //                 console.log(counter);
-            //                 setCounter(false);
-            //                 console.log(counter);
-            //             });
-            //         return response;
-            //         // }, 20000);
-            //     };
-
-            //     fetchDifference();
-            // .then((data) => {
-            //     setCounter(false);
-            //     console.log(counter);
-            //     console.log(data);
-            //     // isProfit(data.stock);
-            // });
-            // } else {
-            //     return;
-            // }
         } catch (err) {
             console.log(err);
         }
@@ -273,7 +246,6 @@ const SummaryComponent = () => {
     };
 
     const investingTable = investingList.map((stock, num) => {
-        // console.log(stock);
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
@@ -303,7 +275,6 @@ const SummaryComponent = () => {
                     </Card.Subtitle>
                     <Button
                         onClick={(e) => {
-                            // debugger;
                             handleShowSellStockModal();
                             handleSellStockInfoOnSelect(e);
                         }}
