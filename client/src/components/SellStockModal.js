@@ -60,7 +60,6 @@ const SellStockModal = ({
     };
 
     const getTextInput = (e) => {
-        // debugger;
         const { value } = e.currentTarget;
         const parsedValue = parseFloat(value);
         console.log(value);
