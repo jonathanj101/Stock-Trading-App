@@ -204,7 +204,6 @@ def user_stock():
                 base_url, data.stock_symbol, api_key)
             req = requests.get(search_url)
             resp = req.json()
-            # print(resp)
             difference_in_cost = (
                 resp['latestPrice'] - data.stock_cost) * data.user_estimated_shares
             print(resp['symbol'])
