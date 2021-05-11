@@ -16,6 +16,7 @@ class Main extends Component {
         this.state = {
             username: '',
             userId: '',
+            userHoldings: '',
         };
         this.handleLogOut = this.handleLogOut.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
