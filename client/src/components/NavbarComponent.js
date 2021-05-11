@@ -31,8 +31,6 @@ const NavbarComponent = ({
         }
     };
 
-    // const
-
     useEffect(() => {
         debugger;
         isUserId(userId);
