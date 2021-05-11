@@ -28,7 +28,7 @@ const BuyStockModal = ({
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const parsed = parseFloat(stockPrice.slice(1));
         try {
-            const request = await axios.post('/add_stock', {
+            await axios.post('/add_stock', {
                 id: localStorageUserId,
                 company_name: stockName,
                 stockCost: parsed,
