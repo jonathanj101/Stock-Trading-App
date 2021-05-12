@@ -230,7 +230,7 @@ def signup():
 
     if filter_user_model_by_username is None:
         user = Users(first_name=user_details['first_name'], last_name=user_details['last_name'],
-                     email=user_details['email'], username=user_details['username'], password=hashed_password)
+                     email=user_details['email'], username=user_details['username'], password=hashed_password, user_holdings=user_details['userHoldings'])
         db.session.add(user)
         db.session.commit()
         return jsonify("Success! You will be redirect to your account shortly!", user.id, 200)
@@ -262,7 +262,12 @@ def user():
 
     user = Users.query.filter_by(id=user_detail['id']).first()
 
+    user_obj = {
+        "username": user.username,
+        "user_holdings": user.user_holdings
+    }
+
     if user:
-        return jsonify({'user': user.username})
+        return jsonify(user_obj)
     else:
         return "User not found!", 500
