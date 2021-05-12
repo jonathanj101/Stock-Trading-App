@@ -71,7 +71,7 @@ const NavbarComponent = ({
                 <Nav variant="pills" className="">
                     <NavLink to="/" exact className="nav-link mr-3 ">
                         <div>
-                            <i class="fas fa-house-user"></i>
+                            <i className="fas fa-house-user"></i>
                             Home
                         </div>
                     </NavLink>
@@ -82,7 +82,7 @@ const NavbarComponent = ({
                     >
                         {isUserAuthenticated ? (
                             <div>
-                                <i class="fas fa-business-time"></i>
+                                <i className="fas fa-business-time"></i>
                                 My Stocks
                             </div>
                         ) : (
@@ -98,7 +98,7 @@ const NavbarComponent = ({
                             }}
                         >
                             <div>
-                                <i class="fas fa-sign-in-alt"></i>
+                                <i className="fas fa-sign-in-alt"></i>
                                 Log In
                             </div>
                         </Nav.Item>

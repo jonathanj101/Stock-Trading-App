@@ -5,7 +5,7 @@ import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
 import SellStockModal from '../components/SellStockModal';
 
-const SummaryComponent = () => {
+const SummaryComponent = ({ userHoldings }) => {
     const [showBuyStockModal, setBuyStockModal] = useState(false);
     const [showSellStockModal, setSellStockModal] = useState(false);
     const [estimatedShares, setEstimatedShares] = useState('0.00');
@@ -20,6 +20,7 @@ const SummaryComponent = () => {
     const [investingList, setInvestingList] = useState([]);
     const [testing, setTesting] = useState(false);
     const [counter, setCounter] = useState(false);
+    console.log(userHoldings);
 
     useEffect(() => {
         debugger;
@@ -229,10 +230,11 @@ const SummaryComponent = () => {
         const stockCompanyName =
             e.currentTarget.parentElement.childNodes[0].childNodes[0]
                 .textContent;
-        const selectedStockSymbol = e.currentTarget.parentElement.childNodes[0].childNodes[1].textContent.slice(
-            1,
-            -1,
-        );
+        const selectedStockSymbol =
+            e.currentTarget.parentElement.childNodes[0].childNodes[1].textContent.slice(
+                1,
+                -1,
+            );
         const userEstimatedCost =
             e.currentTarget.parentElement.childNodes[1].childNodes[1]
                 .textContent;

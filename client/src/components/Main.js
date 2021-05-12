@@ -26,6 +26,7 @@ class Main extends Component {
 
     async componentDidMount() {
         debugger;
+        console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
             const response = await axios
@@ -46,6 +47,7 @@ class Main extends Component {
 
     isUserAuthenticated = () => {
         debugger;
+        console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
             console.log(true);
@@ -61,6 +63,7 @@ class Main extends Component {
         if (userId !== undefined) {
             this.setState({
                 userId: userId,
+                userHoldings: 100000,
             });
         } else {
             return;
@@ -88,7 +91,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div style={{ height: `30vh` }}>
+            <div style={{ height: `100%` }}>
                 <NavbarComponent
                     username={this.state.username}
                     userId={this.state.userId}
@@ -101,6 +104,7 @@ class Main extends Component {
                         path="/my-stocks"
                         exact
                         isUserAuthenticated={this.isUserAuthenticated()}
+                        userHoldings={this.state.userHoldings}
                         component={() => <SummaryComponent />}
                     />
                     <ProtectRoute
@@ -113,7 +117,7 @@ class Main extends Component {
                         exact
                         component={() => (
                             <FormComponent
-                                handleRegisterOnMain={this.handleRegister}
+                                handleRegister={this.handleRegister}
                             />
                         )}
                     />
