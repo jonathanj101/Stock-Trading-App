@@ -20,10 +20,10 @@ const SummaryComponent = ({ userHoldings }) => {
     const [investingList, setInvestingList] = useState([]);
     const [testing, setTesting] = useState(false);
     const [counter, setCounter] = useState(false);
-    console.log(userHoldings);
 
     useEffect(() => {
         debugger;
+        console.log(userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         try {
             const fetchUserInvestingList = async () => {
