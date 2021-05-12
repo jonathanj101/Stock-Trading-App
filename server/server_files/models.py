@@ -20,6 +20,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    user_holdings = db.Column(db.Float(precision='32'), nullable=False)
     transactions = db.relationship('Transactions', backref="transactions")
     stocks = db.relationship("Stock", backref="users")
 
