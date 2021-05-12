@@ -34,14 +34,37 @@ class Main extends Component {
                     id: localStorageUserId,
                 })
                 .then((data) => {
+                    console.log(data.data);
                     return data.data;
                 });
+
             this.setState({
                 userId: localStorageUserId,
-                username: response.user,
+                username: response.username,
+                userHoldings: response.user_holdings,
             });
         } else {
             return;
+        }
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        debugger;
+        const userHoldings = this.state.userHoldings;
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        if (this.state.userHoldings !== prevState.userHoldings) {
+            const response = await axios
+                .post('/user', {
+                    id: localStorageUserId,
+                })
+                .then((data) => {
+                    return data.data;
+                });
+            this.setState({
+                id: localStorageUserId,
+                username: response.username,
+                userHoldings: response.user_holdings,
+            });
         }
     }
 
@@ -104,8 +127,11 @@ class Main extends Component {
                         path="/my-stocks"
                         exact
                         isUserAuthenticated={this.isUserAuthenticated()}
-                        userHoldings={this.state.userHoldings}
-                        component={() => <SummaryComponent />}
+                        component={() => (
+                            <SummaryComponent
+                                userHoldings={this.state.userHoldings}
+                            />
+                        )}
                     />
                     <ProtectRoute
                         path="/my-stocks"
