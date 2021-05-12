@@ -57,6 +57,7 @@ const FormComponent = ({ handleRegister }) => {
                 password: password,
                 username: username,
                 email: email,
+                userHoldings: 100000,
             });
             const respMsg = sendRegistrantData.data[0];
             const respStatusCode = sendRegistrantData.data[2];
