@@ -120,6 +120,7 @@ class Main extends Component {
                     userId={this.state.userId}
                     handleLogIn={this.handleLogIn}
                     handleLogOut={this.handleLogOut}
+                    userHoldings={this.state.userHoldings}
                 />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
