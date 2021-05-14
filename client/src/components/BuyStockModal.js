@@ -19,6 +19,7 @@ const BuyStockModal = ({
     setEstimatedShares,
     setEstimatedCost,
     setShow,
+    userHoldings,
 }) => {
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
@@ -35,6 +36,7 @@ const BuyStockModal = ({
                 stockSymbol: stockSymbol,
                 estimatedShares: estimatedShares,
                 estimatedCost: estimatedCost,
+                userHoldings: userHoldings,
             });
         } catch (error) {
             console.log(error);
@@ -131,7 +133,7 @@ const BuyStockModal = ({
                 </Modal.Body>
                 <Modal.Footer>
                     <div className="text-center mx-auto">
-                        <h4>$0.00 available to buy stock </h4>
+                        <h4>${userHoldings} available to buy stock </h4>
                         <Button
                             onClick={() => {
                                 handleClose();
