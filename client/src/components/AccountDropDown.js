@@ -1,18 +1,21 @@
 import React from 'react';
 import { NavDropdown, Button } from 'react-bootstrap';
 
-const AccountDropDown = ({ username, handleLogOutOnNav }) => {
+const AccountDropDown = ({ username, handleLogOutOnNav, userHoldings }) => {
     debugger;
     return (
         <div>
             <NavDropdown title={username} id="basic-nav-dropdown" drop="down">
-                <NavDropdown.Item className="d-flex justify-content-between mt-5 mb-5">
-                    <div className="d-flex flex-wrap flex-column">
-                        <span>$</span>
+                <NavDropdown.Item
+                    id="dropdown-item"
+                    className="d-flex justify-content-center mt-5 mb-5"
+                >
+                    {/* <div className="d-flex flex-wrap flex-column">
+                        <span>$ {userHoldings}</span>
                         <span>Portfolio Value</span>
-                    </div>
+                    </div> */}
                     <div className="d-flex flex-wrap flex-column">
-                        <span>$</span>
+                        <span>${userHoldings}</span>
                         <span>Buying power</span>
                     </div>
                 </NavDropdown.Item>
