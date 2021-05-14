@@ -10,6 +10,7 @@ const NavbarComponent = ({
     handleLogOut: handleLogOutOnMain,
     userId,
     username,
+    userHoldings,
 }) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
@@ -110,6 +111,7 @@ const NavbarComponent = ({
                             <AccountDropDown
                                 username={username}
                                 handleLogOutOnNav={handleLogOutOnNav}
+                                userHoldings={userHoldings}
                             />
                         </Nav.Item>
                     )}
