@@ -37,6 +37,16 @@ const SummaryComponent = ({ userHoldings }) => {
                 setInvestingList(data.data.stock);
                 setCounter(false);
             });
+            const fetchUser = async () => {
+                const response = await axios.post('/user', {
+                    id: localStorageUserId,
+                });
+                return response;
+            };
+            fetchUser().then((data) => {
+                console.log(data.data.user_holdings);
+                setUserBuyingPower(data.data.user_holdings);
+            });
         } catch (err) {
             console.log(err);
         }
@@ -357,6 +367,7 @@ const SummaryComponent = ({ userHoldings }) => {
                 setEstimatedCost={setEstimatedCost}
                 setEstimatedShares={setEstimatedShares}
                 setShow={setBuyStockModal}
+                userHoldings={userBuyingPower}
             />
 
             <SellStockModal
@@ -366,6 +377,7 @@ const SummaryComponent = ({ userHoldings }) => {
                 stockSymbol={stockSymbol}
                 estimatedCost={estimatedCost}
                 estimatedShares={estimatedShares}
+                userHoldings={userBuyingPower}
             />
 
             <div className="w-75 mx-auto">
