@@ -107,24 +107,31 @@ def search_stock(stock):
 def add_stock():
     user_detail = request.get_json()
 
-    filter_by_id = Users.query.filter_by(id=user_detail['id']).first()
-    if filter_by_id:
+    user = Users.query.filter_by(id=user_detail['id']).first()
+    if user:
         filter_by_stock_symbol = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
         if filter_by_stock_symbol != None:
+            print("line 115 {}".format(filter_by_stock_symbol))
 
             update_user_cost = (filter_by_stock_symbol.user_estimated_cost +
                                 user_detail['estimatedCost'])
             update_user_shares = (filter_by_stock_symbol.user_estimated_shares +
                                   user_detail['estimatedShares'])
+            update_user_holdings = user.user_holdings - update_user_cost
             filter_by_stock_symbol.user_estimated_cost = update_user_cost
             filter_by_stock_symbol.user_estimated_shares = update_user_shares
+            user.user_holdings = update_user_holdings
+            print("line 125 {}".format(user.user_holdings))
             transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(transaction)
             db.session.commit()
             return 'true'
         else:
+            print("line 131 {}".format(filter_by_stock_symbol))
+            user_holdings = user.user_holdings - user_detail['estimatedCost']
+            user.user_holdings = user_holdings
             """
             Transactions model column user_holdings
             has to be the amount of $ the user currently has after
@@ -134,8 +141,8 @@ def add_stock():
             user_stock = Stock(company_name=user_detail['company_name'],
                                stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                                user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], user_id=user_detail['id'])
-            transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
-                                       user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
+            transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail[
+                                       'estimatedCost'], user_holdings=user_holdings, user_id=user_detail['id'])
             db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
@@ -147,33 +154,52 @@ def add_stock():
 @app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     user_detail = request.get_json()
+
     user = Users.query.filter_by(id=user_detail['id']).first()
+
     filter_by_stock = Stock.query.filter_by(
         stock_symbol=user_detail['stockSymbol']).first()
+
     search_stock = "{}/stable/stock/{}/quote?token={}".format(
         base_url, user_detail['stockSymbol'], api_key)
+
     req = requests.get(search_stock)
+
     resp = req.json()
+
     user_estimated_shares = filter_by_stock.user_estimated_shares
+
     actual_stock_cost = resp['latestPrice']
+
     user_selling_ammout = user_detail['userSellingAmount']
+
     stock_bought_at = filter_by_stock.stock_cost
+
     difference_in_cost = (actual_stock_cost -
                           stock_bought_at) * user_estimated_shares
+
     difference_in_shares = (filter_by_stock.user_estimated_cost -
                             user_selling_ammout) / filter_by_stock.stock_cost
+    user_holdings = user.user_holdings + \
+        difference_in_cost + user_detail['userSellingAmount']
 
     if user:
         filter_by_stock.user_estimated_cost = filter_by_stock.user_estimated_cost - \
             user_selling_ammout
         filter_by_stock.user_estimated_shares = difference_in_shares
         if filter_by_stock.user_estimated_cost == 0:
+            transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
+                'userSellingAmount'], user_holdings=user.user_holdings + user_detail['userSellingAmount'], user_id=user_detail['id'])
             stock = Stock.query.filter_by(
                 stock_symbol=user_detail['stockSymbol']).delete()
+            db.session.add(transaction)
             db.session.commit()
             print("deleted stock {}".format(user_detail['stockSymbol']))
         else:
             print("updated stock {}".format(user_detail['stockSymbol']))
+            transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
+                'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
+            db.session.add(transaction)
             db.session.commit()
 
         return "ok", 200
