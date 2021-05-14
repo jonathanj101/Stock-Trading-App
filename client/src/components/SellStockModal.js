@@ -9,6 +9,7 @@ const SellStockModal = ({
     stockSymbol,
     estimatedCost,
     estimatedShares,
+    userHoldings,
 }) => {
     const [userSellingAmount, setUserSellingAmount] = useState('');
     const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
@@ -27,6 +28,7 @@ const SellStockModal = ({
         } else {
             onSellHandler();
             setValidated(false);
+            handleClose();
         }
     };
 
@@ -91,6 +93,7 @@ const SellStockModal = ({
         setTotalSelling(parsedEstimatedCost);
         setTotalOwned(totalSelling);
         setUserSellingAmount(parsedEstimatedCost);
+        setUserInput(parsedEstimatedCost);
         console.log('clicked');
     };
 
@@ -165,7 +168,7 @@ const SellStockModal = ({
                     </Modal.Body>
                     <Modal.Footer>
                         <div className="text-center mx-auto">
-                            <h4>$0.00 available of Holdings</h4>
+                            <h4>${userHoldings} available</h4>
                             <Button
                                 className="mt-5"
                                 variant="primary"
