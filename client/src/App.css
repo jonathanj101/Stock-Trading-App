@@ -58,18 +58,25 @@ div.modal-header button span {
   width: 500px;
   left: -385px;
 }
+
 a.dropdown-item {
   color:black;
 }
 
 a.dropdown-item:hover {
-  background-color:grey;
+  cursor:context-menu;
+  background-color: white;
 }
 
-.navbar-nav a:hover {
+/* 
+a.dropdown-item:hover {
+  background-color:grey;
+} */
+
+/* .navbar-nav a:hover {
   text-decoration: none;
   color: white
-}
+} */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
