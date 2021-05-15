@@ -4,13 +4,13 @@ import { NavLink, useHistory } from 'react-router-dom';
 import LogInModal from './LogInModal';
 import LogOutModal from './LogOutModal';
 import AccountDropDown from './AccountDropDown';
+import axios from 'axios';
 
 const NavbarComponent = ({
     handleLogIn,
     handleLogOut: handleLogOutOnMain,
     userId,
     username,
-    userHoldings,
 }) => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showLogOutModal, setShowLogOutModal] = useState(false);
@@ -19,13 +19,20 @@ const NavbarComponent = ({
     let history = useHistory();
     debugger;
 
-    const isUserId = (userId) => {
+    const isUserId = async (userId) => {
         debugger;
         console.log(userId);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (userId !== '') {
             if (localStorageUserId !== null) {
                 setIsUserAuthenticated(true);
+                // const response = await axios
+                //     .post('/user', {
+                //         id: localStorageUserId,
+                //     })
+                //     .then((data) => {
+                //         setUserHoldings(data.data.user_holdings);
+                //     });
             } else {
                 setIsUserAuthenticated(false);
             }
@@ -111,7 +118,6 @@ const NavbarComponent = ({
                             <AccountDropDown
                                 username={username}
                                 handleLogOutOnNav={handleLogOutOnNav}
-                                userHoldings={userHoldings}
                             />
                         </Nav.Item>
                     )}
