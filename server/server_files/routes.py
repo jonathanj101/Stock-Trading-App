@@ -182,14 +182,18 @@ def sell_stock():
                             user_selling_ammout) / filter_by_stock.stock_cost
     user_holdings = user.user_holdings + \
         difference_in_cost + user_detail['userSellingAmount']
+    print("line 185 {}".format(user_holdings))
+    print("line 186 user.user_holdings{} user detail selling amount {}".format(
+        user.user_holdings, user_detail['userSellingAmount']))
 
     if user:
         filter_by_stock.user_estimated_cost = filter_by_stock.user_estimated_cost - \
             user_selling_ammout
         filter_by_stock.user_estimated_shares = difference_in_shares
+        user.user_holdings = user_holdings
         if filter_by_stock.user_estimated_cost == 0:
             transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
-                'userSellingAmount'], user_holdings=user.user_holdings + user_detail['userSellingAmount'], user_id=user_detail['id'])
+                'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
             stock = Stock.query.filter_by(
                 stock_symbol=user_detail['stockSymbol']).delete()
             db.session.add(transaction)
