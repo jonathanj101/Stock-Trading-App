@@ -51,32 +51,17 @@ div.modal-header button span {
   margin-right: 10px;
   margin-left: 10px;
 }
-
-.dropdown-menu {
+#account-navbar-dropdown > div > .dropdown-menu.show {
   text-align: center;
   font-size: 1.5rem;
   width: 500px;
   left: -385px;
 }
 
-a.dropdown-item {
-  color:black;
-}
-
-a.dropdown-item:hover {
+#account-navbar-dropdown > div > .dropdown-menu > a.dropdown-item:hover {
   cursor:context-menu;
   background-color: white;
 }
-
-/* 
-a.dropdown-item:hover {
-  background-color:grey;
-} */
-
-/* .navbar-nav a:hover {
-  text-decoration: none;
-  color: white
-} */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
