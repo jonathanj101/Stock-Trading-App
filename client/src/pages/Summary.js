@@ -18,8 +18,8 @@ const SummaryComponent = ({ userHoldings }) => {
     const [isStockQuantity, setIsStockQuantity] = useState(true);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
-    const [testing, setTesting] = useState(false);
     const [counter, setCounter] = useState(false);
+    // const [updateUserHoldings, setUpdateUserHoldings] = useState('');
 
     useEffect(() => {
         debugger;
@@ -46,6 +46,7 @@ const SummaryComponent = ({ userHoldings }) => {
             fetchUser().then((data) => {
                 console.log(data.data.user_holdings);
                 setUserBuyingPower(data.data.user_holdings);
+                // setUpdateUserHoldings(data.data.user_holdings);
             });
         } catch (err) {
             console.log(err);
@@ -94,6 +95,8 @@ const SummaryComponent = ({ userHoldings }) => {
 
     const handleShowBuyStockModal = () => {
         setBuyStockModal(true);
+        setEstimatedShares('0.00');
+        setEstimatedCost('$0.00');
     };
 
     const handleShowSellStockModal = () => {
@@ -378,6 +381,7 @@ const SummaryComponent = ({ userHoldings }) => {
                 estimatedCost={estimatedCost}
                 estimatedShares={estimatedShares}
                 userHoldings={userBuyingPower}
+                setCounter={setCounter}
             />
 
             <div className="w-75 mx-auto">
