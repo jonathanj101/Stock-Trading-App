@@ -10,6 +10,7 @@ const SellStockModal = ({
     estimatedCost,
     estimatedShares,
     userHoldings,
+    setCounter,
 }) => {
     const [userSellingAmount, setUserSellingAmount] = useState('');
     const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
@@ -29,6 +30,7 @@ const SellStockModal = ({
             onSellHandler();
             setValidated(false);
             handleClose();
+            setCounter(true);
         }
     };
 
