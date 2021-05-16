@@ -85,22 +85,17 @@ def multiple():
 
 @app.route("/search_stock/<string:stock>", methods={'GET'})
 def search_stock(stock):
-    print(stock)
-    req = requests.get(stock)
+    search_url = "{}/stable/stock/{}/quote?token={}".format(
+        base_url, stock, api_key)
+    req = requests.get(search_url)
     resp = req.json()
-    # search_url = "{}/stable/stock/{}/quote?token={}".format(
-    #     base_url, stock, api_key)
-    # req = requests.get(search_url)
-    # resp = req.json()
-    print(resp)
-    # stock_data = {
-    #     "company_name": resp["companyName"],
-    #     "cost": resp["latestPrice"],
-    #     "change": resp["change"],
-    #     "symbol": resp["symbol"]
-    # }
-    # return jsonify({"data": stock_data})
-    return 'ok'
+    stock_data = {
+        "company_name": resp["companyName"],
+        "cost": resp["latestPrice"],
+        "change": resp["change"],
+        "symbol": resp["symbol"]
+    }
+    return jsonify({"data": stock_data})
 
 
 @app.route('/add_stock', methods=['POST'])
