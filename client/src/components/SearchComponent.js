@@ -12,8 +12,12 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     const getTextInput = (e) => {
         const { value } = e.currentTarget;
         setTextInput(value);
-        sendRequestOnTextInput(value);
-        setIsStockSearched(true);
+        if (value !== '') {
+            sendRequestOnTextInput(value);
+            setIsStockSearched(true);
+        } else {
+            setIsStockSearched(false);
+        }
     };
 
     const sendRequestOnTextInput = (textInput) => {
@@ -80,7 +84,7 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
                         </ListGroup.Item>
                     </ListGroup>
                 ) : (
-                    ''
+                    <div></div>
                 )}
             </Form.Group>
         </div>
