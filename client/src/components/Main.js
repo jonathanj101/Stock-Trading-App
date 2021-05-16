@@ -120,7 +120,6 @@ class Main extends Component {
                     userId={this.state.userId}
                     handleLogIn={this.handleLogIn}
                     handleLogOut={this.handleLogOut}
-                    userHoldings={this.state.userHoldings}
                 />
                 <Switch>
                     <Route path="/" exact render={() => <Home />} />
@@ -128,11 +127,7 @@ class Main extends Component {
                         path="/my-stocks"
                         exact
                         isUserAuthenticated={this.isUserAuthenticated()}
-                        component={() => (
-                            <SummaryComponent
-                                userHoldings={this.state.userHoldings}
-                            />
-                        )}
+                        component={() => <SummaryComponent />}
                     />
                     <ProtectRoute
                         path="/my-stocks"
