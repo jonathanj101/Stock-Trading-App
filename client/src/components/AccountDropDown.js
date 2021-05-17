@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavDropdown, Button } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -6,7 +6,6 @@ const AccountDropDown = ({ username, handleLogOutOnNav }) => {
     const [userHoldings, setUserHoldings] = useState();
 
     const updateUserHoldings = () => {
-        // debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const fetchUserHoldings = async () => {
             const response = await axios.post('/user', {
@@ -29,14 +28,7 @@ const AccountDropDown = ({ username, handleLogOutOnNav }) => {
                     updateUserHoldings();
                 }}
             >
-                <NavDropdown.Item
-                    // id="dropdown-item"
-                    className="d-flex justify-content-center mt-5 mb-5"
-                >
-                    {/* <div className="d-flex flex-wrap flex-column">
-                        <span>$ {userHoldings}</span>
-                        <span>Portfolio Value</span>
-                    </div> */}
+                <NavDropdown.Item className="d-flex justify-content-center mt-5 mb-5">
                     <div className="d-flex flex-wrap flex-column">
                         <span>${userHoldings}</span>
                         <span>Buying power</span>
