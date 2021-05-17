@@ -10,8 +10,9 @@ except Exception as e:
 # # class TestTransactions(unittest.TestCase):
 # @pytest.fixture
 def test_transaction(client):
-    # landing = client.get('/multiple_stocks')
-    print(client.get('/multiple_stocks').data.decode())
+    landing = client.get('/multiple_stocks')
+    html = landing.data.decode()
+    print(html.status_code)
 #     app.testing = True
 #     client = app.test_client()
 #         # tester = app.test_client(self)

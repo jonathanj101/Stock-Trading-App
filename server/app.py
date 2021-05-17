@@ -2,7 +2,7 @@ import os
 # import pytest
 from server_files import app
 # from test_transactions import TestTransactions
-print(app)
+# print(app)
 
 
 # @pytest.fixture
