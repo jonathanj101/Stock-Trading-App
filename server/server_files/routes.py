@@ -101,6 +101,7 @@ def search_stock(stock):
 @app.route('/add_stock', methods=['POST'])
 def add_stock():
     user_detail = request.get_json()
+    print(user_detail)
 
     user = Users.query.filter_by(id=user_detail['id']).first()
     if user:
@@ -122,7 +123,7 @@ def add_stock():
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(transaction)
             db.session.commit()
-            return 'true'
+            return "Success! Stock added to db", 200
         else:
             print("line 131 {}".format(filter_by_stock_symbol))
             user_holdings = user.user_holdings - user_detail['estimatedCost']
@@ -141,7 +142,7 @@ def add_stock():
             db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
-        return jsonify("Success! Stock added to db", 200)
+            return jsonify("Success! Stock in db updated!", 200)
     else:
         return jsonify('Something went wrong on our end! Please try again later.', 500)
 
