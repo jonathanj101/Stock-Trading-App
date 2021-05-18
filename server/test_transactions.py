@@ -1,6 +1,7 @@
 try:
     import pytest
-    from server_files import client
+    import requests
+    from app import client
     # from server_files.routes import add_stoc
     # print("unittest line 5 {}".format(app))
 except Exception as e:
@@ -10,10 +11,14 @@ except Exception as e:
 # # class TestTransactions(unittest.TestCase):
 # @pytest.fixture
 def test_transaction(client):
-    landing = client.get('/multiple_stocks')
-    html = landing.data.decode()
-    print(html.status_code)
-#     app.testing = True
+    print(client)
+    landing = requests.get('http://localhost:5000/multiple_stocks')
+    # landing = client.get('/multiple_stocks')
+    # html = landing.data.decode()
+    # print(landing)
+    assert landing.status_code == 200
+
+    # print("line 18 unit test {}".format(html))
 #     client = app.test_client()
 #         # tester = app.test_client(self)
 #         # # print(tester.get("/multiple_stocks"))
@@ -33,6 +38,4 @@ def test_transaction(client):
 
 
 if __name__ == '__main__':
-    # print(app)
-    print('line unittest 13 {}'.format(__name__))
     pytest.main()
