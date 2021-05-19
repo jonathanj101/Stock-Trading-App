@@ -5,12 +5,12 @@ from server_files import app
 # print(app)
 
 
-@pytest.fixture
-def client():
-    # app.config['TESTING'] = True
-    client = app.test_client()
-    print(client)
-    return client
+# @pytest.fixture
+# def client():
+#     # app.config['TESTING'] = True
+#     client = app.test_client()
+#     print(client)
+#     return client
 
 
 if __name__ == '__main__':
