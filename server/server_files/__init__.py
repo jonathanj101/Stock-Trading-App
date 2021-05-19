@@ -14,7 +14,9 @@ db = SQLAlchemy(app)
 from server_files import routes
 
 
-# @pytest.fixture
-# def client():
-#     client = app.test_client()
-#     return client
+@pytest.fixture
+def client():
+    # app.testing = True
+    app.config['TESTING'] = True
+    client = app.test_client()
+    return client
