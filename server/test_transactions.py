@@ -1,20 +1,21 @@
 try:
+    from server_files import client
     import pytest
     import requests
-    from server_files import client
-    # from server_files.routes import configure_app
-    # from server_files.routes import add_stoc
-    print("unittest line 5 {}".format(client))
 except Exception as e:
     print("Some Modules are missings {}".format(e))
 
+resp = []
+
 
 def test_transaction(client):
-    landing = client.get('http://localhost:5000/multiple_stocks')
-    response = landing.data
+    landing = requests.get('http://localhost:5000/multiple_stocks')
 
-    assert response == 200
+    assert landing.status_code == 200
+
+# def test_connection()
 
 
 if __name__ == '__main__':
+    print(resp)
     pytest.main()
