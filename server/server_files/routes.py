@@ -13,6 +13,11 @@ api_key = os.environ.get('API_KEY')
 base_url = "https://cloud.iexapis.com"
 
 
+@app.route('/tesing', methods=["GET"])
+def testing():
+    return "Hello World", 200
+
+
 @app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     tesla = "tsla"
@@ -83,7 +88,7 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
-@app.route("/search_stock/<string:stock>", methods={'GET'})
+@app.route("/search_stock/<string:stock>", methods=['GET'])
 def search_stock(stock):
     search_url = "{}/stable/stock/{}/quote?token={}".format(
         base_url, stock, api_key)
