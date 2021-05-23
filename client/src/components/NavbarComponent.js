@@ -89,7 +89,6 @@ const NavbarComponent = ({
                         <Nav.Item
                             className="nav-link"
                             onClick={() => {
-                                debugger;
                                 handleShow();
                             }}
                         >
