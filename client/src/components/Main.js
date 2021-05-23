@@ -25,7 +25,6 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        debugger;
         console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
@@ -49,7 +48,6 @@ class Main extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        debugger;
         const userHoldings = this.state.userHoldings;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (this.state.userHoldings !== prevState.userHoldings) {
@@ -69,7 +67,6 @@ class Main extends Component {
     }
 
     isUserAuthenticated = () => {
-        debugger;
         console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
@@ -82,7 +79,7 @@ class Main extends Component {
     };
 
     handleRegister = (userId) => {
-        debugger;
+        console.log(userId);
         if (userId !== undefined) {
             this.setState({
                 userId: userId,
@@ -94,7 +91,6 @@ class Main extends Component {
     };
 
     handleLogIn = (userId, username) => {
-        debugger;
         console.log(username);
         if (userId) {
             localStorage.setItem('userId', JSON.stringify(userId));
