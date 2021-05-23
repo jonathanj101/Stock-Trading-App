@@ -13,11 +13,11 @@ class TestAPI(unittest.TestCase):
         DATA = {
             "id": 1,
             "company_name": "unit-test",
-            "stockCost": 0,
-            "stockSymbol": 'unit-test',
-            "estimatedShares": 0,
-            "estimatedCost": 0,
-            "userHoldings": 0
+            "stockCost": 1,
+            "stockSymbol": 'TSLA',
+            "estimatedShares": 1,
+            "estimatedCost": 1,
+            "userHoldings": 1
         }
 
         response = requests.post(
@@ -30,8 +30,8 @@ class TestAPI(unittest.TestCase):
             "id": 1,
             "companyName": "unit-testing",
             "stockSymbol": "TSLA",
-            "estimatedShares": 0,
-            "userSellingAmount": 0,
+            "estimatedShares": 1,
+            "userSellingAmount": 1,
         }
         response = requests.post(
             "{}/sell_stock".format(TestAPI.BASE_URL), json=DATA)
