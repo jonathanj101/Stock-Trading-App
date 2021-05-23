@@ -32,7 +32,9 @@ class TestAPI(unittest.TestCase):
 
         response = requests.post(
             "{}/add_stock".format(TestAPI.base_url), json=data)
-        print(response)
+        print(" unit test line 35 response{}".format(response))
+        print("unit test line 36 response.status_code  {}".format(
+            response.status_code))
         # print(response.status_code)
         # assert response.status_code == 200
         "ok"
