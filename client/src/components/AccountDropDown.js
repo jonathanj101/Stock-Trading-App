@@ -38,7 +38,7 @@ const AccountDropDown = ({ username, handleLogOutOnNav }) => {
                 <Button
                     block
                     style={styles.button}
-                    onClick={() => handleLogOutOnNav}
+                    onClick={() => handleLogOutOnNav()}
                 >
                     Log Out
                 </Button>
