@@ -9,34 +9,50 @@ except Exception as e:
 
 class TestAPI(unittest.TestCase):
     base_url = 'http://localhost:5000/'
+    err_msg = "status code not successful! Instead got"
 
-    def test_multiple_stocks(self):
-        print(TestAPI.base_url)
-        response = requests.get("{}/multiple_stocks".format(TestAPI.base_url))
-        print(response)
-        # print(response.status_code)
-        assert response.status_code == 200
+    # def test_multiple_stocks(self):
+    #     print(TestAPI.base_url)
+    #     response = requests.get("{}/multiple_stocks".format(TestAPI.base_url))
+    #     print(response)
+    #     # print(response.status_code)
+    #     self.assertEqual(response.status_code, 200, TestAPI.err_msg +
+    #                      " " + str(response.status_code))
 
-    def test_add_stock(self):
-        print(TestAPI.base_url)
+    # def test_add_stock(self):
+    #     print(TestAPI.base_url)
+    #     data = {
+    #         "id": 1,
+    #         "company_name": "unit-test",
+    #         "stockCost": 0,
+    #         "stockSymbol": 'unit-test',
+    #         "estimatedShares": 0,
+    #         "estimatedCost": 0,
+    #         "userHoldings": 0
+    #     }
+
+    #     response = requests.post(
+    #         "{}/add_stock".format(TestAPI.base_url), json=data)
+    #     print(" unit test line 35 response{}".format(response))
+    #     print("unit test line 36 response.status_code  {}".format(
+    #         response.status_code))
+
+    #     self.assertEqual(response.status_code, 200,
+    #                      TestAPI.err_msg + " " + str(response.status_code))
+
+    def test_sell_stock(self):
         data = {
             "id": 1,
-            "company_name": "unit-test",
-            "stockCost": 0,
-            "stockSymbol": 'unit-test',
+            "companyName": "unit-testing",
+            "stockSymbol": "tsla",
             "estimatedShares": 0,
-            "estimatedCost": 0,
-            "userHoldings": 0
+            "userSellingAmount": 0,
         }
-
         response = requests.post(
-            "{}/add_stock".format(TestAPI.base_url), json=data)
-        print(" unit test line 35 response{}".format(response))
-        print("unit test line 36 response.status_code  {}".format(
-            response.status_code))
+            "{}/sell_stock".format(TestAPI.base_url), json=data)
 
         self.assertEqual(response.status_code, 200,
-                         "status code not successful! Instead got {}".format(response.status_code))
+                         TestAPI.err_msg + " " + str(response.status_code))
 
 
 if __name__ == '__main__':
