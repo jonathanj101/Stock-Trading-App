@@ -25,7 +25,6 @@ const BuyStockModal = ({
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
 
     const onBuyHandler = async () => {
-        debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const parsed = parseFloat(stockPrice.slice(1));
         try {
