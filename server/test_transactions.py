@@ -21,13 +21,12 @@ class TestAPI(unittest.TestCase):
         print(TestAPI.base_url)
         data = {
             "id": 1,
-            "company_name": 1,
-            "stockCost": 25,
-            "stockSymbol": 'tsla',
-            "estimatedShares": 25,
-            "estimatedCost": 25000,
-            "userHoldings": 100000
-
+            "company_name": "unit-test",
+            "stockCost": 0,
+            "stockSymbol": 'unit-test',
+            "estimatedShares": 0,
+            "estimatedCost": 0,
+            "userHoldings": 0
         }
 
         response = requests.post(
@@ -35,12 +34,10 @@ class TestAPI(unittest.TestCase):
         print(" unit test line 35 response{}".format(response))
         print("unit test line 36 response.status_code  {}".format(
             response.status_code))
-        # print(response.status_code)
-        # assert response.status_code == 200
-        "ok"
+
+        self.assertEqual(response.status_code, 200,
+                         "status code not successful! Instead got {}".format(response.status_code))
 
 
 if __name__ == '__main__':
     unittest.main()
-    # print(resp)
-    # pytest.main()
