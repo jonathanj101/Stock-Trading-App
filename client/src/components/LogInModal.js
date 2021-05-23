@@ -34,7 +34,6 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
     };
 
     const redirectToAccountPage = () => {
-        debugger;
         setTimeout(() => {
             history.push('/my-stocks');
             handleClose(false);
@@ -43,7 +42,6 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
     };
 
     const handleLogInRequest = async (username, password) => {
-        debugger;
         const respData = await axios.post('/login', {
             username: username,
             password: password,
