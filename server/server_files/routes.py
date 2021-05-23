@@ -155,66 +155,68 @@ def add_stock():
 @app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     user_detail = request.get_json()
+    print(user_detail)
+    # user = Users.query.filter_by(id=user_detail['id']).first()
 
-    user = Users.query.filter_by(id=user_detail['id']).first()
+    # filter_by_stock = Stock.query.filter_by(
+    #     stock_symbol=user_detail['stockSymbol']).first()
 
-    filter_by_stock = Stock.query.filter_by(
-        stock_symbol=user_detail['stockSymbol']).first()
+    # search_stock = "{}/stable/stock/{}/quote?token={}".format(
+    #     base_url, user_detail['stockSymbol'], api_key)
 
-    search_stock = "{}/stable/stock/{}/quote?token={}".format(
-        base_url, user_detail['stockSymbol'], api_key)
+    # req = requests.get(search_stock)
 
-    req = requests.get(search_stock)
+    # resp = req.json()
 
-    resp = req.json()
+    # user_estimated_shares = filter_by_stock.user_estimated_shares
 
-    user_estimated_shares = filter_by_stock.user_estimated_shares
+    # actual_stock_cost = resp['latestPrice']
 
-    actual_stock_cost = resp['latestPrice']
+    # user_selling_ammout = user_detail['userSellingAmount']
 
-    user_selling_ammout = user_detail['userSellingAmount']
+    # stock_bought_at = filter_by_stock.stock_cost
 
-    stock_bought_at = filter_by_stock.stock_cost
+    # difference_in_cost = (actual_stock_cost -
+    #                       stock_bought_at) * user_estimated_shares
 
-    difference_in_cost = (actual_stock_cost -
-                          stock_bought_at) * user_estimated_shares
+    # difference_in_shares = (filter_by_stock.user_estimated_cost -
+    #                         user_selling_ammout) / filter_by_stock.stock_cost
+    # user_holdings = user.user_holdings + \
+    #     difference_in_cost + user_detail['userSellingAmount']
+    # print("line 185 {}".format(user_holdings))
+    # print("line 186 user.user_holdings{} user detail selling amount {}".format(
+    #     user.user_holdings, user_detail['userSellingAmount']))
 
-    difference_in_shares = (filter_by_stock.user_estimated_cost -
-                            user_selling_ammout) / filter_by_stock.stock_cost
-    user_holdings = user.user_holdings + \
-        difference_in_cost + user_detail['userSellingAmount']
-    print("line 185 {}".format(user_holdings))
-    print("line 186 user.user_holdings{} user detail selling amount {}".format(
-        user.user_holdings, user_detail['userSellingAmount']))
+    # if user:
+    #     filter_by_stock.user_estimated_cost = filter_by_stock.user_estimated_cost - \
+    #         user_selling_ammout
+    #     filter_by_stock.user_estimated_shares = difference_in_shares
+    #     user.user_holdings = user_holdings
+    #     if filter_by_stock.user_estimated_cost == 0:
+    #         transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
+    #             'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
+    #         stock = Stock.query.filter_by(
+    #             stock_symbol=user_detail['stockSymbol']).delete()
+    #         db.session.add(transaction)
+    #         db.session.commit()
+    #         print("deleted stock {}".format(user_detail['stockSymbol']))
+    #     else:
+    #         print("updated stock {}".format(user_detail['stockSymbol']))
+    #         transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
+    #             'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
+    #         db.session.add(transaction)
+    #         db.session.commit()
 
-    if user:
-        filter_by_stock.user_estimated_cost = filter_by_stock.user_estimated_cost - \
-            user_selling_ammout
-        filter_by_stock.user_estimated_shares = difference_in_shares
-        user.user_holdings = user_holdings
-        if filter_by_stock.user_estimated_cost == 0:
-            transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
-                'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
-            stock = Stock.query.filter_by(
-                stock_symbol=user_detail['stockSymbol']).delete()
-            db.session.add(transaction)
-            db.session.commit()
-            print("deleted stock {}".format(user_detail['stockSymbol']))
-        else:
-            print("updated stock {}".format(user_detail['stockSymbol']))
-            transaction = Transactions(company_name=user_detail['companyName'], user_estimated_cost=user_detail[
-                'userSellingAmount'], user_holdings=user_holdings, user_id=user_detail['id'])
-            db.session.add(transaction)
-            db.session.commit()
-
-        return "ok", 200
-    else:
-        return 'nope', 500
+    #     return "ok", 200
+    # else:
+    #     return 'nope', 500
+    return "200"
 
 
 @app.route('/user_stock', methods=['POST'])
 def user_stock():
     user_detail = request.get_json()
+    print(user_detail)
     user = Users.query.filter_by(id=user_detail['id']).first()
     stock = Stock.query.filter_by(user_id=user_detail['id']).all()
     stock_list = []
@@ -249,6 +251,7 @@ def user_stock():
 
     else:
         return jsonify('User not found in our record! You will be redirected to the home page.', 500)
+    # return "200"
 
 
 @app.route('/signup', methods=["POST"])
