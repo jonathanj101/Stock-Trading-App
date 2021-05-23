@@ -288,47 +288,47 @@ const SummaryComponent = () => {
         );
     });
 
-    const stocksListTable = stocksList.map((stock, num) => {
-        return (
-            <tr
-                key={num}
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Want to buy? Just click!"
-                className="tableRow"
-                onClick={(e) => {
-                    handleShowBuyStockModal();
-                    handleStockListInfoOnSelect(e);
-                }}
-            >
-                <td className="d-flex flex-column">
-                    <span
-                        style={{
-                            fontSize: '1.50rem',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        {stock.stockData.company_name}
-                    </span>
-                    <span>{stock.stockData.symbol}</span>
-                </td>
-                <td>
-                    <span
-                        style={{
-                            fontSize: '1.50rem',
-                            fontWeight: ' bold',
-                        }}
-                    >
-                        ${stock.stockData.latestPrice}
-                    </span>
+    // const stocksListTable = stocksList.map((stock, num) => {
+    //     return (
+    //         <tr
+    //             key={num}
+    //             data-toggle="tooltip"
+    //             data-placement="top"
+    //             title="Want to buy? Just click!"
+    //             className="tableRow"
+    //             onClick={(e) => {
+    //                 handleShowBuyStockModal();
+    //                 handleStockListInfoOnSelect(e);
+    //             }}
+    //         >
+    //             <td className="d-flex flex-column">
+    //                 <span
+    //                     style={{
+    //                         fontSize: '1.50rem',
+    //                         fontWeight: 'bold',
+    //                     }}
+    //                 >
+    //                     {stock.stockData.company_name}
+    //                 </span>
+    //                 <span>{stock.stockData.symbol}</span>
+    //             </td>
+    //             <td>
+    //                 <span
+    //                     style={{
+    //                         fontSize: '1.50rem',
+    //                         fontWeight: ' bold',
+    //                     }}
+    //                 >
+    //                     ${stock.stockData.latestPrice}
+    //                 </span>
 
-                    <span className="d-flex flex-column">
-                        ${stock.stockData.change}
-                    </span>
-                </td>
-            </tr>
-        );
-    });
+    //                 <span className="d-flex flex-column">
+    //                     ${stock.stockData.change}
+    //                 </span>
+    //             </td>
+    //         </tr>
+    //     );
+    // });
 
     return (
         <div>
@@ -408,7 +408,8 @@ const SummaryComponent = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>{stocksListTable}</tbody>
+                        {/* <tbody>{stocksListTable}</tbody> */}
+                        <tbody>ok</tbody>
                     </Table>
                 </div>
             </div>
