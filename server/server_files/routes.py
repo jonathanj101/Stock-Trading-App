@@ -156,6 +156,8 @@ def sell_stock():
     filter_by_stock = Stock.query.filter_by(
         stock_symbol=user_detail['stockSymbol']).first()
 
+    print("line 159 {}".format(filter_by_stock))
+
     search_stock = "{}/stable/stock/{}/quote?token={}".format(
         base_url, user_detail['stockSymbol'], api_key)
 
@@ -194,6 +196,7 @@ def sell_stock():
         return "Success!", 200
     else:
         return 'Looks like there is an error on our end!', 500
+    # return "200"
 
 
 @app.route('/user_stock', methods=['POST'])
