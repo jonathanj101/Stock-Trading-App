@@ -20,7 +20,6 @@ const SellStockModal = ({
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (e) => {
-        debugger;
         e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
@@ -35,7 +34,6 @@ const SellStockModal = ({
     };
 
     const onSellHandler = async () => {
-        debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         await axios
             .post('/sell_stock', {
