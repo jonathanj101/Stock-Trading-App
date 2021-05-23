@@ -150,6 +150,7 @@ def add_stock():
             return jsonify("Success! Stock in db updated!", 200)
     else:
         return jsonify('Something went wrong on our end! Please try again later.', 500)
+    # return "200"
 
 
 @app.route('/sell_stock', methods=["POST"])

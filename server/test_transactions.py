@@ -15,6 +15,26 @@ class TestAPI(unittest.TestCase):
         response = requests.get("{}/multiple_stocks".format(TestAPI.base_url))
         print(response)
         # print(response.status_code)
+        assert response.status_code == 200
+
+    def test_add_stock(self):
+        print(TestAPI.base_url)
+        data = {
+            "id": 1,
+            "company_name": 1,
+            "stockCost": 25,
+            "stockSymbol": 'tsla',
+            "estimatedShares": 25,
+            "estimatedCost": 25000,
+            "userHoldings": 100000
+
+        }
+
+        response = requests.post(
+            "{}/add_stock".format(TestAPI.base_url), json=data)
+        print(response)
+        # print(response.status_code)
+        # assert response.status_code == 200
         "ok"
 
 
