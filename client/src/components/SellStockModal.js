@@ -37,7 +37,7 @@ const SellStockModal = ({
     const onSellHandler = async () => {
         debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        const sellStockData = await axios
+        await axios
             .post('/sell_stock', {
                 id: localStorageUserId,
                 companyName: stockName,
