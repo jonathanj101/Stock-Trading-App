@@ -1,7 +1,7 @@
-
 #root {
   width:100%;
-  height:100%
+  height:100%;
+  font-family:  sans-serif;
 }
 
 .lindkedIn_div:hover {
@@ -51,11 +51,27 @@ div.modal-header button span {
   margin-right: 10px;
   margin-left: 10px;
 }
+
+#account-navbar-dropdown {
+  display: flex;
+}
+
+.dropdown-toggle {
+  font-size: 1.5rem;
+  background-color: inherit;
+  border-color:#343a40;
+}
+
+.dropdown-toggle:hover {
+  background-color: inherit;
+  border-color:#343a40;
+}
+
 #account-navbar-dropdown > div > .dropdown-menu.show {
   text-align: center;
   font-size: 1.5rem;
   width: 500px;
-  left: -385px;
+  left: -240px;
 }
 
 #account-navbar-dropdown > div > .dropdown-menu > a.dropdown-item:hover {
