@@ -15,8 +15,6 @@ const NavbarComponent = ({
     const [showLogOutModal, setShowLogOutModal] = useState(false);
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
 
-    let history = useHistory();
-
     const isUserId = async (userId) => {
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (userId !== '') {
@@ -39,15 +37,15 @@ const NavbarComponent = ({
         setShowLogInModal(e);
     };
 
-    const handleLogOutOnNav = () => {
-        localStorage.clear();
-        setIsUserAuthenticated(false);
-        handleLogOutOnMain();
-        setTimeout(() => {
-            history.push('/');
-            setShowLogOutModal(false);
-        }, 2000);
-    };
+    // const handleLogOutOnNav = () => {
+    //     localStorage.clear();
+    //     setIsUserAuthenticated(false);
+    //     handleLogOutOnMain();
+    //     setTimeout(() => {
+    //         history.push('/');
+    //         setShowLogOutModal(false);
+    //     }, 2000);
+    // };
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
@@ -99,12 +97,14 @@ const NavbarComponent = ({
                         </Nav.Item>
                     ) : (
                         <Nav.Item className="d-flex align-items-center">
-                            <div className="d-flex align-items-center">
+                            {/* <div className="d-flex align-items-center">
                                 <i className="fas fa-user"></i>
-                            </div>
+                            </div> */}
                             <AccountDropDown
                                 username={username}
-                                handleLogOutOnNav={handleLogOutOnNav}
+                                handleLogOutOnMain={handleLogOutOnMain}
+                                setIsUserAuthenticated={setIsUserAuthenticated}
+                                setShowLogOutModal={setShowLogOutModal}
                             />
                         </Nav.Item>
                     )}
