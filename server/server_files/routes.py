@@ -282,6 +282,11 @@ def user():
 
     user = Users.query.filter_by(id=user_detail['id']).first()
 
+    # print(user)
+    # print(user.username)
+
+    # return "ok"
+
     user_obj = {
         "username": user.username,
         "user_holdings": user.user_holdings
