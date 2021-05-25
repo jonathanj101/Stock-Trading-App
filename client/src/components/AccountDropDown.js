@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Dropdown,
-    Button,
-    NavItem,
-    DropdownButton,
-    NavLink,
-} from 'react-bootstrap';
+import { Dropdown, Button, NavLink } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -16,11 +10,9 @@ const AccountDropDown = ({
     setIsUserAuthenticated,
 }) => {
     const [userHoldings, setUserHoldings] = useState();
-    const [isClicked, setIsClicked] = useState(false);
     let history = useHistory();
 
-    const updateUserHoldings = () => {
-        // debugger;
+    const updateUserHoldings = async () => {
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const fetchUserHoldings = async () => {
             const response = await axios.post('/user', {
@@ -47,17 +39,18 @@ const AccountDropDown = ({
         <div id="account-navbar-dropdown">
             <Dropdown
                 className="d-flex"
-                // style={styles.dropdownMenu}
-                onClick={() => {
-                    updateUserHoldings();
-                    console.log('ok1');
+                onToggle={(e) => {
+                    let isOpen = e;
+                    if (isOpen) {
+                        updateUserHoldings();
+                    }
                 }}
             >
                 <div className="mt-2">
                     <i className="fas fa-user"></i>
                 </div>
                 <Dropdown.Toggle as={NavLink}>{username}</Dropdown.Toggle>
-                <Dropdown.Menu show={isClicked} style={styles.dropdownMenu}>
+                <Dropdown.Menu style={styles.dropdownMenu}>
                     <div className="d-flex flex-wrap flex-column mt-5 mb-5 ">
                         <span>${userHoldings}</span>
                         <span>Buying power</span>
@@ -65,12 +58,11 @@ const AccountDropDown = ({
                     <Dropdown.Divider />
                     <Button
                         style={styles.button}
-                        onClick={() => console.log('ok')}
+                        onClick={() => handleLogOut()}
                     >
                         Log Out
                     </Button>
                 </Dropdown.Menu>
-                {/* </DropdownButton> */}
             </Dropdown>
         </div>
     );
