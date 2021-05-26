@@ -14,13 +14,10 @@ const SellStockModal = ({
     difInCost,
 }) => {
     const [userSellingAmount, setUserSellingAmount] = useState('');
-    const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
     const [userInput, setUserInput] = useState('');
     const [totalSelling, setTotalSelling] = useState('0.00');
     const [totalOwned, setTotalOwned] = useState('0.00');
-    const [totalProfit, setTotalProfit] = useState(
-        parseFloat(difInCost) + parseFloat(estimatedCost),
-    );
+    const [totalProfit, setTotalProfit] = useState();
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (e) => {
@@ -58,17 +55,16 @@ const SellStockModal = ({
 
     const clearForm = () => {
         setUserSellingAmount('');
-        setTotalHoldingsOnSell('');
         setUserInput('');
         setTotalSelling('0.00');
         setTotalOwned('0.00');
+        setTotalProfit();
         setValidated(false);
     };
 
     const getTextInput = (e) => {
         const { value } = e.currentTarget;
         const parsedValue = parseFloat(value);
-        console.log(value);
         if (value !== '+' || value !== '-') {
             setUserInput(parsedValue);
             calculateAmountSellingOnInputChange(parsedValue);
@@ -79,18 +75,16 @@ const SellStockModal = ({
 
     const calculateAmountSellingOnInputChange = (value) => {
         const parsedEstimatedCost = parseFloat(estimatedCost);
-        const totalSelling = parsedEstimatedCost - value;
-        if (value !== '' && isNaN(!value)) {
-            console.log(value);
-            console.log(isNaN(value));
-            console.log(parsedEstimatedCost);
-            console.log(totalSelling);
+        const totalProfit = parseFloat(difInCost) + parsedEstimatedCost;
+        const totalSelling = totalProfit - value;
+        if (Number.isNaN(value) !== true) {
             setTotalSelling(value);
             setUserSellingAmount(value);
             setTotalOwned(totalSelling);
+            setTotalProfit(totalProfit);
         } else {
-            setTotalOwned('$0.00');
-            setTotalSelling('$0.00');
+            setTotalOwned('0.00');
+            setTotalSelling('0.00');
             setTotalProfit(parseFloat(difInCost) + parsedEstimatedCost);
             return;
         }
@@ -101,16 +95,11 @@ const SellStockModal = ({
         const parsedDifInCost = parseFloat(difInCost);
         const totalProfit = parsedDifInCost + parsedEstimatedCost;
         const totalOwned = totalProfit - totalProfit;
-        console.log(parsedEstimatedCost);
-        console.log(difInCost);
-        console.log(parsedDifInCost);
-        console.log(totalProfit);
         setTotalSelling(totalProfit);
         setTotalOwned(totalOwned);
         setUserSellingAmount(parsedEstimatedCost);
         setUserInput(totalProfit);
         setTotalProfit(totalProfit);
-        console.log('clicked');
     };
 
     return (
@@ -127,7 +116,6 @@ const SellStockModal = ({
                     validated={validated}
                     onSubmit={(e) => {
                         handleSubmit(e);
-                        console.log('clicked');
                     }}
                     method="POST"
                 >
