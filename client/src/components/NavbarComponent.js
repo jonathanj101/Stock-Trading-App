@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Navbar, Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 import LogInModal from './LogInModal';
 import LogOutModal from './LogOutModal';
 import AccountDropDown from './AccountDropDown';
@@ -36,16 +36,6 @@ const NavbarComponent = ({
     const handleClose = (e) => {
         setShowLogInModal(e);
     };
-
-    // const handleLogOutOnNav = () => {
-    //     localStorage.clear();
-    //     setIsUserAuthenticated(false);
-    //     handleLogOutOnMain();
-    //     setTimeout(() => {
-    //         history.push('/');
-    //         setShowLogOutModal(false);
-    //     }, 2000);
-    // };
 
     return (
         <div style={{ fontSize: '1.5rem' }}>
