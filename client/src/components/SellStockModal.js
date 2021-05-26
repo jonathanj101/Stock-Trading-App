@@ -105,6 +105,7 @@ const SellStockModal = ({
     return (
         <div>
             <Modal
+                id="sell-modal"
                 show={showSellStockModal}
                 aria-labelledby="contained-modal-title-vcenter"
                 size="lg"
@@ -124,16 +125,16 @@ const SellStockModal = ({
                             Sell {stockName}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className="mb-5 mt-5">
-                        <div style={styles.stockInfoDiv}>
-                            <div>
+                    <Modal.Body>
+                        <div style={styles.stockInfoDiv} id="stock-info-div">
+                            <span>
                                 {stockSymbol} = ${estimatedCost}
-                            </div>
-                            <div>Shares = {estimatedShares}</div>
-                            <div>Profit = {difInCost}</div>
-                            <div>Total = {totalProfit} </div>
+                            </span>
+                            <span>Shares = {estimatedShares}</span>
+                            <span>Profit = {difInCost}</span>
+                            <span>Total = {totalProfit} </span>
                         </div>
-                        <div className="w-75 mx-auto">
+                        <div className="w-100 mx-auto" id="stock-info-2div">
                             <Form.Row className="mb-5">
                                 <Form.Control
                                     id="userSelling"
@@ -194,14 +195,12 @@ const SellStockModal = ({
 var styles = {
     stockInfoDiv: {
         display: 'flex',
-        justifyContent: 'around',
         flexDirection: 'column',
         margin: '20px auto 20px auto',
-        fontSize: '1.5rem',
+        // fontSize: '1.5rem',
         fontWeight: 'bold',
         textAlign: 'center',
         color: 'black',
-        width: '50%',
     },
     stockInfo: {
         fontWeight: 'normal',
