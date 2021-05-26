@@ -101,13 +101,11 @@ def search_stock(stock):
 @app.route('/add_stock', methods=['POST'])
 def add_stock():
     user_detail = request.get_json()
-    print(user_detail)
     user = Users.query.filter_by(id=user_detail['id']).first()
     if user:
         filter_by_stock_symbol = Stock.query.filter_by(
             stock_symbol=user_detail['stockSymbol']).first()
         if filter_by_stock_symbol != None:
-            print("line 115 {}".format(filter_by_stock_symbol))
 
             update_user_cost = (filter_by_stock_symbol.user_estimated_cost +
                                 user_detail['estimatedCost'])
@@ -117,22 +115,14 @@ def add_stock():
             filter_by_stock_symbol.user_estimated_cost = update_user_cost
             filter_by_stock_symbol.user_estimated_shares = update_user_shares
             user.user_holdings = update_user_holdings
-            print("line 125 {}".format(user.user_holdings))
             transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail['estimatedCost'],
                                        user_holdings=user_detail['estimatedCost'], user_id=user_detail['id'])
             db.session.add(transaction)
             db.session.commit()
             return "Success! Stock added to db", 200
         else:
-            print("line 131 {}".format(filter_by_stock_symbol))
             user_holdings = user.user_holdings - user_detail['estimatedCost']
             user.user_holdings = user_holdings
-            """
-            Transactions model column user_holdings
-            has to be the amount of $ the user currently has after
-            each transaction is complete.
-            Leaving as is, working on the client side first
-            """
             user_stock = Stock(company_name=user_detail['company_name'],
                                stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                                user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], user_id=user_detail['id'])
@@ -144,19 +134,15 @@ def add_stock():
             return jsonify("Success! Stock in db updated!", 200)
     else:
         return jsonify('Something went wrong on our end! Please try again later.', 500)
-    # return "200"
 
 
 @app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     user_detail = request.get_json()
-    print(user_detail)
     user = Users.query.filter_by(id=user_detail['id']).first()
 
     filter_by_stock = Stock.query.filter_by(
         stock_symbol=user_detail['stockSymbol']).first()
-
-    print("line 159 {}".format(filter_by_stock))
 
     search_stock = "{}/stable/stock/{}/quote?token={}".format(
         base_url, user_detail['stockSymbol'], api_key)
@@ -196,13 +182,11 @@ def sell_stock():
         return "Success!", 200
     else:
         return 'Looks like there is an error on our end!', 500
-    # return "200"
 
 
 @app.route('/user_stock', methods=['POST'])
 def user_stock():
     user_detail = request.get_json()
-    print(user_detail)
     user = Users.query.filter_by(id=user_detail['id']).first()
     stock = Stock.query.filter_by(user_id=user_detail['id']).all()
     stock_list = []
@@ -215,9 +199,6 @@ def user_stock():
             resp = req.json()
             difference_in_cost = (
                 resp['latestPrice'] - data.stock_cost) * data.user_estimated_shares
-            print(resp['symbol'])
-            print(resp['latestPrice'])
-            print('difference in cost {}'.format(difference_in_cost))
 
             stock_obj = {
                 "companyName": data.company_name,
@@ -262,7 +243,6 @@ def login():
     user_details = request.get_json()
 
     user = Users.query.filter_by(username=user_details["username"]).first()
-    print(user.username)
 
     if user and bcrypt.check_password_hash(user.password, user_details['password']):
         response = {
@@ -278,14 +258,8 @@ def login():
 @app.route('/user', methods=["POST"])
 def user():
     user_detail = request.get_json()
-    print(user_detail)
 
     user = Users.query.filter_by(id=user_detail['id']).first()
-
-    # print(user)
-    # print(user.username)
-
-    # return "ok"
 
     user_obj = {
         "username": user.username,
