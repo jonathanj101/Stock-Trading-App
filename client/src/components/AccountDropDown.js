@@ -38,7 +38,6 @@ const AccountDropDown = ({
     return (
         <div id="account-navbar-dropdown">
             <Dropdown
-                className="d-flex"
                 onToggle={(e) => {
                     let isOpen = e;
                     if (isOpen) {
@@ -46,10 +45,9 @@ const AccountDropDown = ({
                     }
                 }}
             >
-                <div className="mt-2">
-                    <i className="fas fa-user"></i>
-                </div>
-                <Dropdown.Toggle as={NavLink}>{username}</Dropdown.Toggle>
+                <Dropdown.Toggle className="fas fa-user" as={NavLink}>
+                    {username}
+                </Dropdown.Toggle>
                 <Dropdown.Menu style={styles.dropdownMenu}>
                     <div className="d-flex flex-wrap flex-column mt-5 mb-5 ">
                         <span>${userHoldings}</span>
