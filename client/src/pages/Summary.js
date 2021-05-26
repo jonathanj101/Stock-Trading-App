@@ -18,6 +18,7 @@ const SummaryComponent = () => {
     const [isStockQuantity, setIsStockQuantity] = useState(true);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
+    const [difInCost, setDifInCost] = useState('');
     const [isFade, setIsFade] = useState(false);
     const [counter, setCounter] = useState(false);
 
@@ -231,13 +232,20 @@ const SummaryComponent = () => {
         const userEstimatedCost =
             e.currentTarget.parentElement.childNodes[1].childNodes[1]
                 .textContent;
+
         const userEstimatedShares =
+            e.currentTarget.parentElement.childNodes[3].childNodes[1]
+                .textContent;
+
+        const differenceInCost =
             e.currentTarget.parentElement.childNodes[2].childNodes[1]
                 .textContent;
+
         setStockName(stockCompanyName);
         setStockSymbol(selectedStockSymbol);
         setEstimatedCost(userEstimatedCost);
         setEstimatedShares(userEstimatedShares);
+        setDifInCost(differenceInCost);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -364,6 +372,7 @@ const SummaryComponent = () => {
                 stockSymbol={stockSymbol}
                 estimatedCost={estimatedCost}
                 estimatedShares={estimatedShares}
+                difInCost={difInCost}
                 userHoldings={userBuyingPower}
                 setCounter={setCounter}
             />
