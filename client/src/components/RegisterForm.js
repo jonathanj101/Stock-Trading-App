@@ -23,7 +23,6 @@ const FormComponent = ({ handleRegister }) => {
             event.stopPropagation();
             setValidated(true);
         } else {
-            setShow(true);
             handleRegistrantData(
                 firstName,
                 lastName,
@@ -31,11 +30,6 @@ const FormComponent = ({ handleRegister }) => {
                 username,
                 email,
             );
-            setTimeout(() => {
-                history.push('/my-stocks');
-                clearForm();
-            }, 3000);
-            setValidated(false);
         }
     };
 
@@ -45,6 +39,13 @@ const FormComponent = ({ handleRegister }) => {
         setPassword('');
         setUsername('');
         setEmail('');
+    };
+
+    const redirectToAccountPage = () => {
+        setTimeout(() => {
+            history.push('/my-stocks');
+            clearForm();
+        }, 3000);
     };
 
     const handleRegistrantData = async (
@@ -64,16 +65,16 @@ const FormComponent = ({ handleRegister }) => {
                 userHoldings: 100000,
             });
             const respMsg = sendRegistrantData.data[0];
-            const respStatusCode = sendRegistrantData.data[2];
+            const respStatusCode = sendRegistrantData.data[1];
+            setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
-                // setShow(true);
                 console.log(errMsg);
             } else {
-                setSuccessMsg(respMsg);
-                // setShow(true);
-                const userId = sendRegistrantData.data[1];
+                const userId = sendRegistrantData.data[2];
                 localStorage.setItem('userId', JSON.stringify(userId));
+                setSuccessMsg(respMsg);
+                redirectToAccountPage();
                 handleRegister(userId);
             }
         } catch (err) {
