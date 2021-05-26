@@ -11,12 +11,16 @@ const SellStockModal = ({
     estimatedShares,
     userHoldings,
     setCounter,
+    difInCost,
 }) => {
     const [userSellingAmount, setUserSellingAmount] = useState('');
     const [totalHoldingsOnSell, setTotalHoldingsOnSell] = useState('');
     const [userInput, setUserInput] = useState('');
     const [totalSelling, setTotalSelling] = useState('0.00');
     const [totalOwned, setTotalOwned] = useState('0.00');
+    const [totalProfit, setTotalProfit] = useState(
+        parseFloat(difInCost) + parseFloat(estimatedCost),
+    );
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (e) => {
@@ -76,24 +80,36 @@ const SellStockModal = ({
     const calculateAmountSellingOnInputChange = (value) => {
         const parsedEstimatedCost = parseFloat(estimatedCost);
         const totalSelling = parsedEstimatedCost - value;
-        if (value !== '' && value <= parsedEstimatedCost) {
+        if (value !== '' && isNaN(!value)) {
+            console.log(value);
+            console.log(isNaN(value));
+            console.log(parsedEstimatedCost);
             console.log(totalSelling);
             setTotalSelling(value);
             setUserSellingAmount(value);
             setTotalOwned(totalSelling);
         } else {
-            console.log('greater');
+            setTotalOwned('$0.00');
+            setTotalSelling('$0.00');
+            setTotalProfit(parseFloat(difInCost) + parsedEstimatedCost);
             return;
         }
     };
 
     const sellAll = () => {
         const parsedEstimatedCost = parseFloat(estimatedCost);
-        const totalSelling = parsedEstimatedCost - parsedEstimatedCost;
-        setTotalSelling(parsedEstimatedCost);
-        setTotalOwned(totalSelling);
+        const parsedDifInCost = parseFloat(difInCost);
+        const totalProfit = parsedDifInCost + parsedEstimatedCost;
+        const totalOwned = totalProfit - totalProfit;
+        console.log(parsedEstimatedCost);
+        console.log(difInCost);
+        console.log(parsedDifInCost);
+        console.log(totalProfit);
+        setTotalSelling(totalProfit);
+        setTotalOwned(totalOwned);
         setUserSellingAmount(parsedEstimatedCost);
-        setUserInput(parsedEstimatedCost);
+        setUserInput(totalProfit);
+        setTotalProfit(totalProfit);
         console.log('clicked');
     };
 
@@ -126,6 +142,8 @@ const SellStockModal = ({
                                 {stockSymbol} = ${estimatedCost}
                             </div>
                             <div>Shares = {estimatedShares}</div>
+                            <div>Profit = {difInCost}</div>
+                            <div>Total = {totalProfit} </div>
                         </div>
                         <div className="w-75 mx-auto">
                             <Form.Row className="mb-5">
