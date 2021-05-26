@@ -23,6 +23,7 @@ const FormComponent = ({ handleRegister }) => {
             event.stopPropagation();
             setValidated(true);
         } else {
+            setShow(true);
             handleRegistrantData(
                 firstName,
                 lastName,
@@ -30,7 +31,6 @@ const FormComponent = ({ handleRegister }) => {
                 username,
                 email,
             );
-            setShow(true);
             setTimeout(() => {
                 history.push('/my-stocks');
                 clearForm();
