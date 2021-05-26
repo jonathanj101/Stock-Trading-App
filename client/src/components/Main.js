@@ -48,7 +48,6 @@ class Main extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        const userHoldings = this.state.userHoldings;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (this.state.userHoldings !== prevState.userHoldings) {
             const response = await axios
