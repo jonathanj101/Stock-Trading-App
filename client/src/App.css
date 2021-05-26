@@ -1,7 +1,10 @@
+
 #root {
   width:100%;
   height:100%;
   font-family:  sans-serif;
+  margin:0;
+  padding:0;
 }
 
 .lindkedIn_div:hover {
@@ -90,3 +93,32 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+@media screen and (max-width:600px) {
+  #sell-modal > .modal-content {
+    /* background-color: red; */
+    width: 75%;
+    height:50%;
+    margin: auto;
+    /* font-size: 1rem; */
+  }
+  #sell-modal > .modal-content > form {
+    font-size: 1rem;
+  }
+  #sell-modal > .modal-content > form > .modal-body {
+    width:100%;
+  }
+
+  #sell-modal > .modal-content > form > .modal-body > #stock-info-div > span {
+    font-size: 1rem;
+  }
+
+  #sell-modal > .modal-content >  form > .modal-body > #stock-info-2div > div > div.d-flex > h4{
+    font-size: 1rem;
+
+  }
+  #sell-modal > .modal-content >  form > .modal-body > #stock-info-2div > div > div.text-center > button{
+    font-size: 1rem;
+  }
+}
+
