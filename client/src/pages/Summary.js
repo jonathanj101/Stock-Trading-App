@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Button, Table, Fade, Container, Col } from 'react-bootstrap';
+import { Card, Button, Table, Fade } from 'react-bootstrap';
 import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
 import SellStockModal from '../components/SellStockModal';
@@ -337,7 +337,7 @@ const SummaryComponent = () => {
     });
 
     return (
-        <di className="container p-0 m-0">
+        <div className="">
             <SearchComponent
                 addStockToInvestingTable={addStockToInvestingTable}
                 handleShow={handleShowBuyStockModal}
@@ -420,7 +420,7 @@ const SummaryComponent = () => {
                     </Table>
                 </div>
             </div>
-        </di>
+        </div>
     );
 };
 
