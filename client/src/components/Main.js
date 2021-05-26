@@ -109,7 +109,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div style={{ height: `100%` }}>
+            <div style={{ height: `100%`, width: '100%' }}>
                 <NavbarComponent
                     username={this.state.username}
                     userId={this.state.userId}
