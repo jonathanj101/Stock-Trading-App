@@ -25,7 +25,6 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
             const response = await axios
@@ -33,7 +32,6 @@ class Main extends Component {
                     id: localStorageUserId,
                 })
                 .then((data) => {
-                    console.log(data.data);
                     return data.data;
                 });
 
@@ -66,19 +64,15 @@ class Main extends Component {
     }
 
     isUserAuthenticated = () => {
-        console.log(this.state.userHoldings);
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         if (localStorageUserId !== null) {
-            console.log(true);
             return true;
         } else {
-            console.log(false);
             return false;
         }
     };
 
     handleRegister = (userId) => {
-        console.log(userId);
         if (userId !== undefined) {
             this.setState({
                 userId: userId,
@@ -90,7 +84,6 @@ class Main extends Component {
     };
 
     handleLogIn = (userId, username) => {
-        console.log(username);
         if (userId) {
             localStorage.setItem('userId', JSON.stringify(userId));
             this.setState({
