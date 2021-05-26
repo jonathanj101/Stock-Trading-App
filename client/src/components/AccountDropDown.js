@@ -28,10 +28,11 @@ const AccountDropDown = ({
     const handleLogOut = () => {
         localStorage.clear();
         setIsUserAuthenticated(false);
-        handleLogOutOnMain();
+        setShowLogOutModal(true);
         setTimeout(() => {
             history.push('/');
             setShowLogOutModal(false);
+            handleLogOutOnMain();
         }, 2000);
     };
 
