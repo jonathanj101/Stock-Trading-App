@@ -233,7 +233,7 @@ def signup():
                      email=user_details['email'], username=user_details['username'], password=hashed_password, user_holdings=user_details['userHoldings'])
         db.session.add(user)
         db.session.commit()
-        return jsonify("Success! You will be redirect to your account shortly!", user.id, 200)
+        return jsonify("Success! You will be redirect to your account shortly!", 200, user.id)
     else:
         return jsonify("The username has already been used! Please choose another username!", 500)
 
@@ -260,6 +260,9 @@ def user():
     user_detail = request.get_json()
 
     user = Users.query.filter_by(id=user_detail['id']).first()
+    print(user_detail)
+    print(user)
+    print(user.username)
 
     user_obj = {
         "username": user.username,
