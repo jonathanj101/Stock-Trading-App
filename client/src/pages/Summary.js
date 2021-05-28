@@ -337,7 +337,7 @@ const SummaryComponent = () => {
     });
 
     return (
-        <div className="">
+        <div id="summary-page">
             <SearchComponent
                 addStockToInvestingTable={addStockToInvestingTable}
                 handleShow={handleShowBuyStockModal}
@@ -411,7 +411,7 @@ const SummaryComponent = () => {
                                     <h3>Company Name</h3>
                                 </th>
                                 <th>
-                                    <h3>Cost/Difference</h3>
+                                    <h3>Cost Difference</h3>
                                 </th>
                             </tr>
                         </thead>
