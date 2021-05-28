@@ -1,12 +1,11 @@
 import React from 'react';
-import { Jumbotron, Container, Carousel, Image, Card } from 'react-bootstrap';
+import { Container, Carousel, Image } from 'react-bootstrap';
 import tabletStocksData from '../assets/images/tablet-display-stocks.jpg';
 import bitcoinBenjamin from '../assets/images/bitcoin-benjamin.jpg';
 import laptopDisplayStock from '../assets/images/laptop-display-stocks.jpg';
-import LogInModal from '../components/LogInModal';
 import LogInComponent from '../components/LogInComponent';
 
-const Home = () => {
+const Home = ({ handleLogIn }) => {
     return (
         <div style={styles.homeDiv} className="w-100 h-100 m-0 p-0 ">
             <div className="text-center w-100">
@@ -37,7 +36,8 @@ const Home = () => {
                         </Carousel.Item>
                     </Carousel>
                 </Container>
-                <LogInComponent />
+
+                <LogInComponent handleLogIn={handleLogIn} />
             </div>
         </div>
     );
@@ -45,13 +45,9 @@ const Home = () => {
 
 var styles = {
     jumbotronStyle: {
-        // margin: '0 auto 15% auto',
         padding: '0',
         margin: '0',
         minHeight: '30vh',
-    },
-    homeDiv: {
-        // backgroundColor: 'black',
     },
 };
 
