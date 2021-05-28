@@ -75,6 +75,7 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
                         </Modal.Header>
                         <div>
                             <Form
+                                className="w-75 mx-auto"
                                 noValidate
                                 validated={validate}
                                 onSubmit={(e) => {
@@ -87,8 +88,11 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
                                     successMsg={successMsg}
                                     show={showAlertMsgComponent}
                                 />
+                                <Form.Text style={styles.formTextStyles}>
+                                    Sign In to your account
+                                </Form.Text>
                                 <Form.Group
-                                    style={styles.formGroupStyles}
+                                    // style={styles.formGroupStyles}
                                     controlId="email"
                                 >
                                     <Form.Control
@@ -131,7 +135,6 @@ const LogInModal = ({ show, handleClose, handleLogIn }) => {
                                     variant="primary"
                                     size="lg"
                                     block
-                                    style={{ marginTop: '100px' }}
                                 >
                                     Log In
                                 </Button>
@@ -153,6 +156,11 @@ var styles = {
     modalHeaderTitle: {
         fontSize: '2rem',
         color: 'black',
+    },
+    formTextStyles: {
+        fontSize: '1.75rem',
+        margin: '20px auto',
+        fontWeight: 'lighter',
     },
 };
 
