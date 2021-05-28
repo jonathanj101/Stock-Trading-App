@@ -19,14 +19,11 @@ div.modal-header button span {
 .tableRow:hover {
   cursor: pointer;
 }
-.logIn {
-  display: 'block';
-  padding: .5rem 1rem;
-  color: rgba(255, 255, 255, 0.5);
-  padding-right: .5rem;
-  padding-left: .5rem;
-  border-radius: .25rem;
-  background-color: transparent;
+#log-in-form {
+  /* background-color: red; */
+  /* border: 0.5px solid black; */
+  border-radius: 4%;
+  box-shadow: 6px 32px 72px rgb(179, 178, 178);
 }
 
 .nav-link:hover {
