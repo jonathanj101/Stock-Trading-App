@@ -41,8 +41,9 @@ const FormComponent = ({ handleRegister }) => {
         setEmail('');
     };
 
-    const redirectToAccountPage = () => {
+    const redirectToAccountPage = (userId) => {
         setTimeout(() => {
+            handleRegister(userId);
             history.push('/my-stocks');
             clearForm();
         }, 3000);
@@ -56,6 +57,7 @@ const FormComponent = ({ handleRegister }) => {
         email,
     ) => {
         try {
+            // debugger;
             const sendRegistrantData = await axios.post('/signup', {
                 first_name: firstName,
                 last_name: lastName,
@@ -64,9 +66,9 @@ const FormComponent = ({ handleRegister }) => {
                 email: email,
                 userHoldings: 100000,
             });
+            setShow(true);
             const respMsg = sendRegistrantData.data[0];
             const respStatusCode = sendRegistrantData.data[1];
-            setShow(true);
             if (respStatusCode >= 500) {
                 setErrMsg(respMsg);
                 console.log(errMsg);
@@ -74,8 +76,7 @@ const FormComponent = ({ handleRegister }) => {
                 const userId = sendRegistrantData.data[2];
                 localStorage.setItem('userId', JSON.stringify(userId));
                 setSuccessMsg(respMsg);
-                redirectToAccountPage();
-                handleRegister(userId);
+                redirectToAccountPage(userId);
             }
         } catch (err) {
             console.log(err);
