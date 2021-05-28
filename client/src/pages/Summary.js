@@ -309,26 +309,28 @@ const SummaryComponent = () => {
             >
                 <td className="d-flex flex-column">
                     <span
+                        id="stock-title"
                         style={{
-                            fontSize: '1.50rem',
+                            // fontSize: '1.50rem',
                             fontWeight: 'bold',
                         }}
                     >
                         {stock.stockData.company_name}
                     </span>
-                    <span>{stock.stockData.symbol}</span>
+                    <span id="stock-symbol">{stock.stockData.symbol}</span>
                 </td>
                 <td>
                     <span
+                        id="stock-cost"
                         style={{
-                            fontSize: '1.50rem',
+                            // fontSize: '1.50rem',
                             fontWeight: ' bold',
                         }}
                     >
                         ${stock.stockData.latestPrice}
                     </span>
 
-                    <span className="d-flex flex-column">
+                    <span id="stock-cost-change" className="d-flex flex-column">
                         ${stock.stockData.change}
                     </span>
                 </td>
@@ -399,14 +401,15 @@ const SummaryComponent = () => {
                 </div>
                 <div className="w-100" style={{ marginBottom: '55px' }}>
                     <Table
+                        id="table"
                         className="text-center mx-auto"
                         striped
                         bordered
                         hover
                     >
                         <caption style={styles.caption}>LIST</caption>
-                        <thead>
-                            <tr>
+                        <thead id="t-head">
+                            <tr id="t-row">
                                 <th>
                                     <h3>Company Name</h3>
                                 </th>
