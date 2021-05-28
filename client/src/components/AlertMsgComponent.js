@@ -5,7 +5,7 @@ const AlertMsgComponent = ({ successMsg, errMsg, show }) => {
     return (
         <div>
             <Alert
-                show={show}
+                show={true}
                 variant={successMsg === '' ? 'danger' : 'success'}
             >
                 <Alert.Heading>
