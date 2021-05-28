@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Button, Form } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AlertMsgComponent from './AlertMsgComponent';
 
-const LogInComponent = ({ show, handleClose, handleLogIn }) => {
+const LogInComponent = ({ handleLogIn }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
@@ -36,7 +36,6 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
     const redirectToAccountPage = () => {
         setTimeout(() => {
             history.push('/my-stocks');
-            handleClose(false);
             clearForm();
         }, 5000);
     };
@@ -66,11 +65,11 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
     return (
         <div className="w-100">
             <Form
-                className="w-75  mx-auto"
+                id="log-in-form"
                 noValidate
                 validated={validate}
                 onSubmit={(e) => {
-                    handleSubmit(e);
+                    // handleSubmit(e);
                 }}
                 method="POST"
                 style={styles.formStyle}
@@ -86,6 +85,7 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
                 <Form.Group style={styles.formGroupStyles} controlId="email">
                     <Form.Control
                         required
+                        style={{ fontSize: '1.25rem' }}
                         onChange={(e) => setUsername(e.target.value)}
                         name="Username"
                         type="text"
@@ -99,6 +99,7 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
                 </Form.Group>
                 <Form.Group controlId="password">
                     <Form.Control
+                        style={{ fontSize: '1.25rem' }}
                         onChange={(e) => setPassword(e.target.value)}
                         name="password"
                         value={password}
@@ -111,15 +112,22 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Button
+                    id="log-in-btn"
                     type="submit"
                     className="mb-auto"
+                    style={{ marginTop: '50px' }}
                     variant="primary"
                     size="lg"
                     block
                 >
                     Log In
                 </Button>
-                <Button href="/register">Register</Button>
+                <div className="mt-5 d-flex ">
+                    <p>Don't have an account?</p>
+                    <Link className="ml-3" to="/register">
+                        Register here
+                    </Link>
+                </div>
             </Form>
         </div>
     );
@@ -127,11 +135,12 @@ const LogInComponent = ({ show, handleClose, handleLogIn }) => {
 
 var styles = {
     formStyle: {
-        border: '2px solid black',
         padding: '100px',
+        width: '75%',
+        margin: 'auto',
     },
     formGroupStyles: {
-        margin: 'auto auto 50px auto',
+        marginBottom: '50px',
     },
     formTextStyles: {
         fontSize: '1.75rem',
