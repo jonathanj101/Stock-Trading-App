@@ -161,6 +161,7 @@ const SellStockModal = ({
                                 </div>
                                 <div className="text-center mt-5">
                                     <Button
+                                        id="sell-btn"
                                         className="w-50"
                                         variant="primary"
                                         onClick={() => {
