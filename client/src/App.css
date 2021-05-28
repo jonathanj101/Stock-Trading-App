@@ -96,11 +96,9 @@ input[type=number] {
 
 @media screen and (max-width:600px) {
   #sell-modal > .modal-content {
-    /* background-color: red; */
     width: 75%;
     height:50%;
     margin: auto;
-    /* font-size: 1rem; */
   }
   #sell-modal > .modal-content > form {
     font-size: 1rem;
@@ -115,38 +113,41 @@ input[type=number] {
 
   #sell-modal > .modal-content >  form > .modal-body > #stock-info-2div > div > div.d-flex > h4{
     font-size: 1rem;
+    /* font-weight:; */
 
   }
 }
 
 @media screen and (max-width:400px) {
-  div#summary-page > table > thead > tr > th > h3  { 
-    background-color: red;
-    font-size: 1rem;
-  }
 
   #sell-modal > .modal-content  {
-    /* background-color: red; */
     width: 75%;
     margin: auto;
   }
+  
+  #table > #t-head > #t-row >  th > h3 {
+    font-size: 1rem;
+  }
+  
+  #table > tbody > tr > td > span#stock-title {
 
-  #sell-modal > .modal-content >  form > .modal-body > #stock-info-2div > div > div.text-center > button#sell-btn {
-    background-color: red;
-    font-size: 5rem;
-    margin:auto;
-    margin-top: 0 !important;
-    font-size: 25rem;
+    font-size: 1rem;
+  }
+  #table > tbody > tr > td > span#stock-symbol {
+    font-size: 1rem;
+  }
+  #table > tbody > tr > td > span#stock-cost {
+    font-size: 1rem;
+  }
+  #table > tbody > tr > td > span#stock-cost-change {
+    font-size: 1rem;
   }
 
-
   #sell-modal > .modal-content > form > .modal-footer > .text-center > button {
-    /* background-color: red; */
     width: 75%;
     height:50%;
     margin: auto;
     margin-top: 0px !important;
-    /* font-size: 1rem; */
   }
 }
 
