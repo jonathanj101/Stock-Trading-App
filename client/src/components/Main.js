@@ -106,11 +106,14 @@ class Main extends Component {
                 <NavbarComponent
                     username={this.state.username}
                     userId={this.state.userId}
-                    handleLogIn={this.handleLogIn}
                     handleLogOut={this.handleLogOut}
                 />
                 <Switch>
-                    <Route path="/" exact render={() => <Home />} />
+                    <Route
+                        path="/"
+                        exact
+                        render={() => <Home handleLogIn={this.handleLogIn} />}
+                    />
                     <ProtectRoute
                         path="/my-stocks"
                         exact
