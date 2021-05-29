@@ -41,6 +41,7 @@ const NavbarComponent = ({
                 className="d-flex justify-content-end"
                 bg="dark"
                 variant="dark"
+                onToggle={() => console.log('navbar collapse clicked')}
             >
                 <Navbar.Brand></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -49,11 +50,7 @@ const NavbarComponent = ({
                     id="responsive-navbar-nav"
                 >
                     <Nav variant="pills">
-                        <NavLink
-                            to="/"
-                            exact
-                            className="nav-link mr-3 collapse navbar-collapse "
-                        >
+                        <NavLink to="/" exact className="nav-link mr-3  ">
                             <div>
                                 <i className="fas fa-house-user"></i>
                                 Home
@@ -63,7 +60,7 @@ const NavbarComponent = ({
                             to={isUserAuthenticated ? '/my-stocks' : '/'}
                             exact
                             className={
-                                isUserAuthenticated ? 'nav-link mr-3' : ''
+                                isUserAuthenticated ? ' nav-link mr-3' : ''
                             }
                         >
                             {isUserAuthenticated ? (
