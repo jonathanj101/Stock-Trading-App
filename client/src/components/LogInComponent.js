@@ -69,7 +69,7 @@ const LogInComponent = ({ handleLogIn }) => {
                 noValidate
                 validated={validate}
                 onSubmit={(e) => {
-                    // handleSubmit(e);
+                    handleSubmit(e);
                 }}
                 method="POST"
                 style={styles.formStyle}
