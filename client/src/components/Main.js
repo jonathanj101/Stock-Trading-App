@@ -17,6 +17,7 @@ class Main extends Component {
             username: '',
             userId: '',
             userHoldings: '',
+            isLogged: false,
         };
         this.handleLogOut = this.handleLogOut.bind(this);
         this.handleLogIn = this.handleLogIn.bind(this);
@@ -89,6 +90,7 @@ class Main extends Component {
             this.setState({
                 userId: userId,
                 username: username,
+                isLogged: true,
             });
         }
         return;
@@ -112,7 +114,12 @@ class Main extends Component {
                     <Route
                         path="/"
                         exact
-                        render={() => <Home handleLogIn={this.handleLogIn} />}
+                        render={() => (
+                            <Home
+                                handleLogIn={this.handleLogIn}
+                                isLogged={this.state.isLogged}
+                            />
+                        )}
                     />
                     <ProtectRoute
                         path="/my-stocks"
