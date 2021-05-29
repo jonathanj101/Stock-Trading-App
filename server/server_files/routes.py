@@ -247,12 +247,12 @@ def login():
     if user and bcrypt.check_password_hash(user.password, user_details['password']):
         response = {
             "user_id": user.id,
-            "success_msg": "You are logged in successfully! You will be redirect to your account shortly!",
+            "success_msg": "You are logged in successfully! You will be redirected to your account shortly!",
             "username": user.username
         }
         return jsonify(response, 200)
     else:
-        return jsonify("hmmm.. We don't recognize that username or password. Please try again!", 500)
+        return jsonify("We don't recognize that username or password. Please try again!", 500)
 
 
 @app.route('/user', methods=["POST"])
@@ -260,9 +260,6 @@ def user():
     user_detail = request.get_json()
 
     user = Users.query.filter_by(id=user_detail['id']).first()
-    print(user_detail)
-    print(user)
-    print(user.username)
 
     user_obj = {
         "username": user.username,
