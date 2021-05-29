@@ -51,13 +51,16 @@ const SummaryComponent = () => {
     }, [counter]);
 
     useEffect(() => {
-        const fetchMultipleStocks = async () => {
-            let multipleStocksData = await axios.get('/multiple_stocks');
-            handleRequest(multipleStocksData);
-        };
-
-        fetchMultipleStocks();
-    }, []);
+        if (stocksList.length === 0) {
+            const fetchMultipleStocks = async () => {
+                let multipleStocksData = await axios.get('/multiple_stocks');
+                handleRequest(multipleStocksData);
+            };
+            fetchMultipleStocks();
+        } else {
+            return;
+        }
+    }, [stocksList]);
 
     const handleRequest = async (request) => {
         try {
