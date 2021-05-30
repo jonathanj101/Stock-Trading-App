@@ -49,13 +49,20 @@ const AccountDropDown = ({
                 <Dropdown.Toggle className="fas fa-user" as={NavLink}>
                     {username}
                 </Dropdown.Toggle>
-                <Dropdown.Menu style={styles.dropdownMenu}>
-                    <div className="d-flex flex-wrap flex-column mt-5 mb-5 ">
+                <Dropdown.Menu
+                    id="username-dropdown"
+                    style={styles.dropdownMenu}
+                >
+                    <div
+                        id="username-dropdown-items"
+                        className="d-flex flex-wrap flex-column mt-5 mb-5 "
+                    >
                         <span>${userHoldings}</span>
                         <span>Buying power</span>
                     </div>
                     <Dropdown.Divider />
                     <Button
+                        id="log-out-btn"
                         style={styles.button}
                         onClick={() => handleLogOut()}
                     >
