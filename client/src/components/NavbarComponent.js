@@ -73,7 +73,10 @@ const NavbarComponent = ({
                             )}
                         </NavLink>
                         {isUserAuthenticated ? (
-                            <Nav.Item className="d-flex align-items-center">
+                            <Nav.Item
+                                id="username-toggle-nav-item"
+                                className="d-flex align-items-center"
+                            >
                                 <AccountDropDown
                                     username={username}
                                     handleLogOutOnMain={handleLogOutOnMain}
