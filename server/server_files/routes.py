@@ -15,13 +15,19 @@ base_url = "https://cloud.iexapis.com"
 
 @app.route("/crypto_search/<string:stock>", methods=["GET"])
 def crypto_search(stock):
-    search_url = "{}/stable/crypto/{}/quote?token={}".format(
-        base_url, stock, api_key)
+    # search_url = "{}/stable/crypto/{}/quote?token={}".format(
+    #     base_url, stock, api_key)
+    search_url = "{}/stable/ref-data/crypto/symbols?token={}".format(
+        base_url, api_key)
     request = requests.get(search_url)
     response = request.json()
+    loop_data = {}
+    for data in response:
+        print(data)
+
     print(request.text)
 
-    return response
+    return jsonify({"response": response})
 
 
 @app.route("/multiple_stocks", methods=["GET"])
