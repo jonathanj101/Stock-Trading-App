@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Button, Table, Fade } from 'react-bootstrap';
+import { Card, Button, Table } from 'react-bootstrap';
 import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
 import SellStockModal from '../components/SellStockModal';
@@ -19,7 +19,6 @@ const SummaryComponent = () => {
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
     const [difInCost, setDifInCost] = useState('');
-    const [isFade, setIsFade] = useState(false);
     const [counter, setCounter] = useState(false);
 
     useEffect(() => {
@@ -34,7 +33,6 @@ const SummaryComponent = () => {
             fetchUserInvestingList().then((data) => {
                 setInvestingList(data.data.stock);
                 setCounter(false);
-                setIsFade(true);
             });
             const fetchUser = async () => {
                 const response = await axios.post('/user', {
@@ -253,47 +251,43 @@ const SummaryComponent = () => {
 
     const investingTable = investingList.map((stock, num) => {
         return (
-            <Fade in={isFade} appear={isFade} timeout={300}>
-                <Card style={{ width: '20rem' }} key={num}>
-                    <Card.Body>
-                        <Card.Title
-                            style={{ display: 'flex', flexWrap: 'wrap' }}
-                        >
-                            <span style={{ width: '100%' }}>
-                                {stock.companyName}
-                            </span>
-                            <span>({stock.symbol})</span>
-                        </Card.Title>
-                        <Card.Subtitle
-                            className="mb-2 text-muted"
-                            stlye={{ height: '2rem' }}
-                        >
-                            (${stock.userEstimatedHolding})
-                        </Card.Subtitle>
-                        <Card.Subtitle
-                            className="mb-2 text-muted"
-                            stlye={{ height: '2rem' }}
-                        >
-                            (${stock.differenceInCost}) Today
-                        </Card.Subtitle>
-                        <Card.Subtitle
-                            className="mb-5 text-muted"
-                            stlye={{ height: '2rem' }}
-                        >
-                            (Total Shares: {stock.userEstimatedShares})
-                        </Card.Subtitle>
-                        <Button
-                            onClick={(e) => {
-                                handleShowSellStockModal();
-                                handleSellStockInfoOnSelect(e);
-                            }}
-                            block
-                        >
-                            sell
-                        </Button>
-                    </Card.Body>
-                </Card>
-            </Fade>
+            <Card style={{ width: '20rem' }} key={num}>
+                <Card.Body>
+                    <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <span style={{ width: '100%' }}>
+                            {stock.companyName}
+                        </span>
+                        <span>({stock.symbol})</span>
+                    </Card.Title>
+                    <Card.Subtitle
+                        className="mb-2 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (${stock.userEstimatedHolding})
+                    </Card.Subtitle>
+                    <Card.Subtitle
+                        className="mb-2 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (${stock.differenceInCost}) Today
+                    </Card.Subtitle>
+                    <Card.Subtitle
+                        className="mb-5 text-muted"
+                        stlye={{ height: '2rem' }}
+                    >
+                        (Total Shares: {stock.userEstimatedShares})
+                    </Card.Subtitle>
+                    <Button
+                        onClick={(e) => {
+                            handleShowSellStockModal();
+                            handleSellStockInfoOnSelect(e);
+                        }}
+                        block
+                    >
+                        sell
+                    </Button>
+                </Card.Body>
+            </Card>
         );
     });
 
