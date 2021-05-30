@@ -99,6 +99,7 @@ class Main extends Component {
     handleLogOut = () => {
         this.setState({
             username: '',
+            isLogged: false,
         });
     };
 
