@@ -46,7 +46,7 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
             <Form.Group className=" w-75 mx-auto mt-1">
                 <InputGroup>
                     <Form.Control
-                        className=""
+                        id="search-component"
                         style={styles.formControl}
                         required
                         type="text"
@@ -57,22 +57,23 @@ const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
                             getTextInput(e);
                         }}
                     />
-                    <InputGroup.Prepend>
+                    <InputGroup.Prepend id="icon-search">
                         <InputGroup.Text style={styles.inputGroupText}>
                             <i className="fas fa-search"></i>
                         </InputGroup.Text>
                     </InputGroup.Prepend>
                 </InputGroup>
                 {isStockSearched ? (
-                    <ListGroup>
+                    <ListGroup id="search-item-container">
                         <ListGroup.Item
+                            id="search-item-div"
                             onClick={(e) => onSelect(e)}
                             style={styles.ListGroupItem}
                             className=""
                             action
                             variant=""
                         >
-                            <div style={styles.spanContainer}>
+                            <div id="search-item" style={styles.spanContainer}>
                                 <span style={styles.stockSymbolSpan}>
                                     {stockSymbol}
                                 </span>
