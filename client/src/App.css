@@ -94,29 +94,170 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width:1700px) {
   div > form#log-in-form {
-    /* background-color:red; */
-    padding: 25px !important;
+    padding: 50px !important;
+  }
+  form#log-in-form > .form-text  {
+    margin: 50px auto !important;
+    font-size: 1.5rem !important;
+  }
+  div > form#log-in-form > .form-group > input {
+    border-radius: 0 !important;
+    font-size: 1.5rem !important;
+  }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 50px !important;
+    padding: .5rem;
+  }
+  div > form#log-in-form > .form-group {
+    margin-bottom: 50px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 3rem !important;
+    font-size:1rem !important;
   }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width:1600px) {
+  div > form#log-in-form {
+    padding: 20px !important;
+  }
   form#log-in-form > .form-text  {
-    margin: 15px auto !important;
-    font-size: 1.50rem !important;
+    margin: 25px auto !important;
+    font-size: 1.25rem !important;
   }
-
-  div > form#log-in-form > #log-in-btn {
-    font-size: 1rem !important;
-  }
-
   div > form#log-in-form > .form-group > input {
     border-radius: 0 !important;
     font-size: 1rem !important;
   }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 25px !important;
+    padding: .25rem;
+  }
+  div > form#log-in-form > .form-group {
+    margin-bottom: 40px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 3rem !important;
+    font-size:1rem !important;
+  }
+}
+@media screen and (max-width:1400px) {
+  div > form#log-in-form {
+    padding: 20px !important;
+  }
+  form#log-in-form > .form-text  {
+    margin: 25px auto !important;
+    font-size: 1.25rem !important;
+  }
+  div > form#log-in-form > .form-group > input {
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+  }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 25px !important;
+    padding: .25rem;
+  }
+  div > form#log-in-form > .form-group {
+    margin-bottom: 40px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 3rem !important;
+    font-size:1rem !important;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+  div > form#log-in-form {
+    padding: 10px !important;
+  }
+  form#log-in-form > .form-text  {
+    margin: 20px auto !important;
+    font-size: 1.25rem !important;
+
+  }
+  div > form#log-in-form > .form-group > input {
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+  }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 10px !important;
+    font-size: 1rem !important;
+    padding: .25rem;
+  }
+  div > form#log-in-form > .form-group {
+    font-size: 1rem !important;
+    margin-bottom: 50px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 15px !important;
+    font-size:.75rem;
+  }
+}
+@media screen and (max-width: 1000px) {
+  form#log-in-form > .form-text  {
+    margin: 20px auto !important;
+    font-size: 1.25rem !important;
+
+  }
+  div > form#log-in-form > .form-group > input {
+    border-radius: 0 !important;
+    font-size: 1.1rem !important;
+  }
+  div > form#log-in-form {
+    padding: 20px !important
+  }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 20px !important;
+    font-size: 1.1rem !important;
+    padding: .5rem;
+  }
+  div > form#log-in-form > .form-group {
+    font-size: 1rem !important;
+    margin-bottom: 25px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 5px !important;
+    font-size:.75rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  form#log-in-form > .form-text  {
+    margin: 10px auto !important;
+    font-size: 1.25rem !important;
+
+  }
+  div > form#log-in-form > .form-group > input {
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+  }
+  div > form#log-in-form {
+    padding: 10px !important
+  }
+  div > form#log-in-form > #log-in-btn.btn {
+    margin-top: 10px !important;
+    font-size: 1rem !important;
+    padding: .25rem;
+  }
+  div > form#log-in-form > .form-group {
+    font-size: 1rem !important;
+    margin-bottom: 25px !important;
+  }
+  form#log-in-form > div.mt-5 {
+    margin-top: 5px !important;
+    font-size:.75rem;
+  }
 }
 
 @media screen and (max-width:600px) {
+  #app-description-container > #app-title {
+    font-size: 1rem;
+  }
+  #app-description-container > #app-description {
+    font-size: .75rem;
+  }
   #sell-modal > .modal-content {
     width: 75%;
     height:50%;
@@ -128,46 +269,79 @@ input[type=number] {
   #sell-modal > .modal-content > form > .modal-body {
     width:100%;
   }
-
   #sell-modal > .modal-content > form > .modal-body > #stock-info-div > span {
     font-size: 1rem;
   }
-
   #sell-modal > .modal-content >  form > .modal-body > #stock-info-2div > div > div.d-flex > h4{
     font-size: 1rem;
   }
   div > form#log-in-form {
     padding: 10px !important
   }
-  div > form#log-in-form > #log-in-btn {
+  div > form#log-in-form > #log-in-btn.btn {
     margin-top: 10px !important;
     font-size: .5rem !important;
+    padding: .250rem;
   }
   div > form#log-in-form > .form-group {
     background-color:blue;
-    /* padding: 10px !important;  */
     font-size: 0.5rem !important;
     margin-bottom: 25px !important;
+  }
+  div > form#log-in-form > .form-group > .form-control {
+    background-clip:inherit;
   }
   div > form#log-in-form > .form-group > input {
     font-size: 0.5rem !important;
   }
   form#log-in-form > .form-text  {
     margin: 15px auto !important;
-    font-size: .75rem !important;
+    font-size: 1rem !important;
   }
   form#log-in-form > div.mt-5 {
-    margin-top: 5px !important;
-    font-size:.25rem;
-  }
-  form#log-in-form > div.mt-5 > a {
-    margin-left: 0 !important;
+    font-size: .5rem !important;
   }
   #alert_message_container {
     padding: .25rem .75rem !important;
   }
   #alert_message {
     font-size: 10px !important;
+  }
+  #account-navbar-dropdown {
+    width:100% !important;
+  }
+  .navbar-nav.nav-pills > a.nav-link {
+    font-size: 1rem !important;
+  }
+  #username-toggle-nav-item {
+    font-size: 1rem !important;
+  }
+  #username-dropdown > #username-dropdown-items {
+    font-size: 1rem !important;
+  }
+  #username-dropdown >  #log-out-btn {
+    padding: .40rem;
+    margin: .40rem;
+    font-size: .75rem !important;
+  }
+  #search-component {
+    font-size: 1rem !important;
+  }
+  #icon-search > span{
+    font-size: 1rem !important;
+  }
+  #search-item-container > #search-item-div > #search-item {
+    font-size: 1rem !important;
+  }
+  #investing-table-title, #stock-table-title {
+    font-size: 1.5rem !important;
+  }
+
+  table > tbody > tr  {
+    font-size: 1rem !important;
+  }
+  table > thead > tr > th > h3 {
+    font-size: 1.25rem !important;
   }
 }
 
