@@ -33,10 +33,11 @@ const LogInComponent = ({ handleLogIn }) => {
         setShowAlertMsg(false);
     };
 
-    const redirectToAccountPage = () => {
+    const redirectToAccountPage = (usersId, responseDataUsername) => {
         setTimeout(() => {
-            history.push('/my-stocks');
             clearForm();
+            handleLogIn(usersId, responseDataUsername);
+            history.push('/my-stocks');
         }, 5000);
     };
 
@@ -56,9 +57,8 @@ const LogInComponent = ({ handleLogIn }) => {
         } else {
             const successMesg = respData.data[0].success_msg;
             setSuccessMsg(successMesg);
-            redirectToAccountPage();
+            redirectToAccountPage(userId, respDataUsername);
             localStorage.setItem('userId', JSON.stringify(userId));
-            handleLogIn(userId, respDataUsername);
         }
     };
 
