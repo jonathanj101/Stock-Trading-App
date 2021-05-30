@@ -383,7 +383,11 @@ const SummaryComponent = () => {
             />
 
             <div className=" col-sm-12">
-                <h1 className="w-100 mx-auto" style={styles.investingTitle}>
+                <h1
+                    id="investing-table-title"
+                    className="w-100 mx-auto"
+                    style={styles.investingTitle}
+                >
                     INVESTING
                 </h1>
                 <div
@@ -410,7 +414,9 @@ const SummaryComponent = () => {
                         bordered
                         hover
                     >
-                        <caption style={styles.caption}>LIST</caption>
+                        <caption id="stock-table-title" style={styles.caption}>
+                            LIST
+                        </caption>
                         <thead id="t-head">
                             <tr id="t-row">
                                 <th>
