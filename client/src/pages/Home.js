@@ -8,7 +8,11 @@ import LogInComponent from '../components/LogInComponent';
 const Home = ({ handleLogIn, isLogged }) => {
     return (
         <div className="w-100 h-100 mb-5">
-            <div id="app-description-container" className="text-center w-100">
+            <div
+                id="app-description-container"
+                className="text-center w-100"
+                style={{ fontSize: '1.5rem' }}
+            >
                 <span id="app-title">Fantasy Trading Stock App</span>
                 <br />
                 <span id="app-description">
