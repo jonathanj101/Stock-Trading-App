@@ -15,22 +15,35 @@ base_url = "https://cloud.iexapis.com"
 
 @app.route("/crypto_search/<string:stock>", methods=["GET"])
 def crypto_search(stock):
-    # search_url = "{}/stable/crypto/{}/quote?token={}".format(
-    #     base_url, stock, api_key)
-    search_url = "{}/stable/ref-data/crypto/symbols?token={}".format(
-        base_url, api_key)
-    request = requests.get(search_url)
-    response = request.json()
-    loop_data = {}
-    for data in response:
-        print(data)
+    STOCK_TO_USD = stock + "usd"
+    SEARCH_CRYPTO_QUOTE_URL = "{}/stable/crypto/{}/quote?token={}".format(
+        base_url, STOCK_TO_USD, api_key)
+    # SEARCH_CRYPTO_QUOTE_URL = "{}/stable/crypto/{}/quote?token={}".format(
+    #     base_url, STOCK_TO_USD, api_key)
+    request_crypto_quote_url = requests.get(SEARCH_CRYPTO_QUOTE_URL)
+    response_crypto_quote_url = request_crypto_quote_url.json()
+    if response_crypto_quote_url == json.decoder.JSONDecodeError:
+        return "True"
+    # SEARCH_CRYPTO_URL = "{}/stable/ref-data/crypto/symbols?token={}".format(
+    #     base_url, api_key)
+    # request_crypto_url = requests.get(SEARCH_CRYPTO_URL)
+    # response_crypto_url = request_crypto_url.json()
+    # CRYPTO_LIST = []
+    # for data in response_crypto_url:
+    #     print(response_crypto_quote_url)
+    #     if stock[:3].upper() == data["symbol"][:3]:
+    #         crypto_data = {
+    #             "company_name": data["name"],
+    #             "symbol": data["symbol"],
+    #             "cost": response_crypto_quote_url["latestPrice"],
+    #         }
+    #         CRYPTO_LIST.append(crypto_data)
+    # LIMIT_CRYPTO_LIST = [i for i in CRYPTO_LIST[:3]]
+    # return jsonify({"response": LIMIT_CRYPTO_LIST})
+    return jsonify({"response": response_crypto_quote_url})
 
-    print(request.text)
 
-    return jsonify({"response": response})
-
-
-@app.route("/multiple_stocks", methods=["GET"])
+@ app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     tesla = "tsla"
     apple = "aapl"
@@ -100,7 +113,7 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
-@app.route("/search_stock/<string:stock>", methods=['GET'])
+@ app.route("/search_stock/<string:stock>", methods=['GET'])
 def search_stock(stock):
     search_url = "{}/stable/stock/{}/quote?token={}".format(
         base_url, stock, api_key)
@@ -115,7 +128,7 @@ def search_stock(stock):
     return jsonify({"data": stock_data})
 
 
-@app.route('/add_stock', methods=['POST'])
+@ app.route('/add_stock', methods=['POST'])
 def add_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
@@ -144,7 +157,7 @@ def add_stock():
                                stock_symbol=user_detail['stockSymbol'], stock_cost=user_detail['stockCost'],
                                user_estimated_shares=user_detail['estimatedShares'], user_estimated_cost=user_detail['estimatedCost'], user_id=user_detail['id'])
             transaction = Transactions(company_name=user_detail['company_name'], user_estimated_cost=user_detail[
-                                       'estimatedCost'], user_holdings=user_holdings, user_id=user_detail['id'])
+                'estimatedCost'], user_holdings=user_holdings, user_id=user_detail['id'])
             db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
@@ -153,7 +166,7 @@ def add_stock():
         return jsonify('Something went wrong on our end! Please try again later.', 500)
 
 
-@app.route('/sell_stock', methods=["POST"])
+@ app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
@@ -201,7 +214,7 @@ def sell_stock():
         return 'Looks like there is an error on our end!', 500
 
 
-@app.route('/user_stock', methods=['POST'])
+@ app.route('/user_stock', methods=['POST'])
 def user_stock():
     user_detail = request.get_json()
     user = Users.query.filter_by(id=user_detail['id']).first()
@@ -237,7 +250,7 @@ def user_stock():
         return jsonify('User not found in our record! You will be redirected to the home page.', 500)
 
 
-@app.route('/signup', methods=["POST"])
+@ app.route('/signup', methods=["POST"])
 def signup():
     user_details = request.get_json()
     filter_user_model_by_username = Users.query.filter_by(
@@ -255,7 +268,7 @@ def signup():
         return jsonify("The username has already been used! Please choose another username!", 500)
 
 
-@app.route('/login', methods=["POST"])
+@ app.route('/login', methods=["POST"])
 def login():
     user_details = request.get_json()
 
@@ -272,7 +285,7 @@ def login():
         return jsonify("We don't recognize that username or password. Please try again!", 500)
 
 
-@app.route('/user', methods=["POST"])
+@ app.route('/user', methods=["POST"])
 def user():
     user_detail = request.get_json()
 
