@@ -13,36 +13,6 @@ api_key = os.environ.get('API_KEY')
 base_url = "https://cloud.iexapis.com"
 
 
-@app.route("/crypto_search/<string:stock>", methods=["GET"])
-def crypto_search(stock):
-    STOCK_TO_USD = stock + "usd"
-    SEARCH_CRYPTO_QUOTE_URL = "{}/stable/crypto/{}/quote?token={}".format(
-        base_url, STOCK_TO_USD, api_key)
-    # SEARCH_CRYPTO_QUOTE_URL = "{}/stable/crypto/{}/quote?token={}".format(
-    #     base_url, STOCK_TO_USD, api_key)
-    request_crypto_quote_url = requests.get(SEARCH_CRYPTO_QUOTE_URL)
-    response_crypto_quote_url = request_crypto_quote_url.json()
-    if response_crypto_quote_url == json.decoder.JSONDecodeError:
-        return "True"
-    # SEARCH_CRYPTO_URL = "{}/stable/ref-data/crypto/symbols?token={}".format(
-    #     base_url, api_key)
-    # request_crypto_url = requests.get(SEARCH_CRYPTO_URL)
-    # response_crypto_url = request_crypto_url.json()
-    # CRYPTO_LIST = []
-    # for data in response_crypto_url:
-    #     print(response_crypto_quote_url)
-    #     if stock[:3].upper() == data["symbol"][:3]:
-    #         crypto_data = {
-    #             "company_name": data["name"],
-    #             "symbol": data["symbol"],
-    #             "cost": response_crypto_quote_url["latestPrice"],
-    #         }
-    #         CRYPTO_LIST.append(crypto_data)
-    # LIMIT_CRYPTO_LIST = [i for i in CRYPTO_LIST[:3]]
-    # return jsonify({"response": LIMIT_CRYPTO_LIST})
-    return jsonify({"response": response_crypto_quote_url})
-
-
 @ app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     tesla = "tsla"
