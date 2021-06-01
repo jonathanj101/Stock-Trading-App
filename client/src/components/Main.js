@@ -35,11 +35,12 @@ class Main extends Component {
                 .then((data) => {
                     return data.data;
                 });
-
+            console.log(this.state.isLogged);
             this.setState({
                 userId: localStorageUserId,
                 username: response.username,
                 userHoldings: response.user_holdings,
+                isLogged: true,
             });
         } else {
             return;
