@@ -77,16 +77,21 @@ const SellStockModal = ({
         const parsedEstimatedCost = parseFloat(estimatedCost);
         const totalProfit = parseFloat(difInCost) + parsedEstimatedCost;
         const totalSelling = totalProfit - value;
-        if (Number.isNaN(value) !== true) {
-            setTotalSelling(value);
-            setUserSellingAmount(value);
-            setTotalOwned(totalSelling);
-            setTotalProfit(totalProfit);
-        } else {
+        if (value > totalProfit) {
             setTotalOwned('0.00');
-            setTotalSelling('0.00');
-            setTotalProfit(parseFloat(difInCost) + parsedEstimatedCost);
-            return;
+            setTotalSelling(totalProfit);
+        } else {
+            if (Number.isNaN(value) !== true) {
+                setTotalSelling(value);
+                setUserSellingAmount(value);
+                setTotalOwned(totalSelling);
+                setTotalProfit(totalProfit);
+            } else {
+                setTotalOwned('0.00');
+                setTotalSelling('0.00');
+                setTotalProfit(parseFloat(difInCost) + parsedEstimatedCost);
+                return;
+            }
         }
     };
 
