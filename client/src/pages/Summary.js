@@ -18,7 +18,7 @@ const SummaryComponent = () => {
     const [isStockQuantity, setIsStockQuantity] = useState(true);
     const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
-    const [difInCost, setDifInCost] = useState('');
+    const [differenceInCost, setDifferenceInCost] = useState('');
     const [counter, setCounter] = useState(false);
 
     useEffect(() => {
@@ -246,7 +246,7 @@ const SummaryComponent = () => {
         setStockSymbol(selectedStockSymbol);
         setEstimatedCost(userEstimatedCost);
         setEstimatedShares(userEstimatedShares);
-        setDifInCost(differenceInCost);
+        setDifferenceInCost(differenceInCost);
     };
 
     const investingTable = investingList.map((stock, num) => {
@@ -308,7 +308,6 @@ const SummaryComponent = () => {
                     <span
                         id="stock-title"
                         style={{
-                            // fontSize: '1.50rem',
                             fontWeight: 'bold',
                         }}
                     >
@@ -320,7 +319,6 @@ const SummaryComponent = () => {
                     <span
                         id="stock-cost"
                         style={{
-                            // fontSize: '1.50rem',
                             fontWeight: ' bold',
                         }}
                     >
@@ -371,7 +369,7 @@ const SummaryComponent = () => {
                 stockSymbol={stockSymbol}
                 estimatedCost={estimatedCost}
                 estimatedShares={estimatedShares}
-                difInCost={difInCost}
+                differenceInCost={differenceInCost}
                 userHoldings={userBuyingPower}
                 setCounter={setCounter}
             />
