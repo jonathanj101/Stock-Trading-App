@@ -8,8 +8,8 @@ const LogInComponent = ({ handleLogIn }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validate, setValidate] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [showAlertMsgComponent, setShowAlertMsg] = useState(false);
 
     let history = useHistory();
@@ -21,6 +21,7 @@ const LogInComponent = ({ handleLogIn }) => {
             e.stopPropagation();
             setValidate(true);
         } else {
+            // console.log('response');
             handleLogInRequest(username, password);
         }
     };
@@ -28,8 +29,8 @@ const LogInComponent = ({ handleLogIn }) => {
     const clearForm = () => {
         setUsername('');
         setPassword('');
-        setErrMsg('');
-        setSuccessMsg('');
+        setErrorMessage('');
+        setSuccessMessage('');
         setShowAlertMsg(false);
     };
 
@@ -38,26 +39,24 @@ const LogInComponent = ({ handleLogIn }) => {
             clearForm();
             handleLogIn(usersId, responseDataUsername);
             history.push('/my-stocks');
-        }, 5000);
+        }, 2500);
     };
 
     const handleLogInRequest = async (username, password) => {
-        const respData = await axios.post('/login', {
+        const response = await axios.post('/login', {
             username: username,
             password: password,
         });
-        const userId = respData.data[0].user_id;
-        const respStatusCode = respData.data[1];
-        const respDataUsername = respData.data[0].username;
-        console.log(respData.data);
+        const message = response.data[0];
+        const responseStatusCode = response.data[1];
+        const userId = response.data[2];
+        const responseUsername = response.data[3];
         setShowAlertMsg(true);
-        if (respStatusCode >= 500) {
-            const respErrMsg = respData.data[0];
-            setErrMsg(respErrMsg);
+        if (responseStatusCode >= 500) {
+            setErrorMessage(message);
         } else {
-            const successMesg = respData.data[0].success_msg;
-            setSuccessMsg(successMesg);
-            redirectToAccountPage(userId, respDataUsername);
+            setSuccessMessage(message);
+            redirectToAccountPage(userId, responseUsername);
             localStorage.setItem('userId', JSON.stringify(userId));
         }
     };
@@ -75,8 +74,8 @@ const LogInComponent = ({ handleLogIn }) => {
                 style={styles.formStyle}
             >
                 <AlertMsgComponent
-                    errMsg={errMsg}
-                    successMsg={successMsg}
+                    errMsg={errorMessage}
+                    successMsg={successMessage}
                     show={showAlertMsgComponent}
                 />
                 <Form.Text style={styles.formTextStyles}>
