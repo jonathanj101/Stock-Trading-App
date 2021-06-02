@@ -9,7 +9,7 @@ const AccountDropDown = ({
     setShowLogOutModal,
     setIsUserAuthenticated,
 }) => {
-    const [userHoldings, setUserHoldings] = useState();
+    const [userHoldings, setUserHoldings] = useState('');
     let history = useHistory();
 
     const updateUserHoldings = async () => {
@@ -21,6 +21,7 @@ const AccountDropDown = ({
             return response;
         };
         fetchUserHoldings().then((data) => {
+            console.log(data.data.user_holdings);
             setUserHoldings(data.data.user_holdings);
         });
     };
