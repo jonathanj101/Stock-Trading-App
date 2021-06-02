@@ -11,7 +11,7 @@ const SellStockModal = ({
     estimatedShares,
     userHoldings,
     setCounter,
-    difInCost,
+    differenceInCost,
 }) => {
     const [userSellingAmount, setUserSellingAmount] = useState('');
     const [userInput, setUserInput] = useState('');
@@ -75,7 +75,7 @@ const SellStockModal = ({
 
     const calculateAmountSellingOnInputChange = (value) => {
         const parsedEstimatedCost = parseFloat(estimatedCost);
-        const totalProfit = parseFloat(difInCost) + parsedEstimatedCost;
+        const totalProfit = parseFloat(differenceInCost) + parsedEstimatedCost;
         const totalSelling = totalProfit - value;
         if (value > totalProfit) {
             setTotalOwned('0.00');
@@ -89,7 +89,9 @@ const SellStockModal = ({
             } else {
                 setTotalOwned('0.00');
                 setTotalSelling('0.00');
-                setTotalProfit(parseFloat(difInCost) + parsedEstimatedCost);
+                setTotalProfit(
+                    parseFloat(differenceInCost) + parsedEstimatedCost,
+                );
                 return;
             }
         }
@@ -97,7 +99,7 @@ const SellStockModal = ({
 
     const sellAll = () => {
         const parsedEstimatedCost = parseFloat(estimatedCost);
-        const parsedDifInCost = parseFloat(difInCost);
+        const parsedDifInCost = parseFloat(differenceInCost);
         const totalProfit = parsedDifInCost + parsedEstimatedCost;
         const totalOwned = totalProfit - totalProfit;
         setTotalSelling(totalProfit);
@@ -136,7 +138,7 @@ const SellStockModal = ({
                                 {stockSymbol} = ${estimatedCost}
                             </span>
                             <span>Shares = {estimatedShares}</span>
-                            <span>Profit = {difInCost}</span>
+                            <span>Profit = {differenceInCost}</span>
                             <span>Total = {totalProfit} </span>
                         </div>
                         <div className="w-100 mx-auto" id="stock-info-2div">
@@ -203,7 +205,6 @@ var styles = {
         display: 'flex',
         flexDirection: 'column',
         margin: '20px auto 20px auto',
-        // fontSize: '1.5rem',
         fontWeight: 'bold',
         textAlign: 'center',
         color: 'black',
