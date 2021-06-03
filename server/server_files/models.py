@@ -1,19 +1,12 @@
 from flask import Blueprint
-from server_files import db, login_manager
+from server_files import db
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 
-main = Blueprint('main', __name__)
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
-class Users(db.Model, UserMixin):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
