@@ -12,8 +12,8 @@ const FormComponent = ({ handleRegister }) => {
     const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
     const [showAlertMsgComponent, setShow] = useState(false);
-    const [errMsg, setErrMsg] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     let history = useHistory();
 
     const handleSubmit = (event) => {
@@ -58,7 +58,7 @@ const FormComponent = ({ handleRegister }) => {
     ) => {
         try {
             debugger;
-            const sendRegistrantData = await axios.post('/signup', {
+            const response = await axios.post('/signup', {
                 first_name: firstName,
                 last_name: lastName,
                 password: password,
@@ -67,16 +67,15 @@ const FormComponent = ({ handleRegister }) => {
                 userHoldings: 100000,
             });
             setShow(true);
-            const respMsg = sendRegistrantData.data[0];
-            const respStatusCode = sendRegistrantData.data[1];
-            if (respStatusCode >= 500) {
-                setErrMsg(respMsg);
-                console.log(errMsg);
+            const message = response.data[0];
+            const statusCode = response.data[1];
+            const responseUserId = response.data[2];
+            if (statusCode >= 500) {
+                setErrorMessage(message);
             } else {
-                const userId = sendRegistrantData.data[2];
-                localStorage.setItem('userId', JSON.stringify(userId));
-                setSuccessMsg(respMsg);
-                redirectToAccountPage(userId);
+                localStorage.setItem('userId', JSON.stringify(responseUserId));
+                setSuccessMessage(message);
+                redirectToAccountPage(responseUserId);
             }
         } catch (err) {
             console.log(err);
@@ -88,8 +87,8 @@ const FormComponent = ({ handleRegister }) => {
             <AlertMsgComponent
                 setShow={setShow}
                 show={showAlertMsgComponent}
-                errMsg={errMsg}
-                successMsg={successMsg}
+                errMsg={errorMessage}
+                successMsg={successMessage}
             />
             <div style={styles.mainDiv}>
                 <div style={styles.div}>
@@ -102,11 +101,14 @@ const FormComponent = ({ handleRegister }) => {
                         method="POST"
                         style={styles.formContainer}
                     >
-                        <h1 className="text-center">Register</h1>
+                        <h1 className="text-center">Create an account</h1>
                         <Form.Row
-                            style={{
-                                marginTop: '50px',
-                            }}
+                            id="form-row"
+                            // className="d-flex justify-content-center"
+                            // style={{
+                            //     marginTop: '50px',
+                            // }}
+                            // style={styles.formRow}
                         >
                             <Form.Group
                                 as={Col}
@@ -159,7 +161,7 @@ const FormComponent = ({ handleRegister }) => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Form.Row>
-                        <Form.Row>
+                        <Form.Row className="w-100">
                             <Form.Group
                                 as={Col}
                                 sm="12"
@@ -248,17 +250,25 @@ const FormComponent = ({ handleRegister }) => {
 
 var styles = {
     mainDiv: {
-        width: '50%',
+        width: '100%',
         margin: '10% auto',
     },
-    formContainer: {
+    div: {
         width: '100%',
-        margin: 'auto',
-        border: '1px solid black',
-        boxShadow: '5px 10px 18px 10px #888888',
+        height: '100%',
     },
+    formContainer: {
+        backgroundColor: 'Red',
+        width: '50%',
+        margin: 'auto',
+        boxShadow: '6px 32px 144px rgb(179, 178, 178)',
+    },
+    // fromRow: {
+    //     width: '100%',
+    // },
     formGroupStyles: {
         marginTop: '50px',
+        // margin: '50px 5px 0 5px',
     },
     formControlStyles: {
         fontSize: '2rem',
@@ -271,10 +281,5 @@ var styles = {
         fontSize: '2rem',
         margin: '100px auto 0 auto',
     },
-    div: {
-        width: '100%',
-        height: '100%',
-    },
 };
-
 export default FormComponent;
