@@ -85,17 +85,20 @@ def multiple():
 
 @ app.route("/search_stock/<string:stock>", methods=['GET'])
 def search_stock(stock):
-    SEARCH_URL = "{}/stable/stock/{}/quote?token={}".format(
-        BASE_URL, stock, API_KEY)
-    req = requests.get(SEARCH_URL)
-    resp = req.json()
-    stock_data = {
-        "company_name": resp["companyName"],
-        "cost": resp["latestPrice"],
-        "change": resp["change"],
-        "symbol": resp["symbol"]
-    }
-    return jsonify({"data": stock_data})
+    try:
+        SEARCH_URL = "{}/stable/stock/{}/quote?token={}".format(
+            BASE_URL, stock, API_KEY)
+        req = requests.get(SEARCH_URL)
+        resp = req.json()
+        stock_data = {
+            "company_name": resp["companyName"],
+            "cost": resp["latestPrice"],
+            "change": resp["change"],
+            "symbol": resp["symbol"]
+        }
+        return jsonify({"data": stock_data})
+    except ValueError:
+        return "stock symbol/s not found."
 
 
 @ app.route('/add_stock', methods=['POST'])
@@ -145,7 +148,7 @@ def sell_stock():
         stock_symbol=USER_DETAILS['stockSymbol']).first()
 
     SEARCH_STOCK = "{}/stable/stock/{}/quote?token={}".format(
-        base_url, USER_DETAILS['stockSymbol'], API_KEY)
+        BASE_URL, USER_DETAILS['stockSymbol'], API_KEY)
 
     req = requests.get(SEARCH_STOCK)
 
