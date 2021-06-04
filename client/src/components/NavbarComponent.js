@@ -41,7 +41,6 @@ const NavbarComponent = ({
                 className="d-flex justify-content-end"
                 bg="dark"
                 variant="dark"
-                onToggle={() => console.log('navbar collapse clicked')}
             >
                 <Navbar.Brand></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
