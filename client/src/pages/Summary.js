@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Card, Button, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
 import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
 import SellStockModal from '../components/SellStockModal';
+import StockListTableComponent from '../components/StockListTableComponent';
+import InvestingListTable from '../components/InvestingListTable';
 
 const SummaryComponent = () => {
     const [showBuyStockModal, setBuyStockModal] = useState(false);
@@ -16,66 +16,9 @@ const SummaryComponent = () => {
     const [stockSymbol, setStockSymbol] = useState('');
     const [userBuyingPower, setUserBuyingPower] = useState('');
     const [isStockQuantity, setIsStockQuantity] = useState(true);
-    const [stocksList, setStocksList] = useState([]);
     const [investingList, setInvestingList] = useState([]);
     const [differenceInCost, setDifferenceInCost] = useState('');
-    const [counter, setCounter] = useState(false);
-
-    useEffect(() => {
-        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        try {
-            const fetchUserInvestingList = async () => {
-                const response = await axios.post('/user_stock', {
-                    id: localStorageUserId,
-                });
-                return response;
-            };
-            fetchUserInvestingList().then((data) => {
-                setInvestingList(data.data.stock);
-                setCounter(false);
-            });
-            const fetchUser = async () => {
-                const response = await axios.post('/user', {
-                    id: localStorageUserId,
-                });
-                return response;
-            };
-            fetchUser().then((data) => {
-                setUserBuyingPower(data.data.user_holdings);
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    }, [counter]);
-
-    useEffect(() => {
-        if (stocksList.length === 0) {
-            const fetchMultipleStocks = async () => {
-                let multipleStocksData = await axios.get('/multiple_stocks');
-                handleRequest(multipleStocksData);
-            };
-            fetchMultipleStocks();
-        } else {
-            return;
-        }
-    }, [stocksList]);
-
-    const handleRequest = async (request) => {
-        try {
-            const resp = Promise.all(
-                request.data.data.map((stock) => {
-                    return {
-                        stockData: stock,
-                    };
-                }),
-            );
-            resp.then((stockData) => {
-                setStocksList(stockData);
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    const [isInvesting, setIsInvesting] = useState(false);
 
     const handleShowBuyStockModal = () => {
         setBuyStockModal(true);
@@ -116,7 +59,7 @@ const SummaryComponent = () => {
     };
 
     const handleSubmit = () => {
-        setCounter(true);
+        setIsInvesting(true);
         addToInvesting({
             companyName: stockName,
             symbol: stockSymbol,
@@ -209,130 +152,6 @@ const SummaryComponent = () => {
         }
     };
 
-    const handleStockListInfoOnSelect = (e) => {
-        const stockCompanyName =
-            e.currentTarget.childNodes[0].childNodes[0].textContent;
-        const stockCost =
-            e.currentTarget.childNodes[1].childNodes[0].textContent;
-        const stockSymbol =
-            e.currentTarget.childNodes[0].childNodes[1].textContent;
-        setStockName(stockCompanyName);
-        setStockPrice(stockCost);
-        setStockSymbol(stockSymbol);
-    };
-
-    const handleSellStockInfoOnSelect = (e) => {
-        const stockCompanyName =
-            e.currentTarget.parentElement.childNodes[0].childNodes[0]
-                .textContent;
-        const selectedStockSymbol =
-            e.currentTarget.parentElement.childNodes[0].childNodes[1].textContent.slice(
-                1,
-                -1,
-            );
-        const userEstimatedCost =
-            e.currentTarget.parentElement.childNodes[1].childNodes[1]
-                .textContent;
-
-        const userEstimatedShares =
-            e.currentTarget.parentElement.childNodes[3].childNodes[1]
-                .textContent;
-
-        const differenceInCost =
-            e.currentTarget.parentElement.childNodes[2].childNodes[1]
-                .textContent;
-
-        setStockName(stockCompanyName);
-        setStockSymbol(selectedStockSymbol);
-        setEstimatedCost(userEstimatedCost);
-        setEstimatedShares(userEstimatedShares);
-        setDifferenceInCost(differenceInCost);
-    };
-
-    const investingTable = investingList.map((stock, num) => {
-        return (
-            <Card style={{ width: '20rem' }} key={num}>
-                <Card.Body>
-                    <Card.Title style={{ display: 'flex', flexWrap: 'wrap' }}>
-                        <span style={{ width: '100%' }}>
-                            {stock.companyName}
-                        </span>
-                        <span>({stock.symbol})</span>
-                    </Card.Title>
-                    <Card.Subtitle
-                        className="mb-2 text-muted"
-                        stlye={{ height: '2rem' }}
-                    >
-                        (${stock.userEstimatedHolding})
-                    </Card.Subtitle>
-                    <Card.Subtitle
-                        className="mb-2 text-muted"
-                        stlye={{ height: '2rem' }}
-                    >
-                        (${stock.differenceInCost}) Today
-                    </Card.Subtitle>
-                    <Card.Subtitle
-                        className="mb-5 text-muted"
-                        stlye={{ height: '2rem' }}
-                    >
-                        (Total Shares: {stock.userEstimatedShares})
-                    </Card.Subtitle>
-                    <Button
-                        onClick={(e) => {
-                            handleShowSellStockModal();
-                            handleSellStockInfoOnSelect(e);
-                        }}
-                        block
-                    >
-                        sell
-                    </Button>
-                </Card.Body>
-            </Card>
-        );
-    });
-
-    const stocksListTable = stocksList.map((stock, num) => {
-        return (
-            <tr
-                key={num}
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Want to buy? Just click!"
-                className="tableRow"
-                onClick={(e) => {
-                    handleShowBuyStockModal();
-                    handleStockListInfoOnSelect(e);
-                }}
-            >
-                <td className="d-flex flex-column">
-                    <span
-                        id="stock-title"
-                        style={{
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        {stock.stockData.company_name}
-                    </span>
-                    <span id="stock-symbol">{stock.stockData.symbol}</span>
-                </td>
-                <td>
-                    <span
-                        id="stock-cost"
-                        style={{
-                            fontWeight: ' bold',
-                        }}
-                    >
-                        ${stock.stockData.latestPrice}
-                    </span>
-
-                    <span id="stock-cost-change" className="d-flex flex-column">
-                        ${stock.stockData.change}
-                    </span>
-                </td>
-            </tr>
-        );
-    });
-
     return (
         <div id="summary-page">
             <SearchComponent
@@ -371,84 +190,29 @@ const SummaryComponent = () => {
                 estimatedShares={estimatedShares}
                 differenceInCost={differenceInCost}
                 userHoldings={userBuyingPower}
-                setCounter={setCounter}
+                setCounter={setIsInvesting}
             />
-
-            <div className=" col-sm-12">
-                <h1
-                    id="investing-table-title"
-                    className="w-100 mx-auto"
-                    style={styles.investingTitle}
-                >
-                    INVESTING
-                </h1>
-                <div
-                    className="d-flex justify-content-around flex-wrap mb-5"
-                    style={styles.bordersDivs}
-                >
-                    {investingTable.length === 0 ? (
-                        <div>
-                            <h1>
-                                Search for a stock and start investing with
-                                fantasy money
-                            </h1>
-                            <h1>Remember: either go BIG or go HOME!!</h1>
-                        </div>
-                    ) : (
-                        investingTable
-                    )}
-                </div>
-                <div className="w-100" style={{ marginBottom: '55px' }}>
-                    <Table
-                        id="table"
-                        className="text-center mx-auto"
-                        striped
-                        bordered
-                        hover
-                    >
-                        <caption id="stock-table-title" style={styles.caption}>
-                            LIST
-                        </caption>
-                        <thead id="t-head">
-                            <tr id="t-row">
-                                <th>
-                                    <h3>Company Name</h3>
-                                </th>
-                                <th>
-                                    <h3>Cost Difference</h3>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>{stocksListTable}</tbody>
-                        {/* <tbody>ok</tbody> */}
-                    </Table>
-                </div>
+            <InvestingListTable
+                setStockName={setStockName}
+                setStockSymbol={setStockSymbol}
+                setEstimatedCost={setEstimatedCost}
+                setEstimatedShares={setEstimatedShares}
+                setDifferenceInCost={setDifferenceInCost}
+                setUserBuyingPower={setUserBuyingPower}
+                handleShowSellStockModal={handleShowSellStockModal}
+                counter={isInvesting}
+                setCounter={setIsInvesting}
+            />
+            <div className="w-100" style={{ marginBottom: '55px' }}>
+                <StockListTableComponent
+                    handleShowBuyStockModal={handleShowBuyStockModal}
+                    setStockName={setStockName}
+                    setStockPrice={setStockPrice}
+                    setStockSymbol={setStockSymbol}
+                />
             </div>
         </div>
     );
-};
-
-var styles = {
-    caption: {
-        captionSide: 'top',
-        fontSize: '3rem',
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    table_size: {
-        fontSize: '1.5rem',
-    },
-    investingTitle: {
-        captionSide: 'top',
-        fontSize: '3rem',
-        fontWeight: 'bold',
-        color: 'black',
-    },
-
-    bordersDivs: {
-        border: '1px solid black',
-        padding: '50px',
-    },
 };
 
 export default SummaryComponent;
