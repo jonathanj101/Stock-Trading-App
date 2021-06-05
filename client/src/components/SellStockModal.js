@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
+import AlertMsgComponent from './AlertMsgComponent';
 
 const SellStockModal = ({
     showSellStockModal,
@@ -19,6 +20,8 @@ const SellStockModal = ({
     const [totalOwned, setTotalOwned] = useState('0.00');
     const [totalProfit, setTotalProfit] = useState();
     const [validated, setValidated] = useState(false);
+    const [show, setShow] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,23 +32,25 @@ const SellStockModal = ({
         } else {
             onSellHandler();
             setValidated(false);
-            handleClose();
-            setCounter(true);
+            setTimeout(() => {
+                handleClose();
+                setCounter(true);
+            }, 2000);
         }
     };
 
     const onSellHandler = async () => {
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        await axios
-            .post('/sell_stock', {
-                id: localStorageUserId,
-                companyName: stockName,
-                stockSymbol: stockSymbol,
-                estimatedShares: estimatedShares,
-                userSellingAmount: userSellingAmount,
-            })
-
-            .then((data) => console.log(data));
+        const response = await axios.post('/sell_stock', {
+            id: localStorageUserId,
+            companyName: stockName,
+            stockSymbol: stockSymbol,
+            estimatedShares: estimatedShares,
+            userSellingAmount: userSellingAmount,
+        });
+        const message = response.data;
+        setSuccessMessage(message);
+        setShow(true);
     };
 
     const handleClose = () => {
@@ -60,6 +65,7 @@ const SellStockModal = ({
         setTotalOwned('0.00');
         setTotalProfit();
         setValidated(false);
+        setShow(false);
     };
 
     const getTextInput = (e) => {
@@ -132,6 +138,10 @@ const SellStockModal = ({
                             Sell {stockName}
                         </Modal.Title>
                     </Modal.Header>
+                    <AlertMsgComponent
+                        show={show}
+                        successMessage={successMessage}
+                    />
                     <Modal.Body>
                         <div style={styles.stockInfoDiv} id="stock-info-div">
                             <span>
