@@ -124,8 +124,8 @@ def add_stock():
             db.session.commit()
             return "Success! Stock added to db", 200
         else:
-            user_holdings = user.user_holdings - USER_DETAILS['estimatedCost']
-            user.user_holdings = user_holdings
+            user_holdings = USER.user_holdings - USER_DETAILS['estimatedCost']
+            USER.user_holdings = user_holdings
             user_stock = Stock(company_name=USER_DETAILS['company_name'],
                                stock_symbol=USER_DETAILS['stockSymbol'], stock_cost=USER_DETAILS['stockCost'],
                                user_estimated_shares=USER_DETAILS['estimatedShares'], user_estimated_cost=USER_DETAILS['estimatedCost'], user_id=USER_DETAILS['id'])
@@ -164,6 +164,8 @@ def sell_stock():
     user_holdings = USER.user_holdings + \
         difference_in_cost + USER_DETAILS['userSellingAmount']
 
+    MESSAGE = "Success!"
+
     if USER:
         STOCK.user_estimated_cost = STOCK.user_estimated_cost - \
             USER_DETAILS['userSellingAmount']
@@ -176,13 +178,14 @@ def sell_stock():
                 stock_symbol=USER_DETAILS['stockSymbol']).delete()
             db.session.add(transaction)
             db.session.commit()
+            return (MESSAGE, 200)
         else:
             transaction = Transactions(company_name=USER_DETAILS['companyName'], user_estimated_cost=USER_DETAILS[
                 'userSellingAmount'], user_holdings=user_holdings, user_id=USER_DETAILS['id'])
             db.session.add(transaction)
             db.session.commit()
 
-        return ("Success!", 200)
+        return (MESSAGE, 200)
     else:
         return ('Looks like there is an error on our end!', 500)
 
