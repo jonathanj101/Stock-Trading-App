@@ -16,12 +16,13 @@ const LogInComponent = ({ handleLogIn }) => {
 
     const handleSubmit = (e) => {
         const form = e.currentTarget;
+        console.log(password);
         e.preventDefault();
         if (form.checkValidity() === false) {
+            console.log(password);
             e.stopPropagation();
             setValidate(true);
         } else {
-            // console.log('response');
             handleLogInRequest(username, password);
         }
     };
@@ -104,6 +105,7 @@ const LogInComponent = ({ handleLogIn }) => {
                         value={password}
                         type="password"
                         placeholder="Password"
+                        required
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">
