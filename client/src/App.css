@@ -82,6 +82,10 @@ div > form#log-in-form > #log-in-btn:hover {
   border-color: #28a745;
 }
 
+#submit-registration:hover {
+  background-color:#28a745 ;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -193,6 +197,12 @@ input[type=number] {
   form#log-in-form > div.mt-5 {
     margin-top: 15px !important;
     font-size:.75rem;
+  }
+  #registration-form {
+    width:50% !important;
+  }
+  #form-row {
+    width:100% !important;
   }
 }
 @media screen and (max-width: 1000px) {
@@ -346,6 +356,12 @@ input[type=number] {
   #user-info-container {
     font-size: 1.25rem;
   }
+  #registration-form {
+    width:75% !important;
+  }
+  #form-row {
+    width:100% !important;
+  }
 }
 
 @media screen and (max-width:400px) {
@@ -381,6 +397,30 @@ input[type=number] {
   }
   #user-info-container {
     font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  #registration-form {
+    width:100% !important;
+  }
+  #form-row {
+    width:100% !important;
+    display: flex;
+    flex-direction: column !important;
+  }
+  #form-row > .form-group {
+    width:100% !important
+  }
+
+  #form-row-email  {
+    width:100% !important;
+  }
+  #form-row-email > .email.form-group {
+    width:100% !important;
+  }
+  #form-row-email > .email.form-group > .form-control {
+    width:100% !important;
   }
 }
 
