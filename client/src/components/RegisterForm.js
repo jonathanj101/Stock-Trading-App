@@ -88,8 +88,8 @@ const FormComponent = ({ handleRegister }) => {
             <AlertMsgComponent
                 setShow={setShow}
                 show={showAlertMsgComponent}
-                errMsg={errorMessage}
-                successMsg={successMessage}
+                errorMessage={errorMessage}
+                successMessage={successMessage}
             />
             <div style={styles.div}>
                 <Form
