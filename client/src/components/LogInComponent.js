@@ -16,10 +16,8 @@ const LogInComponent = ({ handleLogIn }) => {
 
     const handleSubmit = (e) => {
         const form = e.currentTarget;
-        console.log(password);
         e.preventDefault();
         if (form.checkValidity() === false) {
-            console.log(password);
             e.stopPropagation();
             setValidate(true);
         } else {
@@ -75,8 +73,8 @@ const LogInComponent = ({ handleLogIn }) => {
                 style={styles.formStyle}
             >
                 <AlertMsgComponent
-                    errMsg={errorMessage}
-                    successMsg={successMessage}
+                    errorMessage={errorMessage}
+                    successMessage={successMessage}
                     show={showAlertMsgComponent}
                 />
                 <Form.Text style={styles.formTextStyles}>
