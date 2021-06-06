@@ -42,9 +42,9 @@ const FormComponent = ({ handleRegister }) => {
         setEmail('');
     };
 
-    const redirectToAccountPage = (userId) => {
+    const redirectToAccountPage = (userId, username) => {
         setTimeout(() => {
-            handleRegister(userId);
+            handleRegister(userId, username);
             history.push('/my-stocks');
             clearForm();
         }, 3000);
@@ -70,12 +70,14 @@ const FormComponent = ({ handleRegister }) => {
             const message = response.data[0];
             const statusCode = response.data[1];
             const responseUserId = response.data[2];
+            const responseUsername = response.data[3];
+
             if (statusCode >= 500) {
                 setErrorMessage(message);
             } else {
                 localStorage.setItem('userId', JSON.stringify(responseUserId));
                 setSuccessMessage(message);
-                redirectToAccountPage(responseUserId);
+                redirectToAccountPage(responseUserId, responseUsername);
             }
         } catch (err) {
             console.log(err);
