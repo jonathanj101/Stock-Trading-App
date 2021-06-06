@@ -94,13 +94,14 @@ const StockListTableComponent = ({
     });
 
     return (
-        <div>
+        <div style={styles.mainDiv}>
             <Table
                 id="table"
                 className="text-center mx-auto"
                 striped
                 bordered
                 hover
+                style={styles.table}
             >
                 <caption id="stock-table-title" style={styles.caption}>
                     LIST
@@ -122,11 +123,18 @@ const StockListTableComponent = ({
 };
 
 const styles = {
+    mainDiv: {
+        width: '75%',
+        margin: 'auto',
+    },
     caption: {
         captionSide: 'top',
         fontSize: '3rem',
         fontWeight: 'bold',
         color: 'black',
+    },
+    table: {
+        boxShadow: '6px 32px 72px rgb(179, 178, 178)',
     },
 };
 
