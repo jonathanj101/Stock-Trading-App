@@ -122,7 +122,7 @@ def add_stock():
                                        user_holdings=USER_DETAILS['estimatedCost'], user_id=USER_DETAILS['id'])
             db.session.add(transaction)
             db.session.commit()
-            return "Success! Stock added to db", 200
+            return jsonify("Success! Stock added!"), 200
         else:
             user_holdings = USER.user_holdings - USER_DETAILS['estimatedCost']
             USER.user_holdings = user_holdings
@@ -134,9 +134,9 @@ def add_stock():
             db.session.add(user_stock)
             db.session.add(transaction)
             db.session.commit()
-            return jsonify("Success! Stock in db updated!", 200)
+            return jsonify("Success! Stock updated!"), 200
     else:
-        return jsonify('Something went wrong on our end! Please try again later.', 500)
+        return jsonify('Something went wrong on our end! Please try again later.'), 500
 
 
 @ app.route('/sell_stock', methods=["POST"])
