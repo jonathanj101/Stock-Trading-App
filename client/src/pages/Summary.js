@@ -92,7 +92,6 @@ const SummaryComponent = () => {
     };
 
     const addStock = () => {
-        // debugger;
         setIsInvesting(true);
         addToInvesting({
             companyName: stockName,
@@ -106,7 +105,6 @@ const SummaryComponent = () => {
     };
 
     const addStockToInvestingTable = (stock) => {
-        // debugger;
         setEstimatedCost(stock.estimatedUserSharesCost);
         setEstimatedShares(stock.estimatedUserSharesCost / stock.stockPrice);
         const newStockInfoInvestingList = {
@@ -129,7 +127,6 @@ const SummaryComponent = () => {
     };
 
     const addToInvesting = (stockInfo) => {
-        // debugger;
         addStockToInvestingTable(stockInfo);
     };
 
