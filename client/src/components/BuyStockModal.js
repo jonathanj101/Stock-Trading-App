@@ -28,7 +28,7 @@ const BuyStockModal = ({
     const [successMessage, setSuccessMessage] = useState('');
 
     const onBuyHandler = async () => {
-        debugger;
+        // debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const parsed = parseFloat(stockPrice.slice(1));
         try {
