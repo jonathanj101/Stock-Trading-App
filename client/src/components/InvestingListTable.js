@@ -10,8 +10,8 @@ const InvestingListTable = ({
     setDifferenceInCost,
     setUserBuyingPower,
     handleShowSellStockModal,
-    setCounter,
-    counter,
+    setIsInvesting,
+    isInvesting,
 }) => {
     const [investingList, setInvestingList] = useState([]);
 
@@ -26,7 +26,7 @@ const InvestingListTable = ({
             };
             fetchUserInvestingList().then((data) => {
                 setInvestingList(data.data.stock);
-                setCounter(false);
+                setIsInvesting(false);
             });
             const fetchUser = async () => {
                 const response = await axios.post('/user', {
@@ -40,7 +40,8 @@ const InvestingListTable = ({
         } catch (err) {
             console.log(err);
         }
-    }, [counter]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isInvesting]);
 
     const handleSellStockInfoOnSelect = (e) => {
         const stockCompanyName =
