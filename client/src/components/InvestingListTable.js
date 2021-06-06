@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
+import PaginationComponent from './PaginationComponent';
 
 const InvestingListTable = ({
     setStockName,
@@ -138,6 +139,9 @@ const InvestingListTable = ({
                         investingTable
                     )}
                 </div>
+                <PaginationComponent
+                    investingListLength={investingList.length}
+                />
             </div>
         </div>
     );
