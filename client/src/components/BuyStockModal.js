@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Modal, DropdownButton, Dropdown, Form } from 'react-bootstrap';
+import AlertMsgComponent from './AlertMsgComponent';
 
 const BuyStockModal = ({
     showBuyStockModal,
@@ -23,12 +24,15 @@ const BuyStockModal = ({
 }) => {
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
+    const [showAlertMessage, setShowAlertMessageComponent] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const onBuyHandler = async () => {
+        debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const parsed = parseFloat(stockPrice.slice(1));
         try {
-            await axios.post('/add_stock', {
+            const response = await axios.post('/add_stock', {
                 id: localStorageUserId,
                 company_name: stockName,
                 stockCost: parsed,
@@ -37,6 +41,9 @@ const BuyStockModal = ({
                 estimatedCost: estimatedCost,
                 userHoldings: userHoldings,
             });
+            setShowAlertMessageComponent(true);
+            const message = response.data;
+            setSuccessMessage(message);
         } catch (error) {
             console.log(error);
         }
@@ -50,6 +57,7 @@ const BuyStockModal = ({
     };
 
     const handleClose = () => {
+        setShowAlertMessageComponent(false);
         setShow(false);
         setStockInputValue('$0.00');
         setEstimatedShares('0.00');
@@ -71,6 +79,10 @@ const BuyStockModal = ({
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <AlertMsgComponent
+                        show={showAlertMessage}
+                        successMessage={successMessage}
+                    />
                     <div>
                         <div style={styles.stockInfoDiv}>
                             {stockSymbol} = {stockPrice}
@@ -135,9 +147,11 @@ const BuyStockModal = ({
                         <h4>${userHoldings} available to buy stock </h4>
                         <Button
                             onClick={() => {
-                                handleClose();
                                 handleSubmit();
                                 onBuyHandler();
+                                setTimeout(() => {
+                                    handleClose();
+                                }, 2000);
                             }}
                             block
                         >
