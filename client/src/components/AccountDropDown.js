@@ -21,7 +21,6 @@ const AccountDropDown = ({
             return response;
         };
         fetchUserHoldings().then((data) => {
-            console.log(data.data);
             setUserHoldings(data.data.user_holdings);
         });
     };
