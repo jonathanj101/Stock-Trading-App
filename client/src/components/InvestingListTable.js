@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Card, Button } from 'react-bootstrap';
-import PaginationComponent from './PaginationComponent';
 
 const InvestingListTable = ({
     setStockName,
@@ -9,41 +7,9 @@ const InvestingListTable = ({
     setEstimatedCost,
     setEstimatedShares,
     setDifferenceInCost,
-    setUserBuyingPower,
     handleShowSellStockModal,
-    setIsInvesting,
-    isInvesting,
+    currentStocks,
 }) => {
-    const [investingList, setInvestingList] = useState([]);
-
-    useEffect(() => {
-        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
-        try {
-            const fetchUserInvestingList = async () => {
-                const response = await axios.post('/user_stock', {
-                    id: localStorageUserId,
-                });
-                return response;
-            };
-            fetchUserInvestingList().then((data) => {
-                setInvestingList(data.data.stock);
-                setIsInvesting(false);
-            });
-            const fetchUser = async () => {
-                const response = await axios.post('/user', {
-                    id: localStorageUserId,
-                });
-                return response;
-            };
-            fetchUser().then((data) => {
-                setUserBuyingPower(data.data.user_holdings);
-            });
-        } catch (err) {
-            console.log(err);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isInvesting]);
-
     const handleSellStockInfoOnSelect = (e) => {
         const stockCompanyName =
             e.currentTarget.parentElement.childNodes[0].childNodes[0]
@@ -72,7 +38,7 @@ const InvestingListTable = ({
         setDifferenceInCost(differenceInCost);
     };
 
-    const investingTable = investingList.map((stock, num) => {
+    const investingTable = currentStocks.map((stock, num) => {
         return (
             <Card style={{ width: '20rem' }} key={num}>
                 <Card.Body>
@@ -113,6 +79,7 @@ const InvestingListTable = ({
             </Card>
         );
     });
+
     return (
         <div>
             <div className=" col-sm-12">
@@ -139,9 +106,6 @@ const InvestingListTable = ({
                         investingTable
                     )}
                 </div>
-                <PaginationComponent
-                    investingListLength={investingList.length}
-                />
             </div>
         </div>
     );
