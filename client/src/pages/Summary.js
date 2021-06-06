@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import SearchComponent from '../components/SearchComponent';
 import BuyStockModal from '../components/BuyStockModal';
 import SellStockModal from '../components/SellStockModal';
 import StockListTableComponent from '../components/StockListTableComponent';
 import InvestingListTable from '../components/InvestingListTable';
+import PaginationComponent from '../components/PaginationComponent';
 
 const SummaryComponent = () => {
     const [showBuyStockModal, setBuyStockModal] = useState(false);
@@ -19,6 +21,37 @@ const SummaryComponent = () => {
     const [investingList, setInvestingList] = useState([]);
     const [differenceInCost, setDifferenceInCost] = useState('');
     const [isInvesting, setIsInvesting] = useState(false);
+    const [stocks, setStocks] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [stocksPerPage] = useState(10);
+
+    useEffect(() => {
+        const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
+        try {
+            const fetchUserInvestingList = async () => {
+                const response = await axios.post('/user_stock', {
+                    id: localStorageUserId,
+                });
+                return response;
+            };
+            fetchUserInvestingList().then((data) => {
+                setInvestingList(data.data.stock);
+                setIsInvesting(false);
+            });
+            const fetchUser = async () => {
+                const response = await axios.post('/user', {
+                    id: localStorageUserId,
+                });
+                return response;
+            };
+            fetchUser().then((data) => {
+                setUserBuyingPower(data.data.user_holdings);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isInvesting]);
 
     const handleShowBuyStockModal = () => {
         setBuyStockModal(true);
@@ -87,9 +120,11 @@ const SummaryComponent = () => {
         if (investingList.length >= 1) {
             if (isSameStock(stock) === undefined) {
                 setInvestingList([...investingList, newStockInfoInvestingList]);
+                setStocks([...stocks, newStockInfoInvestingList]);
             }
         } else {
             setInvestingList([...investingList, newStockInfoInvestingList]);
+            setStocks([...stocks, newStockInfoInvestingList]);
         }
     };
 
@@ -155,6 +190,18 @@ const SummaryComponent = () => {
         }
     };
 
+    const handlePageChange = (pageNumber) => {
+        console.log(pageNumber);
+        setCurrentPage(pageNumber);
+    };
+
+    const indexOfLastStock = currentPage * stocksPerPage;
+    const indexOfFirstStock = indexOfLastStock - stocksPerPage;
+    const currentStocks = investingList.slice(
+        indexOfFirstStock,
+        indexOfLastStock,
+    );
+
     return (
         <div id="summary-page">
             <SearchComponent
@@ -205,6 +252,12 @@ const SummaryComponent = () => {
                 handleShowSellStockModal={handleShowSellStockModal}
                 isInvesting={isInvesting}
                 setIsInvesting={setIsInvesting}
+                currentStocks={currentStocks}
+            />
+            <PaginationComponent
+                investingListLength={investingList.length}
+                handlePageChange={handlePageChange}
+                stocksPerPage={stocksPerPage}
             />
             <div className="w-100" style={{ marginBottom: '55px' }}>
                 <StockListTableComponent
