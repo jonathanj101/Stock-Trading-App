@@ -81,37 +81,39 @@ const InvestingListTable = ({
     });
 
     return (
-        <div>
-            <div className=" col-sm-12">
-                <h1
-                    id="investing-table-title"
-                    className="w-100 mx-auto"
-                    style={styles.investingTitle}
-                >
-                    INVESTING
-                </h1>
-                <div
-                    className="d-flex justify-content-around flex-wrap mb-5"
-                    style={styles.bordersDivs}
-                >
-                    {investingTable.length === 0 ? (
-                        <div>
-                            <h1>
-                                Search for a stock and start investing with
-                                fantasy money
-                            </h1>
-                            <h1>Remember: either go BIG or go HOME!!</h1>
-                        </div>
-                    ) : (
-                        investingTable
-                    )}
-                </div>
+        <div style={styles.mainDiv}>
+            <h1
+                id="investing-table-title"
+                className="w-100 mx-auto"
+                style={styles.investingTitle}
+            >
+                INVESTING
+            </h1>
+            <div
+                className="d-flex justify-content-around flex-wrap"
+                style={styles.bordersDivs}
+            >
+                {investingTable.length === 0 ? (
+                    <div>
+                        <h1>
+                            Search for a stock and start investing with fantasy
+                            money
+                        </h1>
+                        <h1>Remember: either go BIG or go HOME!!</h1>
+                    </div>
+                ) : (
+                    investingTable
+                )}
             </div>
         </div>
     );
 };
 
 var styles = {
+    mainDiv: {
+        width: '75%',
+        margin: 'auto',
+    },
     investingTitle: {
         captionSide: 'top',
         fontSize: '3rem',
@@ -120,8 +122,8 @@ var styles = {
     },
 
     bordersDivs: {
-        border: '1px solid black',
-        padding: '50px',
+        padding: '25px',
+        boxShadow: '6px 16px 64px rgb(179, 178, 178)',
     },
 };
 
