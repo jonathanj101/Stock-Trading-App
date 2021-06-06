@@ -58,7 +58,6 @@ const FormComponent = ({ handleRegister }) => {
         email,
     ) => {
         try {
-            debugger;
             const response = await axios.post('/signup', {
                 first_name: firstName,
                 last_name: lastName,
