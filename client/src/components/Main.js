@@ -73,11 +73,13 @@ class Main extends Component {
         }
     };
 
-    handleRegister = (userId) => {
+    handleRegister = (userId, username) => {
+        debugger;
         if (userId !== undefined) {
             this.setState({
                 userId: userId,
                 userHoldings: 100000,
+                username: username,
             });
         } else {
             return;
