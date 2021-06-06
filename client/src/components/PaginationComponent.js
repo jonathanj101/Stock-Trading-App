@@ -12,24 +12,33 @@ const PaginationComponent = ({
     }
 
     return (
-        <div>
-            <Pagination>
-                <Pagination.First />
-                {array.map((number) => {
-                    return (
-                        <Pagination.Item
-                            // href="!#"
-                            key={number}
-                            onClick={() => handlePageChange(number)}
-                        >
-                            {number}
-                        </Pagination.Item>
-                    );
-                })}
-                <Pagination.Last />
-            </Pagination>
+        <div style={{ margin: '0' }}>
+            {investingListLength > 0 ? (
+                <Pagination style={styles.paginationContainer}>
+                    {array.map((number) => {
+                        return (
+                            <Pagination.Item
+                                key={number}
+                                onClick={() => handlePageChange(number)}
+                            >
+                                {number}
+                            </Pagination.Item>
+                        );
+                    })}
+                </Pagination>
+            ) : (
+                <div></div>
+            )}
         </div>
     );
+};
+
+const styles = {
+    paginationContainer: {
+        justifyContent: 'center',
+        fontSize: '1.25rem',
+        marginTop: '25px',
+    },
 };
 
 export default PaginationComponent;
