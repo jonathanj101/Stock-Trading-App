@@ -23,7 +23,7 @@ const SummaryComponent = () => {
     const [isInvesting, setIsInvesting] = useState(false);
     const [stocks, setStocks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [stocksPerPage] = useState(10);
+    const [stocksPerPage] = useState(4);
 
     useEffect(() => {
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
@@ -191,7 +191,6 @@ const SummaryComponent = () => {
     };
 
     const handlePageChange = (pageNumber) => {
-        console.log(pageNumber);
         setCurrentPage(pageNumber);
     };
 
@@ -254,11 +253,13 @@ const SummaryComponent = () => {
                 setIsInvesting={setIsInvesting}
                 currentStocks={currentStocks}
             />
-            <PaginationComponent
-                investingListLength={investingList.length}
-                handlePageChange={handlePageChange}
-                stocksPerPage={stocksPerPage}
-            />
+            <div>
+                <PaginationComponent
+                    investingListLength={investingList.length}
+                    handlePageChange={handlePageChange}
+                    stocksPerPage={stocksPerPage}
+                />
+            </div>
             <div className="w-100" style={{ marginBottom: '55px' }}>
                 <StockListTableComponent
                     handleShowBuyStockModal={handleShowBuyStockModal}
