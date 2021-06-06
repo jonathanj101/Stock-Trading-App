@@ -58,7 +58,8 @@ const SummaryComponent = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const addStock = () => {
+        debugger;
         setIsInvesting(true);
         addToInvesting({
             companyName: stockName,
@@ -72,6 +73,7 @@ const SummaryComponent = () => {
     };
 
     const addStockToInvestingTable = (stock) => {
+        debugger;
         setEstimatedCost(stock.estimatedUserSharesCost);
         setEstimatedShares(stock.estimatedUserSharesCost / stock.stockPrice);
         const newStockInfoInvestingList = {
@@ -92,6 +94,7 @@ const SummaryComponent = () => {
     };
 
     const addToInvesting = (stockInfo) => {
+        debugger;
         addStockToInvestingTable(stockInfo);
     };
 
@@ -168,7 +171,7 @@ const SummaryComponent = () => {
                 stockPrice={stockPrice}
                 isStockQuantity={isStockQuantity}
                 setIsStockQuantity={setIsStockQuantity}
-                handleSubmit={handleSubmit}
+                handleSubmit={addStock}
                 calculateOnTitleChange={calculateOnTitleChange}
                 calculateCost={calculateCost}
                 estimatedCost={estimatedCost}
@@ -200,8 +203,8 @@ const SummaryComponent = () => {
                 setDifferenceInCost={setDifferenceInCost}
                 setUserBuyingPower={setUserBuyingPower}
                 handleShowSellStockModal={handleShowSellStockModal}
-                counter={isInvesting}
-                setCounter={setIsInvesting}
+                isInvesting={isInvesting}
+                setIsInvesting={setIsInvesting}
             />
             <div className="w-100" style={{ marginBottom: '55px' }}>
                 <StockListTableComponent
