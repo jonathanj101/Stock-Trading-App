@@ -240,7 +240,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         MESSAGE = "Success! You will be redirect to your account shortly!"
-        return jsonify(MESSAGE, 200, user.id)
+        return jsonify(MESSAGE, 200, user.id, user.username)
     else:
         MESSAGE = "The username has already been used! Please choose another username!"
         return jsonify(MESSAGE, 500)
