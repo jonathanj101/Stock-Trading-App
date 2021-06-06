@@ -217,7 +217,7 @@ const SummaryComponent = () => {
                 stockPrice={stockPrice}
                 isStockQuantity={isStockQuantity}
                 setIsStockQuantity={setIsStockQuantity}
-                handleSubmit={addStock}
+                addStock={addStock}
                 calculateOnTitleChange={calculateOnTitleChange}
                 calculateCost={calculateCost}
                 estimatedCost={estimatedCost}
@@ -228,6 +228,7 @@ const SummaryComponent = () => {
                 setEstimatedShares={setEstimatedShares}
                 setShow={setBuyStockModal}
                 userHoldings={userBuyingPower}
+                stockInputValue={parseFloat(stockInputValue)}
             />
 
             <SellStockModal
