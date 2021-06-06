@@ -15,20 +15,37 @@ const BuyStockModal = ({
     stockName,
     stockSymbol,
     stockPrice,
-    handleSubmit,
+    addStock,
     setStockInputValue,
     setEstimatedShares,
     setEstimatedCost,
     setShow,
     userHoldings,
+    stockInputValue,
 }) => {
     const [dropdownTitle, setDropdownTitle] = useState('Dollars');
     const [dropdownItemTitle, setDropdownItemTitle] = useState('Shares');
     const [showAlertMessage, setShowAlertMessageComponent] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = () => {
+        console.log(stockInputValue);
+        if (stockInputValue <= userHoldings) {
+            onBuyHandler();
+            addStock();
+            setTimeout(() => {
+                handleClose();
+            }, 2000);
+        } else {
+            setShowAlertMessageComponent(true);
+            setErrorMessage(
+                "You don't have enough buying power! Please buy accordingly to your wallet limit.",
+            );
+        }
+    };
 
     const onBuyHandler = async () => {
-        // debugger;
         const localStorageUserId = JSON.parse(localStorage.getItem('userId'));
         const parsed = parseFloat(stockPrice.slice(1));
         try {
@@ -82,6 +99,7 @@ const BuyStockModal = ({
                     <AlertMsgComponent
                         show={showAlertMessage}
                         successMessage={successMessage}
+                        errorMessage={errorMessage}
                     />
                     <div>
                         <div style={styles.stockInfoDiv}>
@@ -146,13 +164,14 @@ const BuyStockModal = ({
                     <div className="text-center mx-auto">
                         <h4>${userHoldings} available to buy stock </h4>
                         <Button
-                            onClick={() => {
-                                handleSubmit();
-                                onBuyHandler();
-                                setTimeout(() => {
-                                    handleClose();
-                                }, 2000);
-                            }}
+                            onClick={() => handleSubmit()}
+                            // onClick={() => {
+                            //     addStock();
+                            //     onBuyHandler();
+                            //     setTimeout(() => {
+                            //         handleClose();
+                            //     }, 2000);
+                            // }}
                             block
                         >
                             Buy
