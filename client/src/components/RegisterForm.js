@@ -10,7 +10,7 @@ const FormComponent = ({ handleRegister }) => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [showAlertMsgComponent, setShow] = useState(false);
+    const [showAlertMessageComponent, setShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [validated, setValidated] = useState(false);
@@ -88,7 +88,7 @@ const FormComponent = ({ handleRegister }) => {
         <div>
             <AlertMsgComponent
                 setShow={setShow}
-                show={showAlertMsgComponent}
+                show={showAlertMessageComponent}
                 errorMessage={errorMessage}
                 successMessage={successMessage}
             />
