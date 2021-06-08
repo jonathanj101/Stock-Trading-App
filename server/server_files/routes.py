@@ -8,12 +8,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from server_files import app, db, bcrypt
 from server_files.models import Users, Transactions, Stock
 
+
 API_KEY = os.environ.get('API_KEY')
 
 BASE_URL = "https://cloud.iexapis.com"
 
 
-@ app.route("/multiple_stocks", methods=["GET"])
+# @app.route("/", methods=["GET"])
+# def index():
+#     return app.send_static_file("index.html")
+
+
+# @app.errorhandler(404)
+# def not_found(e):
+#     return app.send_static_file('index.html')
+
+
+@app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     tesla = "tsla"
     apple = "aapl"
@@ -83,7 +94,7 @@ def multiple():
     return jsonify({"data": stocks_data})
 
 
-@ app.route("/search_stock/<string:stock>", methods=['GET'])
+@app.route("/search_stock/<string:stock>", methods=['GET'])
 def search_stock(stock):
     try:
         SEARCH_URL = "{}/stable/stock/{}/quote?token={}".format(
@@ -101,7 +112,7 @@ def search_stock(stock):
         return "stock symbol/s not found."
 
 
-@ app.route('/add_stock', methods=['POST'])
+@app.route('/add_stock', methods=['POST'])
 def add_stock():
     USER_DETAILS = request.get_json()
     USER = Users.query.filter_by(id=USER_DETAILS['id']).first()
@@ -139,7 +150,7 @@ def add_stock():
         return jsonify('Something went wrong on our end! Please try again later.'), 500
 
 
-@ app.route('/sell_stock', methods=["POST"])
+@app.route('/sell_stock', methods=["POST"])
 def sell_stock():
     USER_DETAILS = request.get_json()
     USER = Users.query.filter_by(id=USER_DETAILS['id']).first()
@@ -190,7 +201,7 @@ def sell_stock():
         return ('Looks like there is an error on our end!', 500)
 
 
-@ app.route('/user_stock', methods=['POST'])
+@app.route('/user_stock', methods=['POST'])
 def user_stock():
     USER_DETAILS = request.get_json()
     USER = Users.query.filter_by(id=USER_DETAILS['id']).first()
@@ -226,7 +237,7 @@ def user_stock():
         return jsonify('User not found in our record! You will be redirected to the home page.', 500)
 
 
-@ app.route('/signup', methods=["POST"])
+@app.route('/signup', methods=["POST"])
 def signup():
     USER_DETAILS = request.get_json()
     USERNAME = Users.query.filter_by(
@@ -246,7 +257,7 @@ def signup():
         return jsonify(MESSAGE, 500)
 
 
-@ app.route('/login', methods=["POST"])
+@app.route('/login', methods=["POST"])
 def login():
     USER_DETAILS = request.get_json()
 
@@ -260,7 +271,7 @@ def login():
         return jsonify(MESSAGE, 500)
 
 
-@ app.route('/user', methods=["POST"])
+@app.route('/user', methods=["POST"])
 def user():
     USER_DETAILS = request.get_json()
 
