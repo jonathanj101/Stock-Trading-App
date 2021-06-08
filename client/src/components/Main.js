@@ -74,12 +74,12 @@ class Main extends Component {
     };
 
     handleRegister = (userId, username) => {
-        debugger;
         if (userId !== undefined) {
             this.setState({
                 userId: userId,
                 userHoldings: 100000,
                 username: username,
+                isLogged: true,
             });
         } else {
             return;
