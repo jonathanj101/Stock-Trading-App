@@ -163,17 +163,7 @@ const BuyStockModal = ({
                 <Modal.Footer>
                     <div className="text-center mx-auto">
                         <h4>${userHoldings} available to buy stock </h4>
-                        <Button
-                            onClick={() => handleSubmit()}
-                            // onClick={() => {
-                            //     addStock();
-                            //     onBuyHandler();
-                            //     setTimeout(() => {
-                            //         handleClose();
-                            //     }, 2000);
-                            // }}
-                            block
-                        >
+                        <Button onClick={() => handleSubmit()} block>
                             Buy
                         </Button>
                     </div>
