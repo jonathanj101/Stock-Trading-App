@@ -1,0 +1,8 @@
+{
+    "name": "fantasy-stock-trading-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "heroku-prebuild": "npm i --prefix client && npm run build --prefix client"
+    }
+  }
