@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__, static_folder='../../client/build/', static_url_path='/')
 
-ENV = "dev"
+ENV = "!dev"
 
 if ENV == "dev":
     app.debug = True
