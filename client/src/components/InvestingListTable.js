@@ -94,12 +94,15 @@ const InvestingListTable = ({
                 style={styles.bordersDivs}
             >
                 {investingTable.length === 0 ? (
-                    <div>
-                        <h1>
+                    <div id="investing-table-subtitle">
+                        <span style={styles.spans}>
                             Search for a stock and start investing with fantasy
                             money
-                        </h1>
-                        <h1>Remember: either go BIG or go HOME!!</h1>
+                        </span>
+                        <span style={styles.spans}>
+                            {' '}
+                            Remember: either go BIG or go HOME!!
+                        </span>
                     </div>
                 ) : (
                     investingTable
@@ -120,10 +123,12 @@ var styles = {
         fontWeight: 'bold',
         color: 'black',
     },
-
     bordersDivs: {
         padding: '25px',
         boxShadow: '6px 16px 64px rgb(179, 178, 178)',
+    },
+    spans: {
+        fontSize: '1.5rem',
     },
 };
 
