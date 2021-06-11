@@ -30,7 +30,6 @@ const BuyStockModal = ({
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = () => {
-        console.log(stockInputValue);
         if (stockInputValue <= userHoldings) {
             onBuyHandler();
             addStock();
