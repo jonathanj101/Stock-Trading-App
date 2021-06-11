@@ -262,11 +262,14 @@ input[type=number] {
 }
 
 @media screen and (max-width:600px) {
+  #investing-table-subtitle > span {
+    font-size: 1.25rem !important;
+  }
   #app-description-container > #app-title {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
   #app-description-container > #app-description {
-    font-size: .75rem;
+    font-size: .75rem !important;
   }
   #sell-modal > .modal-content {
     width: 75%;
@@ -294,7 +297,6 @@ input[type=number] {
     padding: .250rem;
   }
   div > form#log-in-form > .form-group {
-    background-color:blue;
     font-size: 0.5rem !important;
     margin-bottom: 25px !important;
   }
