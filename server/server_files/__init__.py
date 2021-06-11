@@ -16,4 +16,5 @@ else:
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 from server.server_files import routes
-# from server_files import routes commentted out for heroku, gunicorn error importing them preventing to db.create_all()
+# from server_files import routes
+# commentted out for heroku, gunicorn error importing them preventing to db.create_all()
