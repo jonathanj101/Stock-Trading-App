@@ -7,7 +7,7 @@ from flask import jsonify, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from server.server_files import app, db, bcrypt
 from server.server_files.models import Users, Transactions, Stock
-# commentted out for heroku, gunicorn error importing them preventing to db.create_all()
+# commentted out for heroku, gunicorn importing error => preventing to db.create_all()
 # from server_files import app, db, bcrypt
 # from server_files.models import Users, Transactions, Stock
 
