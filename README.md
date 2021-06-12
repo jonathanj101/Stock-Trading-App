@@ -45,7 +45,7 @@
 ![](./client/src/assets/images/import-error.jpg)
 
 
-##### Setting up Database
+### Setting up Database
 
 1. Install PostgreSQL
 2. Run **backup.sql** scripts in sql_backups directory
