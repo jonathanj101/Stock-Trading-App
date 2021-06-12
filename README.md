@@ -21,7 +21,7 @@
 1. Make sure you have Python installed on your local machine before following the guide below.
 
 - Open your CMD (Command Prompt) or git bash (if downloaded already)
-- Navidate to `server` and download the require packages listing below using Python Package Manager `pip`
+- Navigate to `server` and download the require packages listing below using Python Package Manager `pip`
   - [python-dotenv](https://pypi.org/project/python-dotenv/)
   - [requests](https://requests.readthedocs.io/en/latest/user/install/#install)
   - [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
@@ -42,7 +42,7 @@
     - In `models.py` change `from server.server_files import db` to `from server_files import db`
     - In `__init__.py` change `from server.server_files import routes` to `from server_files import routes`
 - The reason to make these changes above is to prevent `ImportError` like shown on the screenshot below
-![](./client/src/images/import-error.jpg)
+![](./client/src/assets/images/import-error.jpg)
 
 
 ##### Setting up Database
