@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -5,16 +6,19 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__, static_folder='../../client/build/', static_url_path='/')
 
 ENV = "!dev"
+DATABASE_URI = os.environ.get("POSTGRES_DATABASE_URI")
+HEROKU_DB_URI = os.environ.get("HEROKU_DATABASE_URI")
+
 
 if ENV == "dev":
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1209lmc@localhost/fantasy_stock_app'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://guivrcrdrqyahs:fb907c88247bc5dcd0a25bb8441eecd9910496ed5d31887af3419cf68656db5c@ec2-34-195-143-54.compute-1.amazonaws.com:5432/d6qvodk01f8idf'
+    app.config['SQLALCHEMY_DATABASE_URI'] = HEROKU_DB_URI
 
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 from server.server_files import routes
 # from server_files import routes
-# commentted out for heroku, gunicorn error importing them preventing to db.create_all()
+# commentted out for heroku, gunicorn importing error => preventing to db.create_all()
