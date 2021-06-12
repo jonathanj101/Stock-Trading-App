@@ -7,13 +7,12 @@ from flask import jsonify, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from server.server_files import app, db, bcrypt
 from server.server_files.models import Users, Transactions, Stock
-# commentted out for heroku, gunicorn importing error => preventing to db.create_all()
+# commentted out for heroku, to prevent gunicorn importing errors => preventing  db.create_all() or accessing database tables
 # from server_files import app, db, bcrypt
 # from server_files.models import Users, Transactions, Stock
 
 
 API_KEY = os.environ.get('API_KEY')
-
 BASE_URL = "https://cloud.iexapis.com"
 
 
