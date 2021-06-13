@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 app = Flask(__name__, static_folder='../../client/build/', static_url_path='/')
 
 ENV = "!dev"
-DATABASE_URI = os.environ.get("DATABASE_URI")
+DATABASE_URI = os.environ.get("DATABASE_URL")
 MY_POSTGRES_DB_URI = os.environ.get("MY_POSTGRES_DB_URI")
 
 
