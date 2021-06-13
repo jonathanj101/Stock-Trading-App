@@ -1,8 +1,8 @@
 # Stock Trading App 
 
 - This application allows users to invest in Stock Exchange with fake currency.
-- This project client side was built entirely in ReactJS
-- This project server side was built entirely in Flask/Python
+- This project client side was built entirely in ReactJS ![](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+- This project server side was built entirely in Flask/Python ![](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 - This project uses [IEX Cloud](https://iexcloud.io)
 
 [Want to Invest? Click here!](fantasy-stock-trading-app.herokuapp.com)
@@ -43,6 +43,10 @@
     - In `__init__.py` change `from server.server_files import routes` to `from server_files import routes`
 - The reason to make these changes above is to prevent `ImportError` like shown on the screenshot below
 ![](./client/src/assets/images/import-error.jpg)
+
+## Summary
+
+My first Full Stack application ever built, really enjoyed and had fun while building this project. The challenges faced while making this project has enforced my understading of ReactJs Hooks, HTTP requests & Promises, as well as creating a PostgreSQL Database. Thus, using an Object-Relational-Mapper (ORM) like [Flask_SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) to facilitate the process of creating/updating/deleting data in the database. In addition, using my local machine CMD (Command Prompt) to exposed myself more to SQL statements or [PostgreSQL](https://www.postgresql.org/docs/) syntax.
 
 
 ## Setting up Database
