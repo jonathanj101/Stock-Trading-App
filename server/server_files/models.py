@@ -19,7 +19,7 @@ class Users(db.Model):
     stocks = db.relationship("Stock", backref="users")
 
     def __repr__(self):
-        return f"User ('{self.first_name}','{self.last_name}','{self.email}', '{self.username}', '{self.password}')"
+        return f"User ('{self.first_name}','{self.last_name}','{self.email}', '{self.username}', '{self.password}'), '{self.user_holdings}'"
 
 
 class Stock(db.Model):
