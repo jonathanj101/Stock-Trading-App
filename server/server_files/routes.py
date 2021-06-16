@@ -119,13 +119,13 @@ def add_stock():
     USER_DETAILS = request.get_json()
     USER = Users.query.filter_by(id=USER_DETAILS['id']).first()
     if USER:
-        filter_by_stock_symbol = Stock.query.filter_by(
-            stock_symbol=USER_DETAILS['stockSymbol']).first()
-        if filter_by_stock_symbol != None:
+        STOCK = Stock.query.filter_by(
+            stock_symbol=USER_DETAILS["stockSymbol"], user_id=USER_DETAILS["id"]).first()
+        if STOCK != None:
 
-            update_user_cost = (filter_by_stock_symbol.user_estimated_cost +
+            update_user_cost = (STOCK.user_estimated_cost +
                                 USER_DETAILS['estimatedCost'])
-            update_user_shares = (filter_by_stock_symbol.user_estimated_shares +
+            update_user_shares = (STOCK.user_estimated_shares +
                                   USER_DETAILS['estimatedShares'])
             update_user_holdings = USER.user_holdings - update_user_cost
             filter_by_stock_symbol.user_estimated_cost = update_user_cost
@@ -158,7 +158,7 @@ def sell_stock():
     USER = Users.query.filter_by(id=USER_DETAILS['id']).first()
 
     STOCK = Stock.query.filter_by(
-        stock_symbol=USER_DETAILS['stockSymbol']).first()
+        stock_symbol=USER_DETAILS['stockSymbol'], user_id=USER_DETAILS["id"]).first()
 
     SEARCH_STOCK = "{}/stable/stock/{}/quote?token={}".format(
         BASE_URL, USER_DETAILS['stockSymbol'], API_KEY)
