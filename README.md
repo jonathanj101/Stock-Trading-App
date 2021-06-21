@@ -5,7 +5,7 @@
 - This project server side was built entirely in Flask/Python ![](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 - This project uses [IEX Cloud](https://iexcloud.io) API 
 
-[Want to Invest? Click here!](fantasy-stock-trading-app.herokuapp.com)
+[Want to Invest? Click here!](https://fantasy-stock-trading-app.herokuapp.com)
 ![](./client/src/assets/images/my-stock-preview.png)
 
 
