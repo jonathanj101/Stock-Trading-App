@@ -67,6 +67,6 @@ My first Full Stack application ever built, really enjoyed every minute building
 
 # Author
 
-**Jonathan Jimenez** - Full Stack Developer - [LinkedIn](https://www.linkedin.com/in/jonathan-jimenez101/) | [Website](https://jonathan-jimenez.herokuapp.com/)
+**Jonathan Jimenez** - Full Stack Developer - [LinkedIn](https://www.linkedin.com/in/jonathan-jimenez101/) | [Website](https://www.jonathanjimenez.tech)
 
 
