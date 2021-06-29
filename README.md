@@ -40,6 +40,7 @@
 2. To get it running
     - `cd client`
     - `npm run build`
+    - `npm run watch`
     - `cd server` and `flask run`
 
 3. Inside `server` directory, create a file name `.env` **Don't forget the dot (.)**
