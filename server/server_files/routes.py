@@ -28,6 +28,7 @@ def not_found(e):
 
 @app.route("/multiple_stocks", methods=["GET"])
 def multiple():
+    stocks = ["tsla", "aapl", "fb", "qcom", "msft", "sne", "aal"]
     tesla = "tsla"
     apple = "aapl"
     fb = "fb"
@@ -37,62 +38,22 @@ def multiple():
     american_airline = "aal"
 
     SEARCH_URL = "{}/stable/stock/market/batch?symbols={},{},{},{},{},{},{}&types=quote&token={}".format(
-        BASE_URL, tesla, apple, fb, qcom, microsft, sony, american_airline, API_KEY)
+        BASE_URL, stocks[0], stocks[1], stocks[2], stocks[3], stocks[4], stocks[5], stocks[6], API_KEY)
 
     req = requests.get(SEARCH_URL)
 
     resp = req.json()
 
-    stocks_data = [
-        {
-            "company_name": resp['AAPL']["quote"]["companyName"],
-            "symbol": resp['AAPL']["quote"]["symbol"],
-            "latestPrice": resp['AAPL']["quote"]["latestPrice"],
-            "change": resp['AAPL']["quote"]["change"],
-        },
-        {
-            "company_name": resp['TSLA']["quote"]["companyName"],
-            "symbol": resp['TSLA']["quote"]["symbol"],
-            "latestPrice": resp['TSLA']["quote"]["latestPrice"],
-            "change": resp['TSLA']["quote"]["change"]
-        },
+    def map_response(stock_symbol, resp):
+        stock_quote = resp[stock_symbol.upper()]["quote"]
+        return {
+            "company_name": stock_quote["companyName"],
+            "symbol": stock_quote["symbol"],
+            "latestPrice": stock_quote["latestPrice"],
+            "change": stock_quote["change"],
+        }
 
-        {
-            "company_name": resp['FB']["quote"]["companyName"],
-            "symbol": resp['FB']["quote"]["symbol"],
-            "latestPrice": resp['FB']["quote"]["latestPrice"],
-            "change": resp['FB']["quote"]["change"]
-        },
-
-        {
-            "company_name": resp['AAL']["quote"]["companyName"],
-            "symbol": resp['AAL']["quote"]["symbol"],
-            "latestPrice": resp['AAL']["quote"]["latestPrice"],
-            "change": resp['AAL']["quote"]["change"]
-        },
-
-        {
-            "company_name": resp['MSFT']["quote"]["companyName"],
-            "symbol": resp['MSFT']["quote"]["symbol"],
-            "latestPrice": resp['MSFT']["quote"]["latestPrice"],
-            "change": resp['MSFT']["quote"]["change"]
-        },
-
-        {
-            "company_name": resp['QCOM']["quote"]["companyName"],
-            "symbol": resp['QCOM']["quote"]["symbol"],
-            "latestPrice": resp['QCOM']["quote"]["latestPrice"],
-            "change": resp['QCOM']["quote"]["change"]
-        },
-
-        {
-            "company_name": resp['SNE']["quote"]["companyName"],
-            "symbol": resp['SNE']["quote"]["symbol"],
-            "latestPrice": resp['SNE']["quote"]["latestPrice"],
-            "change": resp['SNE']["quote"]["change"]
-        },
-    ]
-
+    stocks_data = [map_response(stock, resp) for stock in stocks]
     return jsonify({"data": stocks_data})
 
 
