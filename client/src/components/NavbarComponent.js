@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import LogOutModal from './LogOutModal';
-import AccountDropDown from './AccountDropDown';
+import LogOutModal from './User-Auth/LogOutModal';
+import AccountDropDown from './DropDown/AccountDropDown';
 
 const NavbarComponent = ({
     handleLogOut: handleLogOutOnMain,
