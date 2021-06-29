@@ -37,12 +37,6 @@
     - [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
     - [Flask-SQLAlchemy](https://pypi.org/project/Flask-SQLAlchemy/)
 
-2. To get it running
-    - `cd client`
-    - `npm run build`
-    - `npm run watch`
-    - `cd server` and `flask run`
-
 3. Inside `server` directory, create a file name `.env` **Don't forget the dot (.)**
 4. Before getting to the next step:
     - Make sure to have a [Developer IEX Cloud Account](https://iexcloud.io/cloud-login#/register). If not already then create an account in order to generate your API Key necessary for this project to function correctly.
@@ -61,6 +55,12 @@
 - The reason to make these changes above is to prevent `ImportError` like shown on the screenshot below
 
 ![](./client/src/assets/images/import-error.jpg)
+
+## To get it running
+1.  `cd client`
+2.  `npm run build`
+3.  `npm run watch`
+4.  `cd server` and `flask run`
 
 ## Setting up Database
 
