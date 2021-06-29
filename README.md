@@ -27,14 +27,20 @@
 
 ### Flask (server-side)
 
-1. Make sure you have Python installed on your local machine before following the guide below.
+1. Make sure you have Python & Git installed on your local machine and know how to use the terminal, before following the guide below.
 
 - Open your CMD (Command Prompt) or git bash (if downloaded already)
 - Navigate to `server` and download the require packages listing below using Python Package Manager `pip`
-    - [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html#via-pip) * Make sure to activate `virtualenv` first before following next steps
+    - [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html#via-pip)  
     - [python-dotenv](https://pypi.org/project/python-dotenv/)
     - [requests](https://requests.readthedocs.io/en/latest/user/install/#install)
     - [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask)
+    - [Flask-SQLAlchemy](https://pypi.org/project/Flask-SQLAlchemy/)
+
+2. To get it running
+    - `cd client`
+    - `npm run build`
+    - `cd server` and `flask run`
 
 3. Inside `server` directory, create a file name `.env` **Don't forget the dot (.)**
 4. Before getting to the next step:
