@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchComponent from '../components/SearchComponent';
-import BuyStockModal from '../components/BuyStockModal';
-import SellStockModal from '../components/SellStockModal';
-import StockListTableComponent from '../components/StockListTableComponent';
-import InvestingListTable from '../components/InvestingListTable';
-import PaginationComponent from '../components/PaginationComponent';
+import BuyStockModal from '../components/Buy-Sell-Stocks/BuyStockModal';
+import SellStockModal from '../components/Buy-Sell-Stocks/SellStockModal';
+import StockListTableComponent from '../components/Stocks-Table/StockListTableComponent';
+import InvestingListTable from '../components/Stocks-Table/InvestingListTable';
+import PaginationComponent from '../components/Pagination/PaginationComponent';
 
 const SummaryComponent = () => {
     const [showBuyStockModal, setBuyStockModal] = useState(false);
