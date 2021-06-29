@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import AlertMsgComponent from './AlertMsgComponent';
+import AlertMsgComponent from '../../AlertMsgComponent';
+import { styles } from './LogInStyles';
 
 const LogInComponent = ({ handleLogIn }) => {
     const [username, setUsername] = useState('');
@@ -130,22 +131,6 @@ const LogInComponent = ({ handleLogIn }) => {
             </Form>
         </div>
     );
-};
-
-var styles = {
-    formStyle: {
-        padding: '100px',
-        width: '75%',
-        margin: 'auto',
-    },
-    formGroupStyles: {
-        marginBottom: '50px',
-    },
-    formTextStyles: {
-        fontSize: '1.75rem',
-        margin: '50px auto',
-        fontWeight: 'lighter',
-    },
 };
 
 export default LogInComponent;
