@@ -44,28 +44,16 @@
 
 ![](./client/src/assets/images/env-preview.png)
 
-## Important changes to make before app runs correctly
-1. Now, you will have to modify 4 files.
-    - In `app.py` change `from server.server_files import app` to `from server_files import app`
-    - In `routes.py` change 
-        - `from server.server_files import app, db bcrypt` to `from server_files import app, db, bcrypt`
-        - `from server.server_files.models import Users, Transactions, Stock` to `from server_files import Users, Transactions, Stock`
-    - In `models.py` change `from server.server_files import db` to `from server_files import db`
-    - In `__init__.py` change `from server.server_files import routes` to `from server_files import routes`
-- The reason to make these changes above is to prevent `ImportError` like shown on the screenshot below
+## Setting up Database
 
-![](./client/src/assets/images/import-error.jpg)
+1. Install PostgreSQL
+2. Run **backup.sql** scripts in sql_backups directory
 
 ## To get it running
 1.  `cd client`
 2.  `npm run build`
 3.  `npm run watch`
 4.  `cd server` and `flask run`
-
-## Setting up Database
-
-1. Install PostgreSQL
-2. Run **backup.sql** scripts in sql_backups directory
 
 ## Summary
 
