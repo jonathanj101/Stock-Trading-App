@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__, static_folder='../../client/build/', static_url_path='/')
 
-ENV = "!dev"
+ENV = "dev"
 DATABASE_URI = os.environ.get("DATABASE_URL")
 MY_POSTGRES_DB_URI = os.environ.get("MY_POSTGRES_DB_URI")
 
@@ -19,6 +19,4 @@ else:
 
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
-from server.server_files import routes
-# from server_files import routes
-# commentted out for heroku, gunicorn importing error => preventing to db.create_all()
+from server_files import routes
