@@ -1,6 +1,5 @@
 from flask import Blueprint
-# from server_files import db
-from server.server_files import db
+from server_files import db
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
