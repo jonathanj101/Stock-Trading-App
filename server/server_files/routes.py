@@ -5,11 +5,8 @@ import requests
 from datetime import datetime
 from flask import jsonify, request, render_template, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from server.server_files import app, db, bcrypt
-from server.server_files.models import Users, Transactions, Stock
-# commentted out for heroku, to prevent gunicorn importing errors => preventing  db.create_all() or accessing database tables
-# from server_files import app, db, bcrypt
-# from server_files.models import Users, Transactions, Stock
+from server_files import app, db, bcrypt
+from server_files.models import Users, Transactions, Stock
 
 
 API_KEY = os.environ.get('API_KEY')
@@ -29,13 +26,6 @@ def not_found(e):
 @app.route("/multiple_stocks", methods=["GET"])
 def multiple():
     stocks = ["tsla", "aapl", "fb", "qcom", "msft", "sne", "aal"]
-    tesla = "tsla"
-    apple = "aapl"
-    fb = "fb"
-    qcom = "qcom"
-    microsft = "msft"
-    sony = 'sne'
-    american_airline = "aal"
 
     SEARCH_URL = "{}/stable/stock/market/batch?symbols={},{},{},{},{},{},{}&types=quote&token={}".format(
         BASE_URL, stocks[0], stocks[1], stocks[2], stocks[3], stocks[4], stocks[5], stocks[6], API_KEY)
