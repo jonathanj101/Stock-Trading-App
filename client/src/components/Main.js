@@ -5,10 +5,10 @@ import Home from '../pages/Home';
 import NavbarComponent from './NavbarComponent';
 import Footer from './Footer';
 import SummaryComponent from '../pages/Summary';
-import FormComponent from './RegisterForm';
+import FormComponent from './User-Auth/Registration/RegisterForm';
 import ProtectRoute from './ProtectRoutes';
 import PageNotFound from '../pages/PageNotFound';
-import SearchComponent from './SearchComponent';
+import SearchComponent from './Search/SearchComponent';
 
 class Main extends Component {
     constructor(props) {
