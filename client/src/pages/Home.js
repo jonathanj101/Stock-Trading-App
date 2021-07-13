@@ -3,7 +3,7 @@ import { Container, Carousel, Image } from 'react-bootstrap';
 import tabletStocksData from '../assets/images/tablet-display-stocks.jpg';
 import bitcoinBenjamin from '../assets/images/bitcoin-benjamin.jpg';
 import laptopDisplayStock from '../assets/images/laptop-display-stocks.jpg';
-import LogInComponent from '../components/LogInComponent';
+import LogInComponent from '../components/User-Auth/LogIn/LogInComponent';
 
 const Home = ({ handleLogIn, isLogged }) => {
     return (
