@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, InputGroup, ListGroup } from 'react-bootstrap';
-import { styles } from './SearchComopnentStyles';
+import { styles } from './SearchComponentStyles';
 
 const SearchComponent = ({ handleShow, getStockFromSearchAddToModal }) => {
     const [textInput, setTextInput] = useState('');
